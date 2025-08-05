@@ -1,0 +1,84 @@
+{
+  "github": {
+    "token": "",
+    "username": "Jim-purch",
+    "include_private": true,
+    "rate_limit_delay": 1.0,
+    "max_retries": 3
+  },
+  "schedule": {
+    "daily_check": "09:00",
+    "weekly_report": "MON:10:00",
+    "check_interval_hours": 6,
+    "timezone": "Asia/Shanghai"
+  },
+  "notifications": {
+    "email": {
+      "enabled": true,
+      "smtp_server": "smtp.outlook.com",
+      "smtp_port": 587,
+      "sender_email": "",
+      "sender_password": "",
+      "recipients": [],
+      "subject_prefix": "[GitHub监控]"
+    },
+    "webhook": {
+      "enabled": false,
+      "type": "dingtalk",
+      "url": "",
+      "secret": ""
+    },
+    "desktop": {
+      "enabled": false
+    }
+  },
+  "analysis": {
+    "project_filters": {
+      "min_size_kb": 10,
+      "exclude_forks": true,
+      "exclude_archived": true,
+      "include_languages": [],
+      "exclude_languages": ["CSS", "HTML"]
+    },
+    "complexity_weights": {
+      "size": 0.3,
+      "languages": 0.2,
+      "stars": 0.1,
+      "forks": 0.1,
+      "readme_length": 0.1,
+      "topics": 0.1,
+      "recent_activity": 0.1
+    },
+    "ai_keywords": [
+      "ai", "ml", "gpt", "claude", "llm", "ocr", "automation",
+      "intelligent", "smart", "neural", "model", "openai",
+      "chatgpt", "anthropic", "machine learning", "deep learning",
+      "tensorflow", "pytorch", "opencv", "nlp", "computer vision"
+    ]
+  },
+  "reports": {
+    "data_dir": "data",
+    "output_formats": ["markdown", "html", "json"],
+    "keep_history_days": 30,
+    "max_featured_projects": 5,
+    "min_complexity_for_featured": 0.5
+  },
+  "thresholds": {
+    "min_updates_for_notification": 1,
+    "min_significant_updates": 1,
+    "complexity_threshold": 0.5,
+    "high_value_threshold": 0.7,
+    "recent_days": 30
+  },
+  "localization": {
+    "language": "zh-CN",
+    "date_format": "%Y年%m月%d日",
+    "time_format": "%H:%M"
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "github_monitor.log",
+    "max_size_mb": 10,
+    "backup_count": 5
+  }
+}
