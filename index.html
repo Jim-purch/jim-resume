@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jim - AI协作专家 & 产品经理 | 个人简历</title>
+    
+    <!-- 性能优化 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    
+    <!-- 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- 图标 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- SEO 优化 -->
+    <meta name="description" content="Jim - AI协作专家与数字化产品经理，专注AI工具应用、业务流程数字化和企业自动化解决方案">
+    <meta name="keywords" content="Jim,AI协作专家,产品经理,AI工具,数字化转型,业务自动化,需求分析">
+    <meta name="author" content="Jim">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Jim - AI协作专家 & 产品经理">
+    <meta property="og:description" content="AI工具协作专家，专注需求分析与实现、业务流程数字化、企业自动化解决方案设计">
+    <meta property="og:type" content="website">
+
+    <style>
+        /* 现代化CSS变量系统 - 参考OpenAI & Notion设计 */
+        :root {
+            /* AI专家主题色彩 - 受OpenAI和Notion启发 */
+            --primary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --primary-solid: #10b981;
+            --secondary: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            --accent: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            --ai-glow: rgba(16, 185, 129, 0.2);
+            --ai-purple: rgba(139, 92, 246, 0.1);
+            
+            /* 中性色 - 受Stripe和Linear启发 */
+            --white: #ffffff;
+            --black: #000000;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            /* 字体系统 */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            
+            /* 间距系统 */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+            
+            /* 阴影系统 - 受Apple设计启发 */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            
+            /* 动画系统 */
+            --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+            --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            
+            /* 边框半径 */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+        }
+        
+        /* 暗色主题 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --white: #111827;
+                --black: #f9fafb;
+                --gray-50: #1f2937;
+                --gray-100: #374151;
+                --gray-200: #4b5563;
+                --gray-300: #6b7280;
+                --gray-400: #9ca3af;
+                --gray-500: #d1d5db;
+                --gray-600: #e5e7eb;
+                --gray-700: #f3f4f6;
+                --gray-800: #f9fafb;
+                --gray-900: #ffffff;
+            }
+        }
+        
+        /* 基础重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            color: var(--gray-900);
+            background: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* 可访问性 */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* 导航栏 - 受Framer启发的浮动设计 */
+        .navbar {
+            position: fixed;
+            top: var(--space-6);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            padding: var(--space-3) var(--space-6);
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s var(--ease-out-cubic);
+        }
+        
+        .navbar.hidden {
+            transform: translateX(-50%) translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .navbar:not(.hidden):hover {
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--space-6);
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            font-size: 0.875rem;
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-lg);
+            transition: all 0.2s var(--ease-out-cubic);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--gray-900);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        /* AI专家英雄区域 - 受OpenAI和Vercel启发 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            overflow: hidden;
+        }
+        
+        /* AI粒子背景效果 */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--ai-glow) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, var(--ai-purple) 0%, transparent 50%);
+            animation: aiGlow 8s ease-in-out infinite alternate;
+        }
+        
+        @keyframes aiGlow {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 3;
+            max-width: 800px;
+            padding: 0 var(--space-6);
+            position: relative;
+        }
+        
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: var(--space-6);
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #8b5cf6 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            font-weight: 400;
+            margin-bottom: var(--space-8);
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-3);
+            background: rgba(16, 185, 129, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--primary-solid);
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s var(--ease-out-cubic);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.3);
+        }
+        
+        /* 浮动几何图形 - 受Jeff Koons启发 */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+            background: rgba(139, 92, 246, 0.1);
+        }
+        
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+            background: rgba(6, 182, 212, 0.1);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        /* 内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+        
+        .section {
+            padding: var(--space-20) 0;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: var(--space-16);
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* 关于我 - 受Spotify Design启发的卡片设计 */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: var(--space-16);
+            align-items: center;
+        }
+        
+        .about-image {
+            position: relative;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            box-shadow: var(--shadow-2xl);
+        }
+        
+        .about-content h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+            color: var(--gray-900);
+        }
+        
+        .about-content p {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            margin-bottom: var(--space-6);
+        }
+        
+        /* AI微交互效果 */
+        .ai-badge {
+            display: inline-block;
+            background: var(--ai-glow);
+            border: 1px solid var(--primary-solid);
+            color: var(--primary-solid);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: var(--space-2);
+            animation: pulse 2s infinite;
+            backdrop-filter: blur(10px);
+        }
+        
+        .intro-highlight {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-solid);
+            margin-bottom: var(--space-4);
+        }
+        
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-4);
+            margin-top: var(--space-6);
+        }
+        
+        .expertise-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3);
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            transition: all 0.3s var(--ease-out-cubic);
+        }
+        
+        .expertise-item:hover {
+            background: rgba(16, 185, 129, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .expertise-item i {
+            color: var(--primary-solid);
+            font-size: 1.2rem;
+        }
+        
+        /* 技能标签 - 受CodePen启发 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-8);
+            margin-top: var(--space-16);
+        }
+        
+        .skill-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s var(--ease-out-cubic);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-lg);
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: var(--space-4);
+        }
+        
+        .skill-card h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+            color: var(--gray-900);
+        }
+        
+        .skill-card p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+        
+        /* AI项目展示 - 受Behance和Dribbble启发 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-8);
+        }
+        
+        .project-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s var(--ease-out-cubic);
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-2xl);
+        }
+        
+        .featured-project {
+            position: relative;
+            border: 2px solid var(--primary-solid);
+        }
+        
+        .featured-project::before {
+            content: '⭐ 重点项目';
+            position: absolute;
+            top: -10px;
+            left: var(--space-4);
+            background: var(--primary);
+            color: white;
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        .project-image {
+            height: 200px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        .ai-project {
+            position: relative;
+        }
+        
+        .ai-indicator {
+            position: absolute;
+            top: var(--space-2);
+            right: var(--space-2);
+            background: var(--secondary);
+            color: white;
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-sm);
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+        
+        .project-content {
+            padding: var(--space-6);
+        }
+        
+        .project-content h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+            color: var(--gray-900);
+        }
+        
+        .project-role {
+            color: var(--primary-solid);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: var(--space-2);
+        }
+        
+        .project-content p {
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: var(--space-4);
+        }
+        
+        .project-metrics {
+            display: flex;
+            gap: var(--space-4);
+            margin: var(--space-4) 0;
+        }
+        
+        .metric {
+            text-align: center;
+        }
+        
+        .metric-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-solid);
+        }
+        
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+        
+        .tag {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .tag.primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* 联系方式 - 极简设计 */
+        .contact {
+            background: var(--gray-50);
+        }
+        
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-content h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+            color: var(--gray-900);
+        }
+        
+        .contact-content p {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: var(--space-8);
+        }
+        
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-3);
+            background: var(--primary);
+            color: white;
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s var(--ease-out-cubic);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .contact-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        /* 悬浮邮件按钮 */
+        .floating-email {
+            position: fixed;
+            bottom: var(--space-8);
+            right: var(--space-8);
+            z-index: 999;
+        }
+        
+        .floating-email a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-xl);
+            transition: all 0.3s var(--ease-spring);
+            animation: pulse 2s infinite;
+        }
+        
+        .floating-email a:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-2xl);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar {
+                top: var(--space-4);
+                left: var(--space-4);
+                right: var(--space-4);
+                transform: none;
+                width: auto;
+            }
+            
+            .nav-container {
+                gap: var(--space-4);
+            }
+            
+            .nav-links {
+                gap: var(--space-3);
+            }
+            
+            .nav-links a {
+                font-size: 0.75rem;
+                padding: var(--space-1) var(--space-2);
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-8);
+                text-align: center;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-metrics {
+                justify-content: center;
+            }
+            
+            .floating-email {
+                bottom: var(--space-4);
+                right: var(--space-4);
+            }
+            
+            .floating-email a {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Jim AI</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="hero">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">AI协作专家<br>数字化产品经理</h1>
+            <p class="hero-subtitle">精通AI工具协作，专注需求分析与实现、业务流程数字化<br>14个AI协作项目经验，致力于用AI工具创新驱动业务价值</p>
+            <a href="#about" class="hero-cta">
+                <span>了解更多</span>
+                <i class="fas fa-arrow-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-grid">
+                <div class="about-image">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="about-content">
+                    <h3>Jim <span class="ai-badge">AI协作专家</span></h3>
+                    <p class="intro-highlight">🤖 专注于通过AI工具创造实际商业价值的数字化产品经理</p>
+                    <p>13个AI协作项目经验 | 3年+企业数字化实战 | 效率提升300%+成功案例 | 67%人力成本优化</p>
+                    <div class="expertise-grid">
+                        <div class="expertise-item">
+                            <i class="fas fa-robot"></i>
+                            <span>AI工具精通</span>
+                        </div>
+                        <div class="expertise-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>需求分析</span>
+                        </div>
+                        <div class="expertise-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>数字化转型</span>
+                        </div>
+                        <div class="expertise-item">
+                            <i class="fas fa-cogs"></i>
+                            <span>产品设计</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心技能 -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">核心技能</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>AI工具精通</h4>
+                    <p>深度掌握Claude Code、ChatGPT等主流AI工具，擅长复杂提示工程和本地大模型部署与优化。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>需求分析与产品</h4>
+                    <p>将模糊业务需求精确转化为AI可执行的技术方案，擅长产品设计和项目管理。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h4>AI协作框架</h4>
+                    <p>设计多角色AI协作体系，擅长提示工程和技术选型指导，建立高效的人机协作工作流。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>数字化转型</h4>
+                    <p>通过AI工具将传统业务流程数字化，具备丰富的流程优化和业务自动化经验。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>数据处理方案</h4>
+                    <p>50万+记录处理经验，擅长设计大规模数据整合方案和数据产品架构。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h4>跨领域业务</h4>
+                    <p>外贸、制造、内容管理等多领域的AI化改造经验，擅长跨领域整合和创新实践。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目展示 -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">项目展示</h2>
+            <div class="projects-grid">
+                <div class="project-card featured-project">
+                    <div class="project-image ai-project">
+                        <i class="fas fa-file-export"></i>
+                        <div class="ai-indicator">🤖 AI协作</div>
+                    </div>
+                    <div class="project-content">
+                        <h4>orderListForSale 订单列表转换工具</h4>
+                        <p class="project-role">💼 产品经理 & AI协作专家</p>
+                        <p>订单列表转换为商业发票、装箱单、报关单等文档的专业工具。通过AI协作实现复杂的贸易文档格式化和数据映射逻辑。</p>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="metric-value">2025.7</span>
+                                <span class="metric-label">最新更新</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">私有</span>
+                                <span class="metric-label">商业项目</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">贸易</span>
+                                <span class="metric-label">业务领域</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag primary">需求分析</span>
+                            <span class="tag primary">AI协作</span>
+                            <span class="tag">贸易文档</span>
+                            <span class="tag">业务自动化</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image ai-project">
+                        <i class="fas fa-envelope"></i>
+                        <div class="ai-indicator">📧 智能处理</div>
+                    </div>
+                    <div class="project-content">
+                        <h4>emailAutoProcess 邮件自动化</h4>
+                        <p class="project-role">💼 产品经理 & AI协作专家</p>
+                        <p>智能客户邮件处理系统，集成WPS表格操作，实现邮件内容解析、分类和自动回复，大幅提升客服效率。</p>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="metric-value">2025.8</span>
+                                <span class="metric-label">最新更新</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">WPS</span>
+                                <span class="metric-label">集成方案</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag primary">AI协作</span>
+                            <span class="tag">邮件处理</span>
+                            <span class="tag">自动化</span>
+                            <span class="tag">WPS集成</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image ai-project">
+                        <i class="fas fa-server"></i>
+                        <div class="ai-indicator">🖼️ 图像服务</div>
+                    </div>
+                    <div class="project-content">
+                        <h4>tmtImageServer 图像服务器</h4>
+                        <p class="project-role">💼 产品经理 & 架构设计师</p>
+                        <p>高性能图像服务器架构，支持企业级图像处理、存储和分发。通过AI协作设计可扩展的微服务架构和API接口。</p>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="metric-value">2025.7</span>
+                                <span class="metric-label">最新更新</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">企业级</span>
+                                <span class="metric-label">服务架构</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag primary">架构设计</span>
+                            <span class="tag primary">AI协作</span>
+                            <span class="tag">图像处理</span>
+                            <span class="tag">微服务</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image ai-project">
+                        <i class="fas fa-images"></i>
+                        <div class="ai-indicator">🔍 智能分类</div>
+                    </div>
+                    <div class="project-content">
+                        <h4>classify_images 图像分类系统</h4>
+                        <p class="project-role">💼 产品经理 & AI协作专家</p>
+                        <p>智能图像分类和处理系统，通过AI协作实现自动化图片识别、分类和标注，大幅提升图像处理效率。</p>
+                        <div class="project-tags">
+                            <span class="tag primary">图像识别</span>
+                            <span class="tag primary">AI协作</span>
+                            <span class="tag">自动分类</span>
+                            <span class="tag">机器学习</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image ai-project">
+                        <i class="fas fa-volume-up"></i>
+                        <div class="ai-indicator">🎵 TTS技术</div>
+                    </div>
+                    <div class="project-content">
+                        <h4>book-index-tts 文本转语音</h4>
+                        <p class="project-role">💼 产品经理 & 开源贡献者</p>
+                        <p>开源文本转语音项目，实现书籍索引的智能语音播报。展现在开源社区的技术贡献和多模态AI应用能力。</p>
+                        <div class="project-tags">
+                            <span class="tag primary">开源项目</span>
+                            <span class="tag primary">TTS技术</span>
+                            <span class="tag">语音合成</span>
+                            <span class="tag">社区贡献</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image ai-project">
+                        <i class="fas fa-file-excel"></i>
+                        <div class="ai-indicator">📊 WPS集成</div>
+                    </div>
+                    <div class="project-content">
+                        <h4>tmtPartWps WPS自动化工具</h4>
+                        <p class="project-role">💼 产品经理 & 自动化专家</p>
+                        <p>WPS办公软件自动化集成工具，通过AI协作实现表格数据处理、文档生成和办公流程自动化，提升办公效率。</p>
+                        <div class="project-tags">
+                            <span class="tag primary">WPS集成</span>
+                            <span class="tag primary">AI协作</span>
+                            <span class="tag">办公自动化</span>
+                            <span class="tag">数据处理</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="contact-content">
+                <h3>期待与您的合作</h3>
+                <p>如果您正在寻找AI协作专家、数字化产品经理或AI解决方案架构师，欢迎与我联系探讨合作机会。我专注于通过AI工具创新驱动业务价值最大化。</p>
+                <a href="mailto:cxxvcheng@outlook.com" class="contact-button">
+                    <i class="fas fa-envelope"></i>
+                    <span>发送邮件</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 悬浮邮件按钮 -->
+    <div class="floating-email">
+        <a href="mailto:cxxvcheng@outlook.com" title="发送邮件">
+            <i class="fas fa-envelope"></i>
+        </a>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        let lastScrollY = window.scrollY;
+        const navbar = document.querySelector('.navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                if (currentScrollY > lastScrollY) {
+                    // 向下滚动时隐藏导航栏
+                    navbar.classList.add('hidden');
+                } else {
+                    // 向上滚动时显示导航栏
+                    navbar.classList.remove('hidden');
+                }
+            } else {
+                // 在顶部时始终显示导航栏
+                navbar.style.background = 'rgba(255, 255, 255, 0.8)';
+                navbar.classList.remove('hidden');
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+
+        // 技能卡片和项目卡片动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有卡片
+        document.querySelectorAll('.skill-card, .project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(card);
+        });
+
+        // AI主题鼠标跟随效果（仅在桌面端）
+        if (window.innerWidth > 768) {
+            const cursor = document.createElement('div');
+            cursor.style.cssText = `
+                position: fixed;
+                width: 20px;
+                height: 20px;
+                background: rgba(16, 185, 129, 0.3);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 999;
+                transition: transform 0.1s ease;
+                mix-blend-mode: normal;
+            `;
+            document.body.appendChild(cursor);
+
+            document.addEventListener('mousemove', (e) => {
+                // 检查鼠标是否在导航栏区域
+                const navbar = document.querySelector('.navbar');
+                const navbarRect = navbar.getBoundingClientRect();
+                const isOverNavbar = e.clientX >= navbarRect.left && 
+                                   e.clientX <= navbarRect.right && 
+                                   e.clientY >= navbarRect.top && 
+                                   e.clientY <= navbarRect.bottom;
+                
+                if (isOverNavbar) {
+                    cursor.style.opacity = '0';
+                } else {
+                    cursor.style.opacity = '1';
+                    cursor.style.left = e.clientX - 10 + 'px';
+                    cursor.style.top = e.clientY - 10 + 'px';
+                }
+            });
+
+            // 悬停效果（排除导航栏）
+            document.querySelectorAll('a:not(.navbar a), button, .skill-card, .project-card, .expertise-item').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(2)';
+                    cursor.style.background = 'rgba(139, 92, 246, 0.4)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.background = 'rgba(16, 185, 129, 0.3)';
+                });
+            });
+        }
+
+        // 性能优化：延迟加载非关键动画
+        setTimeout(() => {
+            document.querySelectorAll('.expertise-item').forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+                item.classList.add('animate-in');
+            });
+        }, 500);
+    </script>
+</body>
+</html>
