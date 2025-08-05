@@ -240,11 +240,14 @@ class GitHubScheduler:
     def _init_monitor(self):
         """初始化GitHub监控器"""
         github_config = self.config.get('github', {})
-        token = github_config.get('token')
-        username = github_config.get('username')
+        
+        # 优先从环境变量获取，然后从配置文件获取
+        token = os.getenv('GITHUB_TOKEN') or github_config.get('token')
+        username = os.getenv('GITHUB_USERNAME') or github_config.get('username')
         
         if not token:
             logger.error("GitHub token未配置")
+            logger.info("请设置环境变量 GITHUB_TOKEN 或在config.json中配置")
             return
         
         self.monitor = GitHubMonitor(token, username)
@@ -370,8 +373,14 @@ class GitHubScheduler:
         
         # 每周报告
         weekly_time = schedule_config.get('weekly_report', 'MON:10:00')
-        day, time = weekly_time.split(':')
-        getattr(schedule.every(), day.lower()).at(f"{time}:00").do(
+        day, time_part = weekly_time.split(':', 1)
+        # 映射星期几缩写到完整名称
+        day_mapping = {
+            'MON': 'monday', 'TUE': 'tuesday', 'WED': 'wednesday',
+            'THU': 'thursday', 'FRI': 'friday', 'SAT': 'saturday', 'SUN': 'sunday'
+        }
+        full_day = day_mapping.get(day.upper(), 'monday')
+        getattr(schedule.every(), full_day).at(time_part).do(
             lambda: self.run_analysis(force_notification=True)
         )
         logger.info(f"已设置每周报告时间: {weekly_time}")
@@ -408,6 +417,16 @@ class GitHubScheduler:
 def main():
     """主函数"""
     import argparse
+    
+    # 加载.env文件
+    env_file = Path('.env')
+    if env_file.exists():
+        with open(env_file) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    os.environ[key.strip()] = value.strip()
     
     parser = argparse.ArgumentParser(description='GitHub仓库监控调度器')
     parser.add_argument('--config', default='config.json', help='配置文件路径')

@@ -8,6 +8,7 @@ Purpose: 自动化监控GitHub仓库变化，生成简历更新建议
 import os
 import json
 import requests
+import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 import logging
@@ -182,16 +183,36 @@ class GitHubMonitor:
     def get_readme_content(self, repo_full_name: str) -> str:
         """获取README内容"""
         url = f"{self.base_url}/repos/{repo_full_name}/readme"
-        response = requests.get(url, headers=self.headers)
         
-        if response.status_code == 200:
-            content = response.json()
-            # GitHub API返回base64编码的内容
-            import base64
+        # 添加重试机制
+        max_retries = 3
+        for attempt in range(max_retries):
             try:
-                return base64.b64decode(content['content']).decode('utf-8')
-            except:
-                return ""
+                response = requests.get(url, headers=self.headers, timeout=10)
+                
+                if response.status_code == 200:
+                    content = response.json()
+                    # GitHub API返回base64编码的内容
+                    import base64
+                    try:
+                        return base64.b64decode(content['content']).decode('utf-8')
+                    except:
+                        return ""
+                elif response.status_code == 404:
+                    # 仓库没有README
+                    return ""
+                else:
+                    logger.warning(f"获取README失败 {repo_full_name}: {response.status_code}")
+                    return ""
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    logger.warning(f"获取README失败 {repo_full_name} (尝试 {attempt + 1}/{max_retries}): {e}")
+                    time.sleep(1 * (attempt + 1))  # 递增延迟
+                    continue
+                else:
+                    logger.error(f"获取README最终失败 {repo_full_name}: {e}")
+                    return ""
+        
         return ""
 
     def analyze_project(self, repo: Repository) -> ProjectAnalysis:
@@ -396,9 +417,24 @@ class GitHubMonitor:
         updated_projects = []
         
         for analysis in analyses:
-            updated_time = datetime.fromisoformat(analysis.repo.updated_at.replace('Z', '+00:00'))
-            if updated_time > cutoff_date:
-                recent_projects.append(analysis)
+            try:
+                # 处理GitHub API返回的时间格式
+                updated_at = analysis.repo.updated_at
+                if updated_at.endswith('Z'):
+                    updated_at = updated_at.replace('Z', '+00:00')
+                updated_time = datetime.fromisoformat(updated_at)
+                
+                # 移除时区信息进行比较（都转为naive datetime）
+                if updated_time.tzinfo is not None:
+                    updated_time = updated_time.replace(tzinfo=None)
+                if cutoff_date.tzinfo is not None:
+                    cutoff_date = cutoff_date.replace(tzinfo=None)
+                
+                if updated_time > cutoff_date:
+                    recent_projects.append(analysis)
+            except Exception as e:
+                logger.warning(f"解析时间失败 {analysis.repo.name}: {e}")
+                continue
             
             # 检查是否有显著更新
             if self._is_significant_update(analysis):
