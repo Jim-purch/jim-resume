@@ -307,6 +307,53 @@
             background: rgba(16, 185, 129, 0.3);
         }
         
+        /* 社交链接样式 */
+        .social-links {
+            display: flex;
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+            justify-content: center;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s var(--ease-out-cubic);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .social-link.github:hover {
+            background: rgba(36, 41, 47, 0.9);
+            border-color: rgba(36, 41, 47, 0.5);
+            color: white;
+        }
+        
+        .social-link.email:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--primary-solid);
+        }
+        
+        .social-link i {
+            font-size: 1.1rem;
+        }
+        
         /* 浮动几何图形 - 受Jeff Koons启发 */
         .floating-shapes {
             position: absolute;
@@ -700,6 +747,25 @@
             box-shadow: var(--shadow-xl);
         }
         
+        /* 联系按钮组 */
+        .contact-buttons {
+            display: flex;
+            gap: var(--space-4);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .contact-button.github-btn {
+            background: var(--gray-900);
+            color: white;
+        }
+        
+        .contact-button.github-btn:hover {
+            background: var(--gray-800);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
         /* 悬浮邮件按钮 */
         .floating-email {
             position: fixed;
@@ -790,6 +856,28 @@
                 height: 50px;
                 font-size: 1.25rem;
             }
+            
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-3);
+            }
+            
+            .social-link {
+                width: 200px;
+                justify-content: center;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-3);
+            }
+            
+            .contact-button {
+                width: 200px;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -817,7 +905,20 @@
         </div>
         <div class="hero-content">
             <h1 class="hero-title">AI协作专家<br>数字化产品经理</h1>
-            <p class="hero-subtitle">精通AI工具协作，专注需求分析与实现、业务流程数字化<br>14个AI协作项目经验，致力于用AI工具创新驱动业务价值</p>
+            <p class="hero-subtitle">精通CMS系统架构与AI工具协作，专注需求分析与实现、业务流程数字化<br>14个专业项目经验，致力于用技术创新驱动业务价值</p>
+            
+            <!-- 社交链接 -->
+            <div class="social-links">
+                <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="social-link github" title="GitHub">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="mailto:cxxvcheng@gmail.com" class="social-link email" title="发送邮件">
+                    <i class="fas fa-envelope"></i>
+                    <span>邮箱联系</span>
+                </a>
+            </div>
+            
             <a href="#about" class="hero-cta">
                 <span>了解更多</span>
                 <i class="fas fa-arrow-down"></i>
@@ -836,7 +937,7 @@
                 <div class="about-content">
                     <h3>Jim <span class="ai-badge">AI协作专家</span></h3>
                     <p class="intro-highlight">🤖 专注于通过AI工具创造实际商业价值的数字化产品经理</p>
-                    <p>13个AI协作项目经验 | 3年+企业数字化实战 | 效率提升300%+成功案例 | 67%人力成本优化</p>
+                    <p>14个专业项目经验 | 3年+企业数字化实战 | 企业级CMS系统上线 | 效率提升300%+成功案例 | 67%人力成本优化</p>
                     <div class="expertise-grid">
                         <div class="expertise-item">
                             <i class="fas fa-robot"></i>
@@ -917,6 +1018,38 @@
             <h2 class="section-title">项目展示</h2>
             <div class="projects-grid">
                 <div class="project-card featured-project">
+                    <div class="project-image ai-project">
+                        <i class="fas fa-table"></i>
+                        <div class="ai-indicator">🏢 企业级CMS</div>
+                    </div>
+                    <div class="project-content">
+                        <h4>多维表格CMS内容管理系统</h4>
+                        <p class="project-role">💼 系统架构师 & 产品经理</p>
+                        <p>企业级多维表格CMS内容管理系统，支持20人同时使用的多角色、多权限协作平台。成功在企业内部署上线，显著提升内容管理效率。</p>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="metric-value">2025.12</span>
+                                <span class="metric-label">最新上线</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">20人</span>
+                                <span class="metric-label">并发支持</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">企业级</span>
+                                <span class="metric-label">生产环境</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag primary">系统架构</span>
+                            <span class="tag primary">CMS系统</span>
+                            <span class="tag">多维表格</span>
+                            <span class="tag">权限管理</span>
+                            <span class="tag">协作平台</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
                     <div class="project-image ai-project">
                         <i class="fas fa-file-export"></i>
                         <div class="ai-indicator">🤖 AI协作</div>
@@ -1062,17 +1195,23 @@
             <div class="contact-content">
                 <h3>期待与您的合作</h3>
                 <p>如果您正在寻找AI协作专家、数字化产品经理或AI解决方案架构师，欢迎与我联系探讨合作机会。我专注于通过AI工具创新驱动业务价值最大化。</p>
-                <a href="mailto:cxxvcheng@outlook.com" class="contact-button">
-                    <i class="fas fa-envelope"></i>
-                    <span>发送邮件</span>
-                </a>
+                <div class="contact-buttons">
+                    <a href="mailto:cxxvcheng@gmail.com" class="contact-button">
+                        <i class="fas fa-envelope"></i>
+                        <span>发送邮件</span>
+                    </a>
+                    <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="contact-button github-btn">
+                        <i class="fab fa-github"></i>
+                        <span>查看项目</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- 悬浮邮件按钮 -->
     <div class="floating-email">
-        <a href="mailto:cxxvcheng@outlook.com" title="发送邮件">
+        <a href="mailto:cxxvcheng@gmail.com" title="发送邮件">
             <i class="fas fa-envelope"></i>
         </a>
     </div>
