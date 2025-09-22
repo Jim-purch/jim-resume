@@ -1,0 +1,37 @@
+# 开发文件
+README_monitor.md
+.env.example
+
+# Docker相关
+Dockerfile
+docker-compose.yml
+start.sh
+
+# Python缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 测试文件
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+tmp/
+temp/
