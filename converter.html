@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF 转换为 PNG/SVG | Jim 工具</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg2: #111827;
+      --panel: #0b1220;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #10b981;
+      --accent2: #06b6d4;
+      --purple: #8b5cf6;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: radial-gradient(1200px 800px at 10% 10%, rgba(16,185,129,0.08), transparent), radial-gradient(1000px 700px at 90% 20%, rgba(139,92,246,0.08), transparent), linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%); color: var(--text); }
+    header { position: sticky; top:0; z-index:10; backdrop-filter: saturate(1.2) blur(14px); background: rgba(10,16,28,0.6); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav { max-width: 1100px; margin: 0 auto; display:flex; align-items:center; justify-content:space-between; padding: 14px 20px; }
+    .brand { font-weight: 800; letter-spacing: 0.2px; background: linear-gradient(135deg, var(--accent), var(--accent2), var(--purple)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color: transparent; }
+    .nav a { color: var(--text); text-decoration:none; font-weight:600; font-size: 14px; opacity:0.85; }
+    .nav a:hover { opacity:1; }
+    .container { max-width: 1100px; margin: 24px auto; padding: 0 20px; }
+    .hero { display:grid; grid-template-columns: 360px 1fr; gap: 20px; align-items:start; }
+    .panel { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+    .left { padding: 16px; min-width: 0; }
+    .right { padding: 16px; position: relative; min-width: 0; overflow: hidden; }
+    .panel { height: calc(85vh + 32px); display:flex; flex-direction: column; }
+    .panel.left { overflow:auto; }
+    .title { font-size: 28px; font-weight: 800; line-height:1.2; margin-bottom: 10px; }
+    .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
+    .row { display:flex; gap:10px; align-items:center; margin-bottom: 12px; }
+    .row label { font-size: 13px; color: var(--muted); min-width: 78px; }
+    .input, select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06); color: var(--text); outline:none; }
+    .input:focus, select:focus { border-color: rgba(16,185,129,0.6); box-shadow: 0 0 0 3px rgba(16,185,129,0.15); }
+    .actions { display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top: 10px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(6,182,212,0.12)); color: var(--text); font-weight: 700; cursor:pointer; white-space: nowrap; }
+    .btn.secondary { background: rgba(255,255,255,0.06); }
+    .btn:hover { border-color: rgba(255,255,255,0.28); }
+    .status { font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .canvas-wrap { position: relative; height: 85vh; width: 100%; overflow: auto; }
+    canvas { display:block; max-width:none; border-radius: 12px; background: #0a0f1c; border: 1px solid rgba(255,255,255,0.08); }
+    .right .panel { height: calc(85vh + 32px); display: flex; flex-direction: column; }
+    .right .canvas-wrap { flex: 1 1 auto; }
+    .crop { position: absolute; border: 2px dashed #10b981; border-radius: 6px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(16,185,129,0.08); }
+    .tools { display:flex; gap:8px; align-items:center; margin-bottom: 10px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tools .btn { padding: 8px 10px; font-weight:600; }
+    .note { font-size: 12px; color: var(--muted); }
+    .badge { display:inline-flex; align-items:center; gap:6px; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); font-size:12px; }
+    .zoom { display:flex; gap:8px; align-items:center; }
+    .zoom input[type=range] { width: 160px; }
+    .canvas-wrap.panning { cursor: grabbing; }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+    .chip { display:inline-flex; align-items:center; justify-content:center; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); color: var(--text); font-size:12px; cursor:pointer; user-select:none; }
+    .chip.selected { border-color: rgba(16,185,129,0.6); background: rgba(16,185,129,0.14); }
+    .tips { margin-top: 12px; padding: 10px; }
+    .tips h3 { margin:0 0 6px; font-size:14px; font-weight:700; }
+    .tips-list { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+    .tips-item { display:flex; gap:8px; align-items:center; padding:6px 8px; border-radius:999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); }
+    .tips-item i { color: var(--accent); }
+    @media (max-width: 640px) { .tips-list { gap:6px; } }
+    /* PDF 视窗悬浮控制栏 */
+    .viewer-controls { position: absolute; top: 8px; left: 8px; right: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; z-index: 5; }
+    .viewer-controls .group { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 999px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.28); backdrop-filter: blur(10px) saturate(1.2); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+    .viewer-controls .group .btn { padding: 6px 10px; }
+    .viewer-controls .group .badge { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.34); }
+    /* 移除滑动条后，该样式可留空 */
+    /* 页码跳转输入样式 */
+    .page-jump input {
+      width: 64px;
+      padding: 4px 6px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.12);
+      color: var(--text);
+      text-align: center;
+      font-weight: 700;
+      outline: none;
+    }
+    .page-jump { gap: 8px; }
+    @media (max-width: 640px) { .viewer-controls { flex-direction: column; align-items: flex-start; } }
+    @media (max-width: 960px) { .hero { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .actions { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand">Jim Tools</div>
+      <a href="/">返回简历</a>
+    </div>
+  </header>
+  <div class="container">
+    <div class="hero">
+      <div class="panel left">
+        <div class="title">PDF 转换</div>
+        <div class="subtitle">上传 PDF，预览页面并裁剪导出为 PNG、JPG、WEBP 或嵌入式 SVG</div>
+        <div class="row">
+          <label>选择文件</label>
+          <input class="input" type="file" id="fileInput" accept="application/pdf" />
+        </div>
+        <div class="row">
+          <label>DPI</label>
+          <input class="input" id="dpiInput" type="number" min="72" max="600" step="12" value="300" />
+        </div>
+        <div class="row">
+          <label>选框比例</label>
+          <div class="chips" id="aspectChips">
+            <div class="chip" data-aspect="free">自由</div>
+            <div class="chip" data-aspect="1:1">1:1</div>
+            <div class="chip" data-aspect="4:3">4:3</div>
+            <div class="chip" data-aspect="3:2">3:2</div>
+            <div class="chip" data-aspect="16:9">16:9</div>
+            <div class="chip" data-aspect="9:16">9:16</div>
+          </div>
+        </div>
+        <div class="row">
+          <label>自定义比例</label>
+          <input class="input" id="customAspect" placeholder="W:H 或 单值，如 3:2 或 1.5" />
+        </div>
+        <div class="row">
+          <label>批量尺寸</label>
+          <input class="input" id="sizesInput" placeholder="逗号分隔，较长边，如 256,512,1024" />
+        </div>
+        <div class="row">
+          <label>常用尺寸</label>
+          <div class="chips" id="presetSizes">
+            <div class="chip" data-size="48">48</div>
+            <div class="chip" data-size="72">72</div>
+            <div class="chip" data-size="96">96</div>
+            <div class="chip" data-size="192">192</div>
+            <div class="chip" data-size="64">64</div>
+            <div class="chip" data-size="128">128</div>
+            <div class="chip" data-size="256">256</div>
+            <div class="chip" data-size="512">512</div>
+            <div class="chip" data-size="1024">1024</div>
+            <div class="chip" data-size="2048">2048</div>
+          </div>
+        </div>
+        <div class="row">
+          <label>导出格式</label>
+          <div class="chips" id="formatChips">
+            <div class="chip" data-format="png">PNG</div>
+            <div class="chip" data-format="webp">WEBP</div>
+            <div class="chip" data-format="jpg">JPG</div>
+            <div class="chip" data-format="svg">SVG</div>
+          </div>
+        </div>
+        
+        <div class="actions">
+          <button class="btn" id="batchExport"><i class="fa-solid fa-box-archive"></i>批量导出 ZIP</button>
+          <button class="btn secondary" id="clearSelection"><i class="fa-solid fa-crop"></i>清除选区</button>
+        </div>
+        <div class="status" id="status">就绪</div>
+        <div class="note">说明：SVG为嵌入栅格图片的SVG，不含矢量路径；浏览器不支持导出ICO。</div>
+      </div>
+      <div class="panel right">
+        <div class="canvas-wrap">
+          <div class="viewer-controls">
+            <div class="group">
+              <button class="btn" id="prevPage"><i class="fa-solid fa-arrow-left"></i>上一页</button>
+              <button class="btn" id="nextPage"><i class="fa-solid fa-arrow-right"></i>下一页</button>
+              <span class="badge page-jump"><i class="fa-solid fa-file-pdf"></i><input type="number" id="pageJump" min="1" step="1" value="1" disabled /> / <span id="pageTotal">0</span></span>
+            </div>
+            
+          </div>
+          <canvas id="pdfCanvas"></canvas>
+          <div id="crop" class="crop" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="tips">
+      <h3>使用提示</h3>
+      <div class="tips-list">
+        <div class="tips-item"><i class="fa-solid fa-magnifying-glass"></i><div>滚轮缩放：在视窗内滚动，围绕光标缩放</div></div>
+        <div class="tips-item"><i class="fa-solid fa-hand"></i><div>拖拽平移：右/中键拖动，或空格+左键</div></div>
+        <div class="tips-item"><i class="fa-solid fa-crop"></i><div>选框比例：点击比例芯片或自定义，导出保持比例</div></div>
+        <div class="tips-item"><i class="fa-solid fa-layer-group"></i><div>批量尺寸与格式：勾选尺寸与格式，批量导出 ZIP</div></div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    const workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
+    const fileInput = document.getElementById('fileInput');
+    const dpiInput = document.getElementById('dpiInput');
+    const aspectChips = document.getElementById('aspectChips');
+    const customAspect = document.getElementById('customAspect');
+    const sizesInput = document.getElementById('sizesInput');
+    const pdfCanvas = document.getElementById('pdfCanvas');
+    const ctx = pdfCanvas.getContext('2d');
+    const cropEl = document.getElementById('crop');
+    const statusEl = document.getElementById('status');
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    const pageJump = document.getElementById('pageJump');
+    const pageTotal = document.getElementById('pageTotal');
+    const formatChips = document.getElementById('formatChips');
+    const batchExportBtn = document.getElementById('batchExport');
+    const clearSelectionBtn = document.getElementById('clearSelection');
+    const presetContainer = document.getElementById('presetSizes');
+
+    let pdfDoc = null;
+    let pageNum = 1;
+    let viewportScale = 1;
+    let viewZoom = 1; // 视图缩放（相对 DPI 的额外倍数）
+    let pageBaseWidth = null; // 当前页在 scale=1 时的宽度
+    const canvasWrap = document.querySelector('.canvas-wrap');
+    let selection = null;
+    let isDragging = false;
+    let dragStart = null;
+    let isPanning = false;
+    let panStart = null;
+    let isSpaceDown = false;
+    // 键盘状态：按下空格启用拖拽平移（左键）
+    window.addEventListener('keydown', (e)=>{ if(e.code === 'Space') isSpaceDown = true; });
+    window.addEventListener('keyup', (e)=>{ if(e.code === 'Space') isSpaceDown = false; });
+    // 禁用右键菜单用于右键拖拽平移
+    pdfCanvas.addEventListener('contextmenu', (e)=> e.preventDefault());
+
+    function setStatus(t){ statusEl.textContent = t; }
+    function getAspectRatio(){
+      const s = (customAspect.value||'').trim();
+      if(s){
+        if(s.includes(':')){ const [w,h] = s.split(':'); const rw = parseFloat(w); const rh = parseFloat(h); if(rw>0&&rh>0) return rw/rh; }
+        const r = parseFloat(s); if(r>0) return r;
+      }
+      const chip = aspectChips ? aspectChips.querySelector('.chip.selected') : null;
+      if(!chip) return null;
+      const val = chip.dataset.aspect;
+      if(val === 'free') return null;
+      if(val.includes(':')){ const [w,h] = val.split(':'); const rw = parseFloat(w); const rh = parseFloat(h); if(rw>0&&rh>0) return rw/rh; }
+      const r = parseFloat(val); if(r>0) return r;
+      return null;
+    }
+    if(aspectChips){
+      // 默认选中“自由”
+      const def = aspectChips.querySelector('[data-aspect="free"]');
+      if(def) def.classList.add('selected');
+      aspectChips.addEventListener('click', (e)=>{
+        const chip = e.target.closest('.chip');
+        if(!chip) return;
+        Array.from(aspectChips.querySelectorAll('.chip')).forEach(el=> el.classList.remove('selected'));
+        chip.classList.add('selected');
+      });
+    }
+    async function renderPage(){
+      if(!pdfDoc) return;
+      const dpi = Math.max(72, Math.min(600, parseInt(dpiInput.value||'300',10)));
+      const baseScale = dpi/72;
+      const page = await pdfDoc.getPage(pageNum);
+      // 记录当前页在 scale=1 的基础宽度，用于适配宽度计算
+      const v1 = page.getViewport({ scale: 1 });
+      pageBaseWidth = v1.width;
+      const scale = baseScale * viewZoom;
+      const viewport = page.getViewport({ scale });
+      viewportScale = scale;
+      pdfCanvas.width = Math.floor(viewport.width);
+      pdfCanvas.height = Math.floor(viewport.height);
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      // 同步当前页码到输入框
+      if(pageJump) pageJump.value = String(pageNum);
+      // 已移除缩放百分比和滑动条
+      selection = null;
+      cropEl.style.display = 'none';
+      setStatus('页面渲染完成');
+    }
+    fileInput.addEventListener('change', async (e)=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      setStatus('加载PDF…');
+      const buf = await file.arrayBuffer();
+      pdfDoc = await pdfjsLib.getDocument({ data: buf }).promise;
+      pageNum = 1;
+      // 设置总页数与页码输入范围
+      if(pageTotal) pageTotal.textContent = String(pdfDoc.numPages);
+      if(pageJump){ pageJump.max = String(pdfDoc.numPages); pageJump.value = '1'; pageJump.disabled = false; }
+      await renderPage();
+    });
+    dpiInput.addEventListener('change', ()=>{ renderPage(); });
+    prevBtn.addEventListener('click', async ()=>{ if(!pdfDoc) return; if(pageNum>1){ pageNum--; await renderPage(); }});
+    nextBtn.addEventListener('click', async ()=>{ if(!pdfDoc) return; if(pageNum<pdfDoc.numPages){ pageNum++; await renderPage(); }});
+    // 页码跳转：支持 change（失焦）与 Enter 键跳转
+    if(pageJump){
+      pageJump.addEventListener('change', async (e)=>{
+        if(!pdfDoc) return;
+        let n = parseInt(e.target.value, 10);
+        if(!Number.isFinite(n)) { e.target.value = String(pageNum); return; }
+        n = Math.max(1, Math.min(pdfDoc.numPages, n));
+        if(n !== pageNum){ pageNum = n; await renderPage(); }
+        else { e.target.value = String(pageNum); }
+      });
+      pageJump.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter') pageJump.dispatchEvent(new Event('change'));
+      });
+    }
+    function clampZoom(z){ return Math.max(0.25, Math.min(4.0, z)); }
+    async function setZoom(z){ viewZoom = clampZoom(z); await renderPage(); }
+    // 已移除缩放滑动条
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+    async function zoomAtFactor(factor, clientX, clientY){
+      if(!pdfDoc) return;
+      const newZoom = clampZoom(viewZoom * factor);
+      if(Math.abs(newZoom - viewZoom) < 0.0001) return;
+      const wrapRect = canvasWrap.getBoundingClientRect();
+      const preScrollLeft = canvasWrap.scrollLeft;
+      const preScrollTop = canvasWrap.scrollTop;
+      const mx = clientX - wrapRect.left + preScrollLeft;
+      const my = clientY - wrapRect.top + preScrollTop;
+      const relX = mx / pdfCanvas.width;
+      const relY = my / pdfCanvas.height;
+      viewZoom = newZoom;
+      await renderPage();
+      const nx = relX * pdfCanvas.width;
+      const ny = relY * pdfCanvas.height;
+      const targetLeft = nx - (clientX - wrapRect.left);
+      const targetTop = ny - (clientY - wrapRect.top);
+      const maxLeft = Math.max(0, pdfCanvas.width - canvasWrap.clientWidth);
+      const maxTop = Math.max(0, pdfCanvas.height - canvasWrap.clientHeight);
+      canvasWrap.scrollLeft = clamp(targetLeft, 0, maxLeft);
+      canvasWrap.scrollTop = clamp(targetTop, 0, maxTop);
+    }
+    // 滚轮缩放（围绕光标）
+    canvasWrap.addEventListener('wheel', (e)=>{ if(!pdfDoc) return; e.preventDefault(); const factor = e.deltaY < 0 ? 1.1 : 0.9; zoomAtFactor(factor, e.clientX, e.clientY); }, { passive: false });
+    function canvasToImageDataRect(sel){
+      const x = Math.floor(Math.min(sel.x0, sel.x1));
+      const y = Math.floor(Math.min(sel.y0, sel.y1));
+      const w = Math.floor(Math.abs(sel.x1 - sel.x0));
+      const h = Math.floor(Math.abs(sel.y1 - sel.y0));
+      return { x, y, w, h };
+    }
+    function parseFormats(){
+      const selected = formatChips ? Array.from(formatChips.querySelectorAll('.chip.selected')).map(el=>el.dataset.format) : [];
+      return selected;
+    }
+    function parseSizes(){
+      const selected = presetContainer ? Array.from(presetContainer.querySelectorAll('.chip.selected')).map(el=>parseInt(el.dataset.size,10)) : [];
+      const txt = (sizesInput.value||'').trim();
+      const manual = txt ? txt.split(',').map(s=>parseInt(s.trim(),10)).filter(n=>Number.isFinite(n)&&n>0) : [];
+      const all = [...selected, ...manual];
+      return Array.from(new Set(all)).sort((a,b)=>a-b);
+    }
+    if(presetContainer){
+      presetContainer.addEventListener('click', (e)=>{
+        const chip = e.target.closest('.chip');
+        if(!chip) return;
+        chip.classList.toggle('selected');
+      });
+      // 默认选中常用的 512 与 1024
+      presetContainer.querySelector('[data-size="512"]').classList.add('selected');
+      presetContainer.querySelector('[data-size="1024"]').classList.add('selected');
+    }
+    async function batchExportZip(){
+      if(!selection){ setStatus('请先拖拽选择裁剪区域'); return; }
+      const sizes = parseSizes();
+      if(!sizes.length){ setStatus('请填写或选择批量尺寸，如 256,512,1024'); return; }
+      const formats = parseFormats();
+      if(!formats.length){ setStatus('请选择导出格式（PNG/WEBP/JPG/SVG）'); return; }
+      const { x, y, w, h } = canvasToImageDataRect(selection);
+      const baseCanvas = document.createElement('canvas');
+      baseCanvas.width = w; baseCanvas.height = h;
+      baseCanvas.getContext('2d').drawImage(pdfCanvas, x, y, w, h, 0, 0, w, h);
+      const zip = new JSZip();
+      for(const size of sizes){
+        const scale = size / Math.max(w, h);
+        const tw = Math.round(w * scale);
+        const th = Math.round(h * scale);
+        const c = document.createElement('canvas');
+        c.width = tw; c.height = th;
+        c.getContext('2d').drawImage(baseCanvas, 0, 0, w, h, 0, 0, tw, th);
+        if(formats.includes('png')){
+          const png = c.toDataURL('image/png');
+          zip.file(`png/page-${pageNum}-${tw}x${th}.png`, png.split(',')[1], {base64:true});
+        }
+        if(formats.includes('webp')){
+          const webp = c.toDataURL('image/webp', 0.92);
+          zip.file(`webp/page-${pageNum}-${tw}x${th}.webp`, webp.split(',')[1], {base64:true});
+        }
+        if(formats.includes('jpg')){
+          const jpg = c.toDataURL('image/jpeg', 0.92);
+          zip.file(`jpg/page-${pageNum}-${tw}x${th}.jpg`, jpg.split(',')[1], {base64:true});
+        }
+        if(formats.includes('svg')){
+          const pngForSvg = c.toDataURL('image/png');
+          const svg = `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="${tw}" height="${th}" viewBox="0 0 ${tw} ${th}"><image href="${pngForSvg}" x="0" y="0" width="${tw}" height="${th}"/></svg>`;
+          zip.file(`svg/page-${pageNum}-${tw}x${th}.svg`, svg);
+        }
+      }
+      const blob = await zip.generateAsync({ type: 'blob' });
+      saveAs(blob, `page-${pageNum}-batch.zip`);
+      setStatus('批量导出完成');
+    }
+    pdfCanvas.addEventListener('mousedown', (e)=>{
+      if(!pdfDoc) return;
+      if(e.button === 2 || e.button === 1 || isSpaceDown){ // 右键/中键或空格键：平移
+        isPanning = true;
+        canvasWrap.classList.add('panning');
+        panStart = { x: e.clientX, y: e.clientY, sl: canvasWrap.scrollLeft, st: canvasWrap.scrollTop };
+        return;
+      }
+      isDragging = true;
+      const wrapRect = canvasWrap.getBoundingClientRect();
+      const x = e.clientX - wrapRect.left + canvasWrap.scrollLeft;
+      const y = e.clientY - wrapRect.top + canvasWrap.scrollTop;
+      dragStart = { x, y };
+      selection = { x0: x, y0: y, x1: x, y1: y };
+      cropEl.style.display = 'block';
+    });
+    pdfCanvas.addEventListener('mousemove', (e)=>{
+      if(isPanning && panStart){
+        const dx = e.clientX - panStart.x;
+        const dy = e.clientY - panStart.y;
+        const maxLeft = Math.max(0, pdfCanvas.width - canvasWrap.clientWidth);
+        const maxTop = Math.max(0, pdfCanvas.height - canvasWrap.clientHeight);
+        canvasWrap.scrollLeft = clamp(panStart.sl - dx, 0, maxLeft);
+        canvasWrap.scrollTop = clamp(panStart.st - dy, 0, maxTop);
+        e.preventDefault();
+        return;
+      }
+      if(!isDragging || !selection) return;
+      const wrapRect = canvasWrap.getBoundingClientRect();
+      let x = e.clientX - wrapRect.left + canvasWrap.scrollLeft;
+      let y = e.clientY - wrapRect.top + canvasWrap.scrollTop;
+      const r = getAspectRatio();
+      if(r===null){ selection.x1 = x; selection.y1 = y; }
+      else {
+        const dx = x - selection.x0; const dy = y - selection.y0;
+        if(Math.abs(dx) >= Math.abs(dy)){
+          selection.x1 = x; const height = Math.abs(dx) / r; selection.y1 = selection.y0 + (dy>=0? height : -height);
+        } else {
+          selection.y1 = y; const width = Math.abs(dy) * r; selection.x1 = selection.x0 + (dx>=0? width : -width);
+        }
+      }
+      const { x: cx, y: cy, w, h } = canvasToImageDataRect(selection);
+      cropEl.style.left = cx + 'px'; cropEl.style.top = cy + 'px'; cropEl.style.width = w + 'px'; cropEl.style.height = h + 'px';
+    });
+    window.addEventListener('mouseup', ()=>{ isDragging = false; isPanning = false; canvasWrap.classList.remove('panning'); });
+    pdfCanvas.addEventListener('mouseleave', ()=>{ isDragging = false; isPanning = false; canvasWrap.classList.remove('panning'); });
+    if(formatChips){
+      formatChips.addEventListener('click', (e)=>{
+        const chip = e.target.closest('.chip');
+        if(!chip) return;
+        chip.classList.toggle('selected');
+      });
+      // 默认选中 PNG
+      const defF = formatChips.querySelector('[data-format="png"]');
+      if(defF) defF.classList.add('selected');
+    }
+    batchExportBtn.addEventListener('click', ()=> batchExportZip());
+    clearSelectionBtn.addEventListener('click', ()=>{ selection=null; cropEl.style.display='none'; setStatus('已清除选区'); });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</body>
+</html>
