@@ -288,20 +288,58 @@ class GitHubScheduler:
         except Exception as e:
             logger.error(f"分析失败: {e}")
             return None
+
+    def run_deep_analysis(self, force_notification: bool = False) -> Optional[Dict[str, Any]]:
+        """运行深度分析（包含 AI 能力和哲学洞察）"""
+        if not self.monitor:
+            logger.error("GitHub监控器未初始化")
+            return None
+        
+        try:
+            logger.info("开始深度GitHub仓库分析...")
+            
+            # 获取仓库列表（深度模式）
+            include_private = self.config['github'].get('include_private', True)
+            repos = self.monitor.get_user_repos_deep(include_private)
+            
+            # 分析所有项目
+            analyses = []
+            for repo in repos:
+                analysis = self.monitor.analyze_project(repo)
+                analyses.append(analysis)
+            
+            # 生成深度报告
+            report_data = self.monitor.generate_deep_report(analyses, repos)
+            
+            # 保存报告数据
+            self._save_analysis_data(report_data, prefix="deep_report")
+            
+            # 检查是否需要发送通知
+            if self._should_send_notification(report_data) or force_notification:
+                self._send_notifications(report_data)
+            
+            logger.info("深度分析完成")
+            return report_data
+            
+        except Exception as e:
+            logger.error(f"深度分析失败: {e}")
+            import traceback
+            traceback.print_exc()
+            return None
     
-    def _save_analysis_data(self, report_data: Dict[str, Any]):
+    def _save_analysis_data(self, report_data: Dict[str, Any], prefix: str = "report"):
         """保存分析数据"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
         # 保存JSON数据
-        json_file = self.data_dir / f"report_{timestamp}.json"
+        json_file = self.data_dir / f"{prefix}_{timestamp}.json"
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(report_data, f, ensure_ascii=False, indent=2)
         
         # 生成不同格式的报告
         for fmt in self.config.get('report_formats', ['markdown']):
             content = self.report_generator.generate_report(report_data, fmt)
-            report_file = self.data_dir / f"report_{timestamp}.{fmt}"
+            report_file = self.data_dir / f"{prefix}_{timestamp}.{fmt}"
             self.report_generator.save_report(content, str(report_file), fmt)
         
         logger.info(f"报告已保存到: {self.data_dir}")
@@ -431,6 +469,7 @@ def main():
     parser = argparse.ArgumentParser(description='GitHub仓库监控调度器')
     parser.add_argument('--config', default='config.json', help='配置文件路径')
     parser.add_argument('--once', action='store_true', help='只运行一次分析')
+    parser.add_argument('--deep', action='store_true', help='运行深度分析（包含 AI 能力和哲学洞察）')
     parser.add_argument('--no-notification', action='store_true', help='不发送通知')
     
     args = parser.parse_args()
@@ -438,11 +477,23 @@ def main():
     # 创建调度器
     scheduler = GitHubScheduler(args.config)
     
-    if args.once:
+    if args.once or args.deep:
         # 运行一次
-        report = scheduler.run_once(notification=not args.no_notification)
+        if args.deep:
+            print("开始深度分析（包含 AI 能力和哲学洞察）...")
+            report = scheduler.run_deep_analysis(force_notification=not args.no_notification)
+        else:
+            report = scheduler.run_once(notification=not args.no_notification)
+        
         if report:
             print("分析完成，报告已生成")
+            if args.deep and 'deep_analysis' in report:
+                deep = report['deep_analysis']
+                print("\n=== 深度分析摘要 ===")
+                print(f"AI 掌握程度: {deep.get('ai_profile', {}).get('overall_mastery', 'N/A')}")
+                print(f"AI 哲学: {deep.get('ai_profile', {}).get('ai_philosophy', 'N/A')}")
+                print(f"哲学宣言: {deep.get('philosophy', {}).get('philosophy_statement', 'N/A')}")
+                print(f"核心价值观: {', '.join(deep.get('philosophy', {}).get('core_values', []))}")
         else:
             print("分析失败")
     else:

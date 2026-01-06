@@ -9,12 +9,21 @@ import os
 import json
 import requests
 import time
+import base64
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 import logging
 from pathlib import Path
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from collections import defaultdict
+
+# 导入新的分析模块
+try:
+    from ai_capability_analyzer import AICapabilityAnalyzer, AIProfile, ProjectAIAnalysis
+    from philosophical_insights import PhilosophicalInsightGenerator, PersonalPhilosophy, ProjectPhilosophyData
+    DEEP_ANALYSIS_AVAILABLE = True
+except ImportError:
+    DEEP_ANALYSIS_AVAILABLE = False
 
 # 配置日志
 logging.basicConfig(
@@ -47,6 +56,12 @@ class Repository:
     readme_content: str = ""
     license: Optional[str] = None
     homepage: Optional[str] = None
+    # 深度分析数据
+    file_tree: List[str] = field(default_factory=list)
+    key_files: Dict[str, str] = field(default_factory=dict)
+    dependencies: List[str] = field(default_factory=list)
+    commit_messages: List[str] = field(default_factory=list)
+    architecture_hints: List[str] = field(default_factory=list)
 
 @dataclass
 class ProjectAnalysis:
@@ -214,6 +229,248 @@ class GitHubMonitor:
                     return ""
         
         return ""
+
+    def get_repo_tree(self, repo_full_name: str, max_files: int = 100) -> List[str]:
+        """获取仓库文件树结构"""
+        url = f"{self.base_url}/repos/{repo_full_name}/git/trees/HEAD?recursive=1"
+        
+        try:
+            response = requests.get(url, headers=self.headers, timeout=15)
+            if response.status_code == 200:
+                tree_data = response.json()
+                files = []
+                for item in tree_data.get('tree', [])[:max_files]:
+                    if item.get('type') == 'blob':
+                        files.append(item.get('path', ''))
+                return files
+        except Exception as e:
+            logger.debug(f"获取文件树失败 {repo_full_name}: {e}")
+        
+        return []
+
+    def get_file_content(self, repo_full_name: str, file_path: str) -> str:
+        """获取指定文件内容"""
+        url = f"{self.base_url}/repos/{repo_full_name}/contents/{file_path}"
+        
+        try:
+            response = requests.get(url, headers=self.headers, timeout=10)
+            if response.status_code == 200:
+                content_data = response.json()
+                if content_data.get('encoding') == 'base64':
+                    return base64.b64decode(content_data.get('content', '')).decode('utf-8', errors='ignore')
+        except Exception as e:
+            logger.debug(f"获取文件失败 {repo_full_name}/{file_path}: {e}")
+        
+        return ""
+
+    def get_key_files(self, repo_full_name: str, file_tree: List[str]) -> Dict[str, str]:
+        """获取关键配置文件内容"""
+        key_file_patterns = [
+            'package.json', 'requirements.txt', 'pyproject.toml', 'Cargo.toml',
+            'go.mod', 'pom.xml', 'build.gradle', 'Gemfile', 'composer.json',
+            'Dockerfile', 'docker-compose.yml', 'docker-compose.yaml',
+            '.env.example', 'config.json', 'config.yaml', 'config.yml',
+            'main.py', 'app.py', 'index.ts', 'index.js', 'main.go', 'main.rs'
+        ]
+        
+        key_files = {}
+        files_to_fetch = []
+        
+        for file_path in file_tree:
+            filename = file_path.split('/')[-1]
+            if filename in key_file_patterns:
+                files_to_fetch.append(file_path)
+        
+        # 限制获取数量避免 API 限制
+        for file_path in files_to_fetch[:8]:
+            content = self.get_file_content(repo_full_name, file_path)
+            if content:
+                key_files[file_path] = content[:5000]  # 限制大小
+            time.sleep(0.1)  # 避免频繁请求
+        
+        return key_files
+
+    def parse_dependencies(self, key_files: Dict[str, str]) -> List[str]:
+        """从配置文件解析依赖"""
+        dependencies = []
+        
+        # 解析 package.json
+        if 'package.json' in key_files:
+            try:
+                pkg = json.loads(key_files['package.json'])
+                dependencies.extend(pkg.get('dependencies', {}).keys())
+                dependencies.extend(pkg.get('devDependencies', {}).keys())
+            except:
+                pass
+        
+        # 解析 requirements.txt
+        for path, content in key_files.items():
+            if 'requirements' in path and path.endswith('.txt'):
+                for line in content.split('\n'):
+                    line = line.strip()
+                    if line and not line.startswith('#'):
+                        # 移除版本号
+                        dep = line.split('==')[0].split('>=')[0].split('<=')[0].split('[')[0]
+                        dependencies.append(dep)
+        
+        # 解析 pyproject.toml (简化)
+        if 'pyproject.toml' in key_files:
+            content = key_files['pyproject.toml']
+            # 简单提取依赖名称
+            import re
+            deps = re.findall(r'"([a-zA-Z0-9_-]+)"', content)
+            dependencies.extend(deps[:20])
+        
+        return list(set(dependencies))
+
+    def get_commit_messages(self, repo_full_name: str, limit: int = 20) -> List[str]:
+        """获取最近的 commit messages"""
+        url = f"{self.base_url}/repos/{repo_full_name}/commits"
+        params = {'per_page': limit}
+        
+        try:
+            response = requests.get(url, headers=self.headers, params=params, timeout=10)
+            if response.status_code == 200:
+                commits = response.json()
+                messages = []
+                for commit in commits:
+                    msg = commit.get('commit', {}).get('message', '')
+                    if msg:
+                        messages.append(msg.split('\n')[0][:200])  # 只取第一行
+                return messages
+        except Exception as e:
+            logger.debug(f"获取commit历史失败 {repo_full_name}: {e}")
+        
+        return []
+
+    def detect_architecture_hints(self, file_tree: List[str], key_files: Dict[str, str]) -> List[str]:
+        """从文件结构检测架构模式"""
+        hints = []
+        
+        # 检测常见架构模式
+        tree_str = ' '.join(file_tree).lower()
+        
+        if 'src/' in tree_str or '/src' in tree_str:
+            hints.append('标准源码目录结构')
+        
+        if 'components/' in tree_str:
+            hints.append('组件化架构')
+        
+        if 'api/' in tree_str or 'routes/' in tree_str:
+            hints.append('API 服务架构')
+        
+        if 'tests/' in tree_str or 'test/' in tree_str or '__tests__' in tree_str:
+            hints.append('包含测试用例')
+        
+        if 'docker' in tree_str:
+            hints.append('容器化部署')
+        
+        if '.github/workflows' in tree_str:
+            hints.append('CI/CD 自动化')
+        
+        if 'models/' in tree_str:
+            hints.append('模型层分离')
+        
+        if 'utils/' in tree_str or 'helpers/' in tree_str:
+            hints.append('工具函数封装')
+        
+        # 检测框架
+        deps_str = ' '.join(key_files.values()).lower()
+        
+        if 'react' in deps_str:
+            hints.append('React 前端框架')
+        if 'next' in deps_str:
+            hints.append('Next.js 全栈框架')
+        if 'fastapi' in deps_str:
+            hints.append('FastAPI 后端框架')
+        if 'flask' in deps_str:
+            hints.append('Flask 后端框架')
+        if 'express' in deps_str:
+            hints.append('Express.js 后端')
+        if 'vite' in deps_str:
+            hints.append('Vite 构建工具')
+        
+        return hints[:8]
+
+    def get_user_repos_deep(self, include_private: bool = True) -> List[Repository]:
+        """获取用户所有仓库（带深度分析数据）"""
+        logger.info(f"获取用户 {self.username} 的仓库列表（深度分析模式）...")
+        
+        repos = []
+        page = 1
+        per_page = 100
+        
+        while True:
+            url = f"{self.base_url}/user/repos"
+            params = {
+                'page': page,
+                'per_page': per_page,
+                'sort': 'updated',
+                'direction': 'desc'
+            }
+            
+            if include_private:
+                params['visibility'] = 'all'
+            
+            response = requests.get(url, headers=self.headers, params=params)
+            if response.status_code != 200:
+                logger.error(f"获取仓库失败: {response.status_code}")
+                break
+                
+            batch_repos = response.json()
+            if not batch_repos:
+                break
+                
+            for repo_data in batch_repos:
+                repo_full_name = repo_data['full_name']
+                logger.info(f"深度分析: {repo_data['name']}")
+                
+                # 基础数据
+                languages = self.get_repo_languages(repo_full_name)
+                readme = self.get_readme_content(repo_full_name)
+                
+                # 深度分析数据
+                file_tree = self.get_repo_tree(repo_full_name)
+                key_files = self.get_key_files(repo_full_name, file_tree)
+                dependencies = self.parse_dependencies(key_files)
+                commit_messages = self.get_commit_messages(repo_full_name)
+                architecture_hints = self.detect_architecture_hints(file_tree, key_files)
+                
+                repo = Repository(
+                    name=repo_data['name'],
+                    full_name=repo_full_name,
+                    description=repo_data.get('description', '') or '',
+                    language=repo_data.get('language', '') or '',
+                    languages=languages,
+                    topics=repo_data.get('topics', []),
+                    stars=repo_data['stargazers_count'],
+                    forks=repo_data['forks_count'],
+                    created_at=repo_data['created_at'],
+                    updated_at=repo_data['updated_at'],
+                    pushed_at=repo_data['pushed_at'],
+                    size=repo_data['size'],
+                    open_issues=repo_data['open_issues_count'],
+                    is_private=repo_data['private'],
+                    readme_content=readme,
+                    license=repo_data.get('license', {}).get('name') if repo_data.get('license') else None,
+                    homepage=repo_data.get('homepage'),
+                    file_tree=file_tree,
+                    key_files=key_files,
+                    dependencies=dependencies,
+                    commit_messages=commit_messages,
+                    architecture_hints=architecture_hints
+                )
+                repos.append(repo)
+                
+                # 速率限制
+                time.sleep(0.2)
+            
+            page += 1
+            if len(batch_repos) < per_page:
+                break
+        
+        logger.info(f"成功获取 {len(repos)} 个仓库（深度分析完成）")
+        return repos
 
     def analyze_project(self, repo: Repository) -> ProjectAnalysis:
         """分析项目特征"""
@@ -470,6 +727,115 @@ class GitHubMonitor:
         }
         
         return report
+
+    def generate_deep_report(self, analyses: List[ProjectAnalysis], repos: List[Repository]) -> Dict[str, Any]:
+        """生成深度分析报告（包含 AI 能力和哲学洞察）"""
+        logger.info("生成深度分析报告...")
+        
+        # 基础报告
+        report = self.generate_resume_report(analyses)
+        
+        if not DEEP_ANALYSIS_AVAILABLE:
+            logger.warning("深度分析模块不可用，返回基础报告")
+            return report
+        
+        # AI 能力分析
+        logger.info("分析 AI 能力...")
+        ai_analyzer = AICapabilityAnalyzer()
+        project_ai_analyses = []
+        
+        for repo in repos:
+            ai_analysis = ai_analyzer.analyze_project_ai_usage(
+                repo_name=repo.name,
+                readme_content=repo.readme_content,
+                file_contents=repo.key_files,
+                dependencies=repo.dependencies,
+                commit_messages=repo.commit_messages
+            )
+            project_ai_analyses.append(ai_analysis)
+        
+        ai_profile = ai_analyzer.generate_ai_profile(project_ai_analyses)
+        
+        # 哲学洞察分析
+        logger.info("生成哲学洞察...")
+        philosophy_generator = PhilosophicalInsightGenerator()
+        
+        philosophy_projects = [
+            ProjectPhilosophyData(
+                name=a.repo.name,
+                project_type=a.project_type,
+                created_at=a.repo.created_at,
+                complexity_score=a.complexity_score,
+                ai_collaboration=a.ai_collaboration,
+                key_features=a.key_features,
+                business_value=a.business_value,
+                languages=list(a.repo.languages.keys()),
+                description=a.repo.description or ''
+            )
+            for a in analyses
+        ]
+        
+        philosophy = philosophy_generator.generate_philosophy(philosophy_projects)
+        
+        # 扩展报告
+        report['deep_analysis'] = {
+            'ai_profile': {
+                'overall_mastery': ai_profile.overall_ai_mastery,
+                'ai_philosophy': ai_profile.ai_philosophy,
+                'unique_strengths': ai_profile.unique_strengths,
+                'ai_tools_used': ai_profile.ai_tools_used,
+                'ai_apis_integrated': ai_profile.ai_apis_integrated,
+                'capability_scores': {
+                    'prompt_engineering': ai_profile.prompt_engineering,
+                    'ai_product_design': ai_profile.ai_product_design,
+                    'ai_service_integration': ai_profile.ai_service_integration,
+                    'human_ai_collaboration': ai_profile.human_ai_collaboration,
+                    'ai_workflow_design': ai_profile.ai_workflow_design
+                },
+                'radar_data': ai_profile.radar_data,
+                'usage_patterns': {
+                    'ai_as_developer_tool': ai_profile.ai_as_developer_tool,
+                    'ai_as_product_feature': ai_profile.ai_as_product_feature,
+                    'ai_as_thinking_partner': ai_profile.ai_as_thinking_partner
+                }
+            },
+            'philosophy': {
+                'core_values': philosophy.core_values,
+                'thinking_patterns': philosophy.thinking_patterns,
+                'growth_narrative': philosophy.growth_narrative,
+                'growth_stages': philosophy.growth_stages,
+                'problem_solving_approach': philosophy.problem_solving_approach,
+                'tech_humanity_balance': philosophy.tech_humanity_balance,
+                'creator_mindset': philosophy.creator_mindset,
+                'ai_collaboration_view': philosophy.ai_collaboration_view,
+                'philosophy_statement': philosophy.philosophy_statement,
+                'deep_insights': philosophy.deep_insights
+            },
+            'architecture_summary': self._summarize_architectures(repos)
+        }
+        
+        logger.info("深度分析报告生成完成")
+        return report
+
+    def _summarize_architectures(self, repos: List[Repository]) -> Dict[str, Any]:
+        """汇总架构信息"""
+        all_hints = []
+        for repo in repos:
+            all_hints.extend(repo.architecture_hints)
+        
+        hint_counts = defaultdict(int)
+        for hint in all_hints:
+            hint_counts[hint] += 1
+        
+        sorted_hints = sorted(hint_counts.items(), key=lambda x: x[1], reverse=True)
+        
+        return {
+            'common_patterns': [h[0] for h in sorted_hints[:10]],
+            'pattern_distribution': dict(sorted_hints[:15]),
+            'total_with_tests': sum(1 for r in repos if '包含测试用例' in r.architecture_hints),
+            'total_containerized': sum(1 for r in repos if '容器化部署' in r.architecture_hints),
+            'total_with_cicd': sum(1 for r in repos if 'CI/CD 自动化' in r.architecture_hints)
+        }
 
     def _is_significant_update(self, analysis: ProjectAnalysis) -> bool:
         """判断是否为显著更新"""
