@@ -11,9 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 
-    <!-- 字体 -->
+    <!-- 字体 - Aura 风格 -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
         rel="stylesheet">
 
     <!-- 图标 -->
@@ -30,87 +30,36 @@
     <meta property="og:type" content="website">
 
     <style>
-        /* 现代化CSS变量系统 - 灰白透明现代感设计 */
+        /* Aura 设计系统 - 温暖极简主义 */
         :root {
-            /* 灰白透明主题色彩 - 参考Linear、Notion、Stripe设计 */
-            --primary: linear-gradient(135deg, #374151 0%, #1f2937 100%);
-            --primary-solid: #374151;
-            --secondary: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-            --accent: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
-            --accent-color: #6b7280;
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.3);
-            --glass-shadow: rgba(0, 0, 0, 0.05);
+            /* 配色 - 暖奶油色调 */
+            --cream: #F5F2EB;
+            --cream-light: #FAF9F6;
+            --cream-dark: #EBE7DE;
+            --warm-gray: #D6D1C7;
+            --charcoal: #2C2A26;
+            --charcoal-light: #5D5A53;
+            --stone: #A8A29E;
 
-            /* 中性色 - 灰白透明主题 */
-            --white: #ffffff;
-            --black: #000000;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
+            /* 字体 */
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-            /* 字体系统 */
-            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            /* 间距 */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-2xl: 4rem;
+            --space-3xl: 6rem;
+            --space-4xl: 8rem;
 
-            /* 间距系统 */
-            --space-1: 0.25rem;
-            --space-2: 0.5rem;
-            --space-3: 0.75rem;
-            --space-4: 1rem;
-            --space-5: 1.25rem;
-            --space-6: 1.5rem;
-            --space-8: 2rem;
-            --space-10: 2.5rem;
-            --space-12: 3rem;
-            --space-16: 4rem;
-            --space-20: 5rem;
-            --space-24: 6rem;
-
-            /* 阴影系统 - 柔和灰色阴影 */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-
-            /* 动画系统 */
-            --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
-            --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
-            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-            /* 边框半径 */
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-            --radius-2xl: 1.5rem;
-            --radius-full: 9999px;
-        }
-
-        /* 暗色主题 */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --white: #111827;
-                --black: #f9fafb;
-                --gray-50: #1f2937;
-                --gray-100: #374151;
-                --gray-200: #4b5563;
-                --gray-300: #6b7280;
-                --gray-400: #9ca3af;
-                --gray-500: #d1d5db;
-                --gray-600: #e5e7eb;
-                --gray-700: #f3f4f6;
-                --gray-800: #f9fafb;
-                --gray-900: #ffffff;
-            }
+            /* 动画 */
+            --ease-out: cubic-bezier(0.2, 1, 0.3, 1);
+            --transition-slow: 0.7s var(--ease-out);
+            --transition-normal: 0.5s var(--ease-out);
+            --transition-fast: 0.3s var(--ease-out);
         }
 
         /* 基础重置 */
@@ -122,751 +71,713 @@
 
         html {
             scroll-behavior: smooth;
-            font-size: 16px;
+            scroll-padding-top: 80px;
         }
 
         body {
-            font-family: var(--font-primary);
-            line-height: 1.6;
-            color: var(--gray-900);
-            background: var(--white);
-            overflow-x: hidden;
+            font-family: var(--font-sans);
+            background-color: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
         }
 
-        /* 可访问性 */
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
+        h1, h2, h3, h4, .font-serif {
+            font-family: var(--font-serif);
         }
 
-        /* 导航栏 - 玻璃态浮动设计 */
+        /* 动画 */
+        @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 1s var(--ease-out) forwards;
+        }
+
+        .animate-delay-200 { animation-delay: 0.2s; opacity: 0; }
+        .animate-delay-400 { animation-delay: 0.4s; opacity: 0; }
+        .animate-delay-600 { animation-delay: 0.6s; opacity: 0; }
+
+        /* 导航栏 - Aura 风格 */
         .navbar {
             position: fixed;
-            top: var(--space-6);
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: var(--radius-full);
-            padding: var(--space-3) var(--space-6);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s var(--ease-out-cubic);
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: all var(--transition-slow);
+            padding: var(--space-lg) var(--space-lg);
         }
 
-        .navbar.hidden {
-            transform: translateX(-50%) translateY(-100%);
-            opacity: 0;
-            pointer-events: none;
+        .navbar.scrolled {
+            background: rgba(245, 242, 235, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: var(--space-sm) var(--space-lg);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
         }
 
-        .navbar:not(.hidden):hover {
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
+        .navbar-inner {
+            max-width: 1800px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
-            gap: var(--space-8);
+            justify-content: space-between;
         }
 
         .logo {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--gray-800);
+            font-family: var(--font-serif);
+            font-size: 1.875rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: var(--cream);
+            transition: color var(--transition-normal);
+        }
+
+        .navbar.scrolled .logo {
+            color: var(--charcoal);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: var(--space-6);
+            gap: var(--space-xl);
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--gray-600);
+            font-size: 0.75rem;
             font-weight: 500;
-            font-size: 0.875rem;
-            padding: var(--space-2) var(--space-4);
-            border-radius: var(--radius-lg);
-            transition: all 0.2s var(--ease-out-cubic);
-            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(245, 242, 235, 0.9);
+            transition: opacity var(--transition-fast);
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: var(--charcoal);
         }
 
         .nav-links a:hover {
-            color: var(--gray-900);
-            background: rgba(107, 114, 128, 0.1);
+            opacity: 0.6;
         }
 
-        /* 英雄区域 - 灰白透明现代感设计 */
+        /* Hero 区域 - Aura 风格 */
         .hero {
+            position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
             overflow: hidden;
+            background: var(--warm-gray);
         }
 
-        /* 微妙背景纹理 */
-        .hero::before {
-            content: '';
+        .hero-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                radial-gradient(circle at 20% 30%, rgba(148, 163, 184, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(100, 116, 139, 0.1) 0%, transparent 50%);
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(0.7) brightness(0.95);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(67, 62, 56, 0.4);
+            mix-blend-mode: multiply;
+        }
+
+        .hero-overlay-2 {
+            position: absolute;
+            inset: 0;
+            background: rgba(49, 48, 48, 0.2);
         }
 
         .hero-content {
-            text-align: center;
-            color: var(--gray-900);
-            z-index: 3;
-            max-width: 800px;
-            padding: 0 var(--space-6);
             position: relative;
+            z-index: 10;
+            width: 100%;
+            padding: 0 var(--space-lg);
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: var(--space-md);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 9999px;
         }
 
         .hero-title {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 900;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 400;
+            color: white;
+            letter-spacing: -0.02em;
             line-height: 1.1;
-            margin-bottom: var(--space-6);
-            background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #4b5563 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            z-index: 3;
+            margin-bottom: var(--space-lg);
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--cream);
         }
 
         .hero-subtitle {
-            font-size: clamp(1.125rem, 2.5vw, 1.375rem);
-            font-weight: 400;
-            margin-bottom: var(--space-8);
-            color: var(--gray-600);
-            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto var(--space-xl);
+            font-size: 1.125rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
         }
 
         .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-3);
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(55, 65, 81, 0.2);
-            color: var(--gray-700);
-            padding: var(--space-4) var(--space-8);
-            border-radius: var(--radius-full);
+            display: inline-block;
+            background: var(--cream);
+            color: var(--charcoal);
+            padding: var(--space-sm) var(--space-xl);
+            border-radius: 9999px;
             text-decoration: none;
+            font-size: 0.8rem;
             font-weight: 600;
-            transition: all 0.3s var(--ease-out-cubic);
-            position: relative;
-            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: all var(--transition-normal);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
         .hero-cta:hover {
+            background: white;
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(55, 65, 81, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
         }
 
-        /* 社交链接样式 */
-        .social-links {
+        .hero-social {
             display: flex;
-            gap: var(--space-4);
-            margin-bottom: var(--space-6);
             justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
         }
 
-        .social-link {
-            display: inline-flex;
+        .hero-social a {
+            display: flex;
             align-items: center;
-            gap: var(--space-2);
-            padding: var(--space-3) var(--space-5);
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(107, 114, 128, 0.2);
-            border-radius: var(--radius-full);
-            color: var(--gray-700);
+            gap: var(--space-xs);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s var(--ease-out-cubic);
-            position: relative;
-            overflow: hidden;
+            font-size: 0.875rem;
+            font-weight: 400;
+            transition: all var(--transition-fast);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--space-xs);
         }
 
-        .social-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        .social-link.github:hover {
-            background: var(--gray-800);
-            border-color: var(--gray-700);
+        .hero-social a:hover {
             color: white;
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .social-link.email:hover {
-            background: var(--gray-700);
-            border-color: var(--gray-600);
-            color: white;
-        }
-
-        .social-link i {
-            font-size: 1.1rem;
-        }
-
-        /* 浮动几何图形 - 微妙灰色装饰 */
-        .floating-shapes {
+        .scroll-indicator {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+            bottom: var(--space-xl);
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            animation: bounce 2s infinite;
         }
 
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(148, 163, 184, 0.08);
-            animation: float 8s ease-in-out infinite;
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
         }
 
-        .shape:nth-child(1) {
-            width: 100px;
-            height: 100px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
+        /* 关于我 - Aura 风格 */
+        .about {
+            background: var(--cream-dark);
         }
 
-        .shape:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            top: 60%;
-            right: 15%;
-            animation-delay: 2s;
-            background: rgba(100, 116, 139, 0.06);
-        }
-
-        .shape:nth-child(3) {
-            width: 80px;
-            height: 80px;
-            bottom: 30%;
-            left: 20%;
-            animation-delay: 4s;
-            background: rgba(71, 85, 105, 0.05);
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-15px);
-            }
-        }
-
-        /* 内容区域 */
-        .container {
-            max-width: 1200px;
+        .about-intro {
+            padding: var(--space-3xl) var(--space-lg);
+            max-width: 1800px;
             margin: 0 auto;
-            padding: 0 var(--space-6);
-        }
-
-        .section {
-            padding: var(--space-20) 0;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 5vw, 2.5rem);
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: var(--space-16);
-            color: var(--gray-800);
-        }
-
-        /* 关于我 - 受Spotify Design启发的卡片设计 */
-        .about-grid {
             display: grid;
             grid-template-columns: 1fr 2fr;
-            gap: var(--space-16);
-            align-items: center;
+            gap: var(--space-3xl);
+            align-items: start;
         }
 
-        .about-image {
-            position: relative;
-            border-radius: var(--radius-2xl);
-            overflow: hidden;
-            aspect-ratio: 1;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: white;
-            box-shadow: var(--shadow-2xl);
+        .about-intro h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--charcoal);
         }
 
-        .about-content h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: var(--space-4);
-            color: var(--gray-900);
+        .about-intro-content {
+            max-width: 700px;
         }
 
-        .about-content p {
+        .about-intro-content p {
             font-size: 1.125rem;
-            line-height: 1.7;
-            color: var(--gray-600);
-            margin-bottom: var(--space-6);
+            font-weight: 300;
+            color: var(--charcoal-light);
+            line-height: 1.8;
+            margin-bottom: var(--space-lg);
         }
 
-        /* 标签效果 */
-        .ai-badge {
-            display: inline-block;
-            background: rgba(107, 114, 128, 0.1);
-            border: 1px solid rgba(107, 114, 128, 0.3);
-            color: var(--gray-600);
-            padding: var(--space-1) var(--space-3);
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-left: var(--space-2);
-        }
-
-        .intro-highlight {
+        .about-quote {
+            border-left: 2px solid var(--charcoal);
+            padding-left: var(--space-md);
+            margin: var(--space-xl) 0;
+            font-family: var(--font-serif);
+            font-style: italic;
             font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: var(--space-4);
+            color: var(--charcoal);
         }
 
-        .expertise-grid {
+        /* 技能区块 - Aura 风格大分区 */
+        .skills-section {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-4);
-            margin-top: var(--space-6);
+            grid-template-columns: 1fr 1fr;
+            min-height: 80vh;
         }
 
-        .expertise-item {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-            padding: var(--space-3);
-            background: rgba(107, 114, 128, 0.08);
-            border-radius: var(--radius-md);
-            border: 1px solid rgba(107, 114, 128, 0.15);
-            transition: all 0.3s var(--ease-out-cubic);
-        }
-
-        .expertise-item:hover {
-            background: rgba(107, 114, 128, 0.12);
-            transform: translateY(-2px);
-        }
-
-        .expertise-item i {
-            color: var(--gray-600);
-            font-size: 1.2rem;
-        }
-
-        /* 技能标签 - 受CodePen启发 */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--space-8);
-            margin-top: var(--space-16);
-        }
-
-        .skill-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(107, 114, 128, 0.15);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8);
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s var(--ease-out-cubic);
+        .skills-image {
             position: relative;
             overflow: hidden;
         }
 
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        .skills-image img {
             width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--gray-400), var(--gray-600));
+            height: 100%;
+            object-fit: cover;
+            transition: transform 2s var(--ease-out);
         }
 
-        .skill-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-xl);
-            background: rgba(255, 255, 255, 0.9);
+        .skills-image:hover img {
+            transform: scale(1.05);
         }
 
-        .skill-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: var(--radius-lg);
-            background: linear-gradient(135deg, var(--gray-600), var(--gray-700));
+        .skills-content {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            color: white;
-            font-size: 1.4rem;
-            margin-bottom: var(--space-4);
+            padding: var(--space-3xl);
+            background: var(--warm-gray);
         }
 
-        .skill-card h4 {
-            font-size: 1.2rem;
+        .skills-content.dark {
+            background: var(--charcoal);
+            color: var(--cream);
+        }
+
+        .skills-label {
+            font-size: 0.7rem;
             font-weight: 600;
-            margin-bottom: var(--space-3);
-            color: var(--gray-800);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--charcoal-light);
+            margin-bottom: var(--space-md);
         }
 
-        .skill-card p {
-            color: var(--gray-600);
-            line-height: 1.6;
-            font-size: 0.95rem;
+        .skills-content.dark .skills-label {
+            color: var(--stone);
         }
 
-        /* 项目展示 - 简洁现代设计 */
+        .skills-content h3 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: var(--space-lg);
+        }
+
+        .skills-content p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 500px;
+            color: var(--charcoal-light);
+        }
+
+        .skills-content.dark p {
+            color: var(--stone);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin-top: var(--space-lg);
+        }
+
+        .skill-tag {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: var(--space-xs) var(--space-sm);
+            background: rgba(44, 42, 38, 0.08);
+            border-radius: var(--space-xs);
+            color: var(--charcoal);
+        }
+
+        .skills-content.dark .skill-tag {
+            background: rgba(245, 242, 235, 0.1);
+            color: var(--cream);
+        }
+
+        /* 项目展示 - Aura 简洁风格 */
+        .projects {
+            background: var(--cream);
+            padding: var(--space-4xl) var(--space-lg);
+        }
+
+        .projects-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto var(--space-3xl);
+        }
+
+        .projects-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 400;
+            margin-bottom: var(--space-md);
+        }
+
+        .projects-header p {
+            font-size: 1.125rem;
+            font-weight: 300;
+            color: var(--charcoal-light);
+        }
+
         .projects-grid {
+            max-width: 1400px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: var(--space-8);
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--space-lg);
         }
 
         .project-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(107, 114, 128, 0.12);
-            border-radius: var(--radius-xl);
+            background: var(--cream-light);
+            border-radius: var(--space-sm);
             overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s var(--ease-out-cubic);
-            position: relative;
+            transition: all var(--transition-normal);
+            border: 1px solid rgba(0, 0, 0, 0.03);
         }
 
         .project-card:hover {
             transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
-        .featured-project {
-            position: relative;
-            border: 1px solid var(--gray-400);
-        }
-
-        .featured-project::before {
-            content: '★ 重点项目';
-            position: absolute;
-            top: -10px;
-            left: var(--space-4);
-            background: var(--gray-700);
-            color: white;
-            padding: var(--space-1) var(--space-3);
-            border-radius: var(--radius-md);
-            font-size: 0.75rem;
-            font-weight: 600;
-            z-index: 1;
+        .project-card.featured {
+            border: 1px solid var(--warm-gray);
         }
 
         .project-image {
-            height: 180px;
-            background: linear-gradient(135deg, var(--gray-600), var(--gray-700));
+            height: 200px;
+            background: linear-gradient(135deg, var(--charcoal-light), var(--charcoal));
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 2rem;
+            font-size: 2.5rem;
             position: relative;
         }
 
-        .ai-project {
-            position: relative;
-        }
-
-        .ai-indicator {
+        .project-badge {
             position: absolute;
-            top: var(--space-2);
-            right: var(--space-2);
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--gray-700);
-            padding: var(--space-1) var(--space-2);
-            border-radius: var(--radius-sm);
+            top: var(--space-sm);
+            right: var(--space-sm);
             font-size: 0.65rem;
             font-weight: 600;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--charcoal);
+            border-radius: var(--space-xs);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -12px;
+            left: var(--space-sm);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            background: var(--charcoal);
+            color: white;
+            border-radius: var(--space-xs);
+            z-index: 1;
         }
 
         .project-content {
-            padding: var(--space-6);
+            padding: var(--space-lg);
         }
 
         .project-content h4 {
-            font-size: 1.25rem;
+            font-family: var(--font-sans);
+            font-size: 1.125rem;
             font-weight: 600;
-            margin-bottom: var(--space-3);
-            color: var(--gray-900);
+            margin-bottom: var(--space-xs);
+            color: var(--charcoal);
         }
 
         .project-role {
-            color: var(--primary-solid);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: var(--space-2);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--charcoal-light);
+            margin-bottom: var(--space-sm);
         }
 
         .project-content p {
-            color: var(--gray-600);
-            line-height: 1.6;
-            margin-bottom: var(--space-4);
-        }
-
-        .project-metrics {
-            display: flex;
-            gap: var(--space-4);
-            margin: var(--space-4) 0;
-        }
-
-        .metric {
-            text-align: center;
-        }
-
-        .metric-value {
-            display: block;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--gray-800);
-        }
-
-        .metric-label {
-            font-size: 0.75rem;
-            color: var(--gray-500);
+            font-size: 0.9375rem;
+            font-weight: 300;
+            color: var(--charcoal-light);
+            line-height: 1.7;
+            margin-bottom: var(--space-md);
         }
 
         .project-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: var(--space-2);
+            gap: var(--space-xs);
         }
 
-        .tag {
-            background: rgba(107, 114, 128, 0.1);
-            color: var(--gray-600);
-            padding: var(--space-1) var(--space-3);
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
+        .project-tag {
+            font-size: 0.7rem;
             font-weight: 500;
+            padding: 4px 10px;
+            background: rgba(44, 42, 38, 0.06);
+            border-radius: 9999px;
+            color: var(--charcoal-light);
         }
 
-        .tag.primary {
-            background: var(--gray-700);
+        .project-tag.primary {
+            background: var(--charcoal);
             color: white;
         }
 
-        /* 联系方式 - 极简现代设计 */
+        /* 联系区域 - Aura 风格 */
         .contact {
-            background: linear-gradient(180deg, var(--white) 0%, var(--gray-50) 100%);
+            background: var(--cream-dark);
+            padding: var(--space-4xl) var(--space-lg);
         }
 
         .contact-content {
-            text-align: center;
             max-width: 600px;
             margin: 0 auto;
+            text-align: center;
         }
 
         .contact-content h3 {
-            font-size: 1.875rem;
-            font-weight: 700;
-            margin-bottom: var(--space-4);
-            color: var(--gray-800);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 400;
+            margin-bottom: var(--space-md);
         }
 
         .contact-content p {
             font-size: 1.0625rem;
-            color: var(--gray-600);
-            margin-bottom: var(--space-8);
-            line-height: 1.7;
+            font-weight: 300;
+            color: var(--charcoal-light);
+            line-height: 1.8;
+            margin-bottom: var(--space-xl);
         }
 
-        .contact-button {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-3);
-            background: var(--gray-800);
-            color: white;
-            padding: var(--space-4) var(--space-8);
-            border-radius: var(--radius-full);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s var(--ease-out-cubic);
-            box-shadow: var(--shadow-md);
-        }
-
-        .contact-button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-            background: var(--gray-700);
-        }
-
-        /* 联系按钮组 */
         .contact-buttons {
             display: flex;
-            gap: var(--space-4);
             justify-content: center;
+            gap: var(--space-md);
             flex-wrap: wrap;
         }
 
-        .contact-button.github-btn {
-            background: transparent;
-            border: 1px solid var(--gray-300);
-            color: var(--gray-700);
-        }
-
-        .contact-button.github-btn:hover {
-            background: var(--gray-100);
-            border-color: var(--gray-400);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* 悬浮邮件按钮 */
-        .floating-email {
-            position: fixed;
-            bottom: var(--space-8);
-            right: var(--space-8);
-            z-index: 999;
-        }
-
-        .floating-email a {
-            display: flex;
+        .contact-btn {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 56px;
-            height: 56px;
-            background: var(--gray-800);
-            color: white;
-            border-radius: 50%;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: 9999px;
             text-decoration: none;
-            font-size: 1.4rem;
-            box-shadow: var(--shadow-lg);
-            transition: all 0.3s var(--ease-spring);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all var(--transition-fast);
         }
 
-        .floating-email a:hover {
-            transform: scale(1.08);
-            box-shadow: var(--shadow-xl);
-            background: var(--gray-700);
+        .contact-btn.primary {
+            background: var(--charcoal);
+            color: white;
+        }
+
+        .contact-btn.primary:hover {
+            background: var(--charcoal-light);
+            transform: translateY(-2px);
+        }
+
+        .contact-btn.secondary {
+            background: transparent;
+            color: var(--charcoal);
+            border: 1px solid var(--warm-gray);
+        }
+
+        .contact-btn.secondary:hover {
+            background: var(--cream);
+            border-color: var(--charcoal-light);
+        }
+
+        /* 页脚 - Aura 风格 */
+        .footer {
+            background: var(--cream-dark);
+            padding: var(--space-3xl) var(--space-lg) var(--space-xl);
+            border-top: 1px solid var(--warm-gray);
+        }
+
+        .footer-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: var(--space-3xl);
+        }
+
+        .footer-brand h4 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-brand p {
+            font-size: 0.9375rem;
+            font-weight: 300;
+            color: var(--charcoal-light);
+            line-height: 1.7;
+            max-width: 300px;
+        }
+
+        .footer-links h5 {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--charcoal);
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-links a {
+            font-size: 0.9375rem;
+            font-weight: 300;
+            color: var(--charcoal-light);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--charcoal);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .footer-bottom {
+            max-width: 1800px;
+            margin: var(--space-xl) auto 0;
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--warm-gray);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--stone);
+            text-align: center;
         }
 
         /* 响应式设计 */
-        @media (max-width: 768px) {
-            .navbar {
-                top: var(--space-4);
-                left: var(--space-4);
-                right: var(--space-4);
-                transform: none;
-                width: auto;
+        @media (max-width: 1024px) {
+            .about-intro {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
             }
 
-            .nav-container {
-                gap: var(--space-4);
+            .skills-section {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-image {
+                height: 400px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: var(--space-sm);
             }
 
             .nav-links {
-                gap: var(--space-3);
+                display: none;
             }
 
-            .nav-links a {
-                font-size: 0.75rem;
-                padding: var(--space-1) var(--space-2);
+            .hero-title {
+                font-size: clamp(2.5rem, 12vw, 4rem);
             }
 
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: var(--space-8);
-                text-align: center;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
+            .hero-social {
+                flex-direction: column;
+                align-items: center;
             }
 
             .projects-grid {
                 grid-template-columns: 1fr;
             }
 
-            .expertise-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .project-metrics {
-                justify-content: center;
-            }
-
-            .floating-email {
-                bottom: var(--space-4);
-                right: var(--space-4);
-            }
-
-            .floating-email a {
-                width: 50px;
-                height: 50px;
-                font-size: 1.25rem;
-            }
-
-            .social-links {
-                flex-direction: column;
-                align-items: center;
-                gap: var(--space-3);
-            }
-
-            .social-link {
-                width: 200px;
-                justify-content: center;
+            .skills-content {
+                padding: var(--space-xl);
             }
 
             .contact-buttons {
                 flex-direction: column;
                 align-items: center;
-                gap: var(--space-3);
             }
 
-            .contact-button {
+            .contact-btn {
                 width: 200px;
                 justify-content: center;
+            }
+        }
+
+        /* 可访问性 */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -874,353 +785,220 @@
 
 <body>
     <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">Jim AI</div>
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="logo">Jim</a>
             <ul class="nav-links">
-                <li><a href="#home">首页</a></li>
                 <li><a href="#about">关于</a></li>
                 <li><a href="#skills">技能</a></li>
                 <li><a href="#projects">项目</a></li>
                 <li><a href="#contact">联系</a></li>
-                <li><a href="/converter.html" title="PDF 转 SVG/PNG 工具">PDF转换</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- 英雄区域 -->
+    <!-- Hero 区域 -->
     <section id="home" class="hero">
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000" 
+                 alt="Serene misty landscape">
+            <div class="hero-overlay"></div>
+            <div class="hero-overlay-2"></div>
         </div>
         <div class="hero-content">
-            <h1 class="hero-title">AI工具实践者<br>数字化产品经理</h1>
-            <p class="hero-subtitle">用代码自动化重复，用工具放大创造力，让技术成为人的延伸<br>30+ 项目经验 · 8种 AI 工具实践 · 4年+ 企业数字化经历</p>
-
-            <!-- 社交链接 -->
-            <div class="social-links">
-                <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer"
-                    class="social-link github" title="GitHub">
+            <div class="animate-fade-in-up">
+                <span class="hero-badge">AI工具实践者 · 产品经理</span>
+            </div>
+            <h1 class="hero-title animate-fade-in-up animate-delay-200">
+                用工具放大<br><em>创造力。</em>
+            </h1>
+            <p class="hero-subtitle animate-fade-in-up animate-delay-400">
+                让技术成为人的延伸，而非束缚。<br>
+                30+ 项目经验 · 8种 AI 工具实践 · 4年+ 企业数字化经历
+            </p>
+            <div class="animate-fade-in-up animate-delay-600">
+                <a href="#about" class="hero-cta">了解更多</a>
+            </div>
+            <div class="hero-social animate-fade-in-up animate-delay-600">
+                <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-github"></i>
                     <span>GitHub</span>
                 </a>
-                <a href="mailto:cxxvcheng@gmail.com" class="social-link email" title="发送邮件">
+                <a href="mailto:cxxvcheng@gmail.com">
                     <i class="fas fa-envelope"></i>
                     <span>邮箱联系</span>
                 </a>
             </div>
-
-            <a href="#about" class="hero-cta">
-                <span>了解更多</span>
-                <i class="fas fa-arrow-down"></i>
-            </a>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
         </div>
     </section>
 
     <!-- 关于我 -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title">关于我</h2>
-            <div class="about-grid">
-                <div class="about-image">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div class="about-content">
-                    <h3>Jim <span class="ai-badge">AI实践者</span></h3>
-                    <p class="intro-highlight">用代码自动化重复，用工具放大创造力，让技术成为人的延伸而非束缚。</p>
-                    <p>30+ 项目经验 | 4年+ 企业数字化实战 | 8种 AI 工具深度整合 | 业务流程优化</p>
-                    <div class="expertise-grid">
-                        <div class="expertise-item">
-                            <i class="fas fa-brain"></i>
-                            <span>提示工程实践</span>
-                        </div>
-                        <div class="expertise-item">
-                            <i class="fas fa-magic"></i>
-                            <span>AI产品设计</span>
-                        </div>
-                        <div class="expertise-item">
-                            <i class="fas fa-microphone"></i>
-                            <span>语音AI应用</span>
-                        </div>
-                        <div class="expertise-item">
-                            <i class="fas fa-eye"></i>
-                            <span>视觉AI应用</span>
-                        </div>
-                    </div>
-
-                    <!-- AI 哲学 -->
-                    <div class="philosophy-section"
-                        style="margin-top: var(--space-6); padding: var(--space-4); background: rgba(107, 114, 128, 0.08); border-radius: var(--radius-lg); border-left: 3px solid var(--gray-400);">
-                        <h4
-                            style="color: var(--gray-700); margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
-                            <i class="fas fa-quote-left"></i> AI 协作理念
-                        </h4>
-                        <p style="font-style: italic; color: var(--gray-600); line-height: 1.8;">
-                            AI 是增强人的工具，不是替代。与 AI 的协作让创造力得以放大，让想法更快地转化为现实。<strong>人提供方向与判断，AI
-                                提供执行与可能性</strong>。
-                        </p>
-                    </div>
-                </div>
+    <section id="about" class="about">
+        <div class="about-intro">
+            <h2>扎根实践，<br>放眼创新。</h2>
+            <div class="about-intro-content">
+                <p>
+                    我相信AI是增强人的工具，而非替代。与AI的协作让创造力得以放大，让想法更快地转化为现实。
+                </p>
+                <p>
+                    4年+企业数字化实战经验，30+项目经验，8种AI工具深度整合。我专注于将模糊的业务需求精确转化为可执行的技术方案。
+                </p>
+                <blockquote class="about-quote">
+                    "人提供方向与判断，AI提供执行与可能性。"
+                </blockquote>
             </div>
         </div>
     </section>
 
     <!-- 核心技能 -->
-    <section id="skills" class="section">
-        <div class="container">
-            <h2 class="section-title">核心技能</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h4>AI工具精通</h4>
-                    <p>深度掌握Claude Code、ChatGPT等主流AI工具，擅长复杂提示工程和本地大模型部署与优化。</p>
+    <section id="skills">
+        <div class="skills-section">
+            <div class="skills-image">
+                <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=1200" 
+                     alt="Natural Stone Texture">
+            </div>
+            <div class="skills-content">
+                <span class="skills-label">核心能力</span>
+                <h3>AI工具<br>深度实践</h3>
+                <p>
+                    深度掌握Claude Code、ChatGPT等主流AI工具，擅长复杂提示工程和本地大模型部署与优化。
+                </p>
+                <div class="skills-list">
+                    <span class="skill-tag">提示工程</span>
+                    <span class="skill-tag">AI产品设计</span>
+                    <span class="skill-tag">语音AI应用</span>
+                    <span class="skill-tag">视觉AI应用</span>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h4>需求分析与产品</h4>
-                    <p>将模糊业务需求精确转化为AI可执行的技术方案，擅长产品设计和项目管理。</p>
+            </div>
+        </div>
+        <div class="skills-section">
+            <div class="skills-content dark">
+                <span class="skills-label">业务能力</span>
+                <h3>需求分析<br>与数字化转型</h3>
+                <p>
+                    将模糊业务需求精确转化为AI可执行的技术方案。通过AI工具将传统业务流程数字化，具备丰富的流程优化和业务自动化经验。
+                </p>
+                <div class="skills-list">
+                    <span class="skill-tag">需求分析</span>
+                    <span class="skill-tag">产品设计</span>
+                    <span class="skill-tag">项目管理</span>
+                    <span class="skill-tag">数据处理</span>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h4>AI协作框架</h4>
-                    <p>设计多角色AI协作体系，擅长提示工程和技术选型指导，建立高效的人机协作工作流。</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h4>数字化转型</h4>
-                    <p>通过AI工具将传统业务流程数字化，具备丰富的流程优化和业务自动化经验。</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h4>数据处理方案</h4>
-                    <p>50万+记录处理经验，擅长设计大规模数据整合方案和数据产品架构。</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-industry"></i>
-                    </div>
-                    <h4>跨领域业务</h4>
-                    <p>外贸、制造、内容管理等多领域的AI化改造经验，擅长跨领域整合和创新实践。</p>
-                </div>
+            </div>
+            <div class="skills-image">
+                <img src="https://images.pexels.com/photos/6801917/pexels-photo-6801917.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                     alt="Calm workspace">
             </div>
         </div>
     </section>
 
     <!-- 项目展示 -->
-    <section id="projects" class="section">
-        <div class="container">
-            <h2 class="section-title">项目展示</h2>
-            <div class="projects-grid">
-                <div class="project-card featured-project">
-                    <div class="project-image ai-project">
-                        <i class="fas fa-table"></i>
-                        <div class="ai-indicator">🏢 企业级CMS</div>
-                    </div>
-                    <div class="project-content">
-                        <h4>多维表格CMS内容管理系统</h4>
-                        <p class="project-role">💼 系统架构师 & 产品经理</p>
-                        <p>企业级多维表格CMS内容管理系统，支持20人同时使用的多角色、多权限协作平台。成功在企业内部署上线，显著提升内容管理效率。</p>
-                        <div class="project-metrics">
-                            <div class="metric">
-                                <span class="metric-value">2025.12</span>
-                                <span class="metric-label">最新上线</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">20人</span>
-                                <span class="metric-label">并发支持</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">企业级</span>
-                                <span class="metric-label">生产环境</span>
-                            </div>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag primary">系统架构</span>
-                            <span class="tag primary">CMS系统</span>
-                            <span class="tag">多维表格</span>
-                            <span class="tag">权限管理</span>
-                            <span class="tag">协作平台</span>
-                        </div>
+    <section id="projects" class="projects">
+        <div class="projects-header">
+            <h2>项目作品</h2>
+            <p>用AI协作完成的企业级项目，从需求分析到产品落地的全流程实践。</p>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card featured">
+                <div class="featured-badge">★ 重点项目</div>
+                <div class="project-image">
+                    <i class="fas fa-table"></i>
+                    <span class="project-badge">🏢 企业级CMS</span>
+                </div>
+                <div class="project-content">
+                    <h4>多维表格CMS内容管理系统</h4>
+                    <p class="project-role">系统架构师 & 产品经理</p>
+                    <p>企业级多维表格CMS内容管理系统，支持20人同时使用的多角色、多权限协作平台。成功在企业内部署上线。</p>
+                    <div class="project-tags">
+                        <span class="project-tag primary">系统架构</span>
+                        <span class="project-tag primary">CMS系统</span>
+                        <span class="project-tag">多维表格</span>
+                        <span class="project-tag">权限管理</span>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-image ai-project">
-                        <i class="fas fa-database"></i>
-                        <div class="ai-indicator">🤖 AI协作</div>
-                    </div>
-                    <div class="project-content">
-                        <h4>partsdb 配件数据库系统</h4>
-                        <p class="project-role">💼 AI协作专家 & 自动化专家</p>
-                        <p>基于AI协作构建的配件数据库系统，支持响应式布局、数据自动化处理和图像识别集成。实现了企业级数据的结构化管理与高效检索。</p>
-                        <div class="project-metrics">
-                            <div class="metric">
-                                <span class="metric-value">2025.12</span>
-                                <span class="metric-label">最近更新</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">AI增强</span>
-                                <span class="metric-label">技术方案</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">2-6周</span>
-                                <span class="metric-label">开发周期</span>
-                            </div>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag primary">Web应用</span>
-                            <span class="tag primary">AI集成</span>
-                            <span class="tag">数据处理</span>
-                            <span class="tag">容器化</span>
-                            <span class="tag">自动化</span>
-                        </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-database"></i>
+                    <span class="project-badge">🤖 AI协作</span>
+                </div>
+                <div class="project-content">
+                    <h4>partsdb 配件数据库系统</h4>
+                    <p class="project-role">AI协作专家 & 自动化专家</p>
+                    <p>基于AI协作构建的配件数据库系统，支持响应式布局、数据自动化处理和图像识别集成。</p>
+                    <div class="project-tags">
+                        <span class="project-tag primary">Web应用</span>
+                        <span class="project-tag primary">AI集成</span>
+                        <span class="project-tag">数据处理</span>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-image ai-project">
-                        <i class="fas fa-file-export"></i>
-                        <div class="ai-indicator">🤖 AI协作</div>
-                    </div>
-                    <div class="project-content">
-                        <h4>orderListForSale 订单列表转换工具</h4>
-                        <p class="project-role">💼 产品经理 & AI协作专家</p>
-                        <p>订单列表转换为商业发票、装箱单、报关单等文档的专业工具。通过AI协作实现复杂的贸易文档格式化和数据映射逻辑。</p>
-                        <div class="project-metrics">
-                            <div class="metric">
-                                <span class="metric-value">2025.7</span>
-                                <span class="metric-label">最新更新</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">私有</span>
-                                <span class="metric-label">商业项目</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">贸易</span>
-                                <span class="metric-label">业务领域</span>
-                            </div>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag primary">需求分析</span>
-                            <span class="tag primary">AI协作</span>
-                            <span class="tag">贸易文档</span>
-                            <span class="tag">业务自动化</span>
-                        </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-file-export"></i>
+                    <span class="project-badge">🤖 AI协作</span>
+                </div>
+                <div class="project-content">
+                    <h4>orderListForSale 订单列表转换工具</h4>
+                    <p class="project-role">产品经理 & AI协作专家</p>
+                    <p>订单列表转换为商业发票、装箱单、报关单等文档的专业工具。</p>
+                    <div class="project-tags">
+                        <span class="project-tag primary">需求分析</span>
+                        <span class="project-tag">贸易文档</span>
+                        <span class="project-tag">业务自动化</span>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-image ai-project">
-                        <i class="fas fa-envelope"></i>
-                        <div class="ai-indicator">📧 智能处理</div>
-                    </div>
-                    <div class="project-content">
-                        <h4>emailAutoProcess 邮件自动化</h4>
-                        <p class="project-role">💼 产品经理 & AI协作专家</p>
-                        <p>智能客户邮件处理系统，集成WPS表格操作，实现邮件内容解析、分类和自动回复，大幅提升客服效率。</p>
-                        <div class="project-metrics">
-                            <div class="metric">
-                                <span class="metric-value">2025.8</span>
-                                <span class="metric-label">最新更新</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">WPS</span>
-                                <span class="metric-label">集成方案</span>
-                            </div>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag primary">AI协作</span>
-                            <span class="tag">邮件处理</span>
-                            <span class="tag">自动化</span>
-                            <span class="tag">WPS集成</span>
-                        </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-envelope"></i>
+                    <span class="project-badge">📧 智能处理</span>
+                </div>
+                <div class="project-content">
+                    <h4>emailAutoProcess 邮件自动化</h4>
+                    <p class="project-role">产品经理 & AI协作专家</p>
+                    <p>智能客户邮件处理系统，集成WPS表格操作，实现邮件内容解析、分类和自动回复。</p>
+                    <div class="project-tags">
+                        <span class="project-tag primary">AI协作</span>
+                        <span class="project-tag">邮件处理</span>
+                        <span class="project-tag">自动化</span>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-image ai-project">
-                        <i class="fas fa-server"></i>
-                        <div class="ai-indicator">🖼️ 图像服务</div>
-                    </div>
-                    <div class="project-content">
-                        <h4>tmtImageServer 图像服务器</h4>
-                        <p class="project-role">💼 产品经理 & 架构设计师</p>
-                        <p>高性能图像服务器架构，支持企业级图像处理、存储和分发。通过AI协作设计可扩展的微服务架构和API接口。</p>
-                        <div class="project-metrics">
-                            <div class="metric">
-                                <span class="metric-value">2025.7</span>
-                                <span class="metric-label">最新更新</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-value">企业级</span>
-                                <span class="metric-label">服务架构</span>
-                            </div>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag primary">架构设计</span>
-                            <span class="tag primary">AI协作</span>
-                            <span class="tag">图像处理</span>
-                            <span class="tag">微服务</span>
-                        </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-server"></i>
+                    <span class="project-badge">🖼️ 图像服务</span>
+                </div>
+                <div class="project-content">
+                    <h4>tmtImageServer 图像服务器</h4>
+                    <p class="project-role">产品经理 & 架构设计师</p>
+                    <p>高性能图像服务器架构，支持企业级图像处理、存储和分发。</p>
+                    <div class="project-tags">
+                        <span class="project-tag primary">架构设计</span>
+                        <span class="project-tag">图像处理</span>
+                        <span class="project-tag">微服务</span>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-image ai-project">
-                        <i class="fas fa-images"></i>
-                        <div class="ai-indicator">🔍 智能分类</div>
-                    </div>
-                    <div class="project-content">
-                        <h4>classify_images 图像分类系统</h4>
-                        <p class="project-role">💼 产品经理 & AI协作专家</p>
-                        <p>智能图像分类和处理系统，通过AI协作实现自动化图片识别、分类和标注，大幅提升图像处理效率。</p>
-                        <div class="project-tags">
-                            <span class="tag primary">图像识别</span>
-                            <span class="tag primary">AI协作</span>
-                            <span class="tag">自动分类</span>
-                            <span class="tag">机器学习</span>
-                        </div>
-                    </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-volume-up"></i>
+                    <span class="project-badge">🎵 TTS技术</span>
                 </div>
-                <div class="project-card">
-                    <div class="project-image ai-project">
-                        <i class="fas fa-volume-up"></i>
-                        <div class="ai-indicator">🎵 TTS技术</div>
-                    </div>
-                    <div class="project-content">
-                        <h4>book-index-tts 文本转语音</h4>
-                        <p class="project-role">💼 产品经理 & 开源贡献者</p>
-                        <p>开源文本转语音项目，实现书籍索引的智能语音播报。展现在开源社区的技术贡献和多模态AI应用能力。</p>
-                        <div class="project-tags">
-                            <span class="tag primary">开源项目</span>
-                            <span class="tag primary">TTS技术</span>
-                            <span class="tag">语音合成</span>
-                            <span class="tag">社区贡献</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image ai-project">
-                        <i class="fas fa-file-excel"></i>
-                        <div class="ai-indicator">📊 WPS集成</div>
-                    </div>
-                    <div class="project-content">
-                        <h4>tmtPartWps WPS自动化工具</h4>
-                        <p class="project-role">💼 产品经理 & 自动化专家</p>
-                        <p>WPS办公软件自动化集成工具，通过AI协作实现表格数据处理、文档生成和办公流程自动化，提升办公效率。</p>
-                        <div class="project-tags">
-                            <span class="tag primary">WPS集成</span>
-                            <span class="tag primary">AI协作</span>
-                            <span class="tag">办公自动化</span>
-                            <span class="tag">数据处理</span>
-                        </div>
+                <div class="project-content">
+                    <h4>book-index-tts 文本转语音</h4>
+                    <p class="project-role">产品经理 & 开源贡献者</p>
+                    <p>开源文本转语音项目，实现书籍索引的智能语音播报。</p>
+                    <div class="project-tags">
+                        <span class="project-tag primary">开源项目</span>
+                        <span class="project-tag primary">TTS技术</span>
+                        <span class="project-tag">语音合成</span>
                     </div>
                 </div>
             </div>
@@ -1228,32 +1006,53 @@
     </section>
 
     <!-- 联系方式 -->
-    <section id="contact" class="section contact">
-        <div class="container">
-            <div class="contact-content">
-                <h3>期待与您的合作</h3>
-                <p>如果您正在寻找AI协作专家、数字化产品经理或AI解决方案架构师，欢迎与我联系探讨合作机会。我专注于通过AI工具创新驱动业务价值最大化。</p>
-                <div class="contact-buttons">
-                    <a href="mailto:cxxvcheng@gmail.com" class="contact-button">
-                        <i class="fas fa-envelope"></i>
-                        <span>发送邮件</span>
-                    </a>
-                    <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer"
-                        class="contact-button github-btn">
-                        <i class="fab fa-github"></i>
-                        <span>查看项目</span>
-                    </a>
-                </div>
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <h3>期待与您的合作</h3>
+            <p>
+                如果您正在寻找AI协作专家、数字化产品经理或AI解决方案架构师，欢迎与我联系探讨合作机会。
+            </p>
+            <div class="contact-buttons">
+                <a href="mailto:cxxvcheng@gmail.com" class="contact-btn primary">
+                    <i class="fas fa-envelope"></i>
+                    <span>发送邮件</span>
+                </a>
+                <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="contact-btn secondary">
+                    <i class="fab fa-github"></i>
+                    <span>查看项目</span>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- 悬浮邮件按钮 -->
-    <div class="floating-email">
-        <a href="mailto:cxxvcheng@gmail.com" title="发送邮件">
-            <i class="fas fa-envelope"></i>
-        </a>
-    </div>
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h4>Jim</h4>
+                <p>AI工具实践者，专注需求分析与实现、业务流程数字化、企业自动化解决方案设计。</p>
+            </div>
+            <div class="footer-links">
+                <h5>导航</h5>
+                <ul>
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#skills">核心技能</a></li>
+                    <li><a href="#projects">项目展示</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>联系</h5>
+                <ul>
+                    <li><a href="mailto:cxxvcheng@gmail.com">cxxvcheng@gmail.com</a></li>
+                    <li><a href="https://github.com/Jim-purch/" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Jim. 保留所有权利。</p>
+        </div>
+    </footer>
 
     <!-- JavaScript -->
     <script>
@@ -1261,42 +1060,35 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                const targetId = this.getAttribute('href').slice(1);
+                if (!targetId) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+                const element = document.getElementById(targetId);
+                if (element) {
+                    const headerOffset = 80;
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
                     });
                 }
             });
         });
 
         // 导航栏滚动效果
-        let lastScrollY = window.scrollY;
-        const navbar = document.querySelector('.navbar');
-
+        const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-
-            if (currentScrollY > 100) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                if (currentScrollY > lastScrollY) {
-                    // 向下滚动时隐藏导航栏
-                    navbar.classList.add('hidden');
-                } else {
-                    // 向上滚动时显示导航栏
-                    navbar.classList.remove('hidden');
-                }
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
             } else {
-                // 在顶部时始终显示导航栏
-                navbar.style.background = 'rgba(255, 255, 255, 0.8)';
-                navbar.classList.remove('hidden');
+                navbar.classList.remove('scrolled');
             }
-
-            lastScrollY = currentScrollY;
         });
 
-        // 技能卡片和项目卡片动画
+        // 元素进入视口动画
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1311,68 +1103,13 @@
             });
         }, observerOptions);
 
-        // 观察所有卡片
-        document.querySelectorAll('.skill-card, .project-card').forEach(card => {
+        // 观察项目卡片
+        document.querySelectorAll('.project-card').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.2, 1, 0.3, 1)';
             observer.observe(card);
         });
-
-        // AI主题鼠标跟随效果（仅在桌面端）
-        if (window.innerWidth > 768) {
-            const cursor = document.createElement('div');
-            cursor.style.cssText = `
-                position: fixed;
-                width: 20px;
-                height: 20px;
-                background: rgba(16, 185, 129, 0.3);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 999;
-                transition: transform 0.1s ease;
-                mix-blend-mode: normal;
-            `;
-            document.body.appendChild(cursor);
-
-            document.addEventListener('mousemove', (e) => {
-                // 检查鼠标是否在导航栏区域
-                const navbar = document.querySelector('.navbar');
-                const navbarRect = navbar.getBoundingClientRect();
-                const isOverNavbar = e.clientX >= navbarRect.left &&
-                    e.clientX <= navbarRect.right &&
-                    e.clientY >= navbarRect.top &&
-                    e.clientY <= navbarRect.bottom;
-
-                if (isOverNavbar) {
-                    cursor.style.opacity = '0';
-                } else {
-                    cursor.style.opacity = '1';
-                    cursor.style.left = e.clientX - 10 + 'px';
-                    cursor.style.top = e.clientY - 10 + 'px';
-                }
-            });
-
-            // 悬停效果（排除导航栏）
-            document.querySelectorAll('a:not(.navbar a), button, .skill-card, .project-card, .expertise-item').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.style.transform = 'scale(2)';
-                    cursor.style.background = 'rgba(139, 92, 246, 0.4)';
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursor.style.transform = 'scale(1)';
-                    cursor.style.background = 'rgba(16, 185, 129, 0.3)';
-                });
-            });
-        }
-
-        // 性能优化：延迟加载非关键动画
-        setTimeout(() => {
-            document.querySelectorAll('.expertise-item').forEach((item, index) => {
-                item.style.animationDelay = `${index * 0.1}s`;
-                item.classList.add('animate-in');
-            });
-        }, 500);
     </script>
 </body>
 
