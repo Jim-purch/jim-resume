@@ -1,0 +1,9 @@
+# Nixpacks 配置 :: Coolify 自动构建纯静态站点
+# 使用 Caddy 作为静态文件服务器（单二进制、零配置、支持 gzip/brotli）
+# Coolify 默认通过 PORT 环境变量注入端口
+
+[phases.setup]
+nixPkgs = ["caddy"]
+
+[start]
+cmd = "caddy file-server --listen :${PORT:-8080} --root /app"
