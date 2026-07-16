@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jim - AI协作 & 全栈数字化产品创造者 | 个人简历</title>
+    <title>Jim - AI协作 & 全栈数字化产品创造者 | Personal Portfolio</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
     <!-- 性能优化 -->
@@ -12,21 +12,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 
-    <!-- 字体 - Aura 风格 -->
+    <!-- 字体 - 中英双语优化 -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
 
     <!-- 图标 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <!-- SEO 优化 -->
-    <meta name="description" content="Jim - AI协作大师与全栈数字化产品创造者，专注AI生态构建(MCP)、全栈SaaS开发、企业级分布式系统和企业数字化转型">
-    <meta name="keywords" content="Jim,AI协作大师,全栈开发,MCP,Next.js,数字化产品,分布式系统,AI应用,企业自动化">
+    <meta name="description" content="Jim - AI协作与全栈数字化产品创造者，专注AI生态构建(MCP)、全栈SaaS开发、企业级分布式系统和企业数字化转型 | AI Collaboration Expert & Full-stack Digital Product Creator">
+    <meta name="keywords" content="Jim,AI协作，全栈开发,MCP,Next.js,数字化产品,分布式系统,AI应用,企业自动化,AI Collaboration,Full-stack,MCP">
     <meta name="author" content="Jim">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Jim - AI协作大师 & 全栈数字化产品创造者">
+    <meta property="og:title" content="Jim - AI协作 & 全栈数字化产品创造者">
     <meta property="og:description" content="40+项目经验 · MCP生态构建者 · 2000万+记录分布式系统 · 全栈SaaS开发">
     <meta property="og:type" content="website">
 
@@ -42,9 +42,13 @@
             --charcoal-light: #5D5A53;
             --stone: #A8A29E;
 
-            /* 字体 */
-            --font-serif: 'Playfair Display', Georgia, serif;
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            /* GitHub 强调色 */
+            --gh-accent: #6B4EFF;
+
+            /* 字体 - 中英双语 */
+            --font-serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
+            --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
 
             /* 间距 */
             --space-xs: 0.5rem;
@@ -79,13 +83,54 @@
             font-family: var(--font-sans);
             background-color: var(--cream);
             color: var(--charcoal);
-            line-height: 1.7;
+            line-height: 1.75;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            font-feature-settings: "kern", "liga";
         }
 
         h1, h2, h3, h4, .font-serif {
             font-family: var(--font-serif);
+        }
+
+        /* 双语排版系统 */
+        .en {
+            font-family: var(--font-sans);
+            font-weight: 300;
+            letter-spacing: 0.01em;
+            opacity: 0.78;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            color: var(--charcoal-light);
+            margin-bottom: var(--space-md);
+        }
+
+        .section-label::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--charcoal-light);
+        }
+
+        .section-label .en-tag {
+            opacity: 0.6;
+            font-weight: 500;
+        }
+
+        .lang-sub {
+            display: block;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-weight: 400;
+            opacity: 0.55;
         }
 
         /* 动画 */
@@ -101,6 +146,7 @@
         .animate-delay-200 { animation-delay: 0.2s; opacity: 0; }
         .animate-delay-400 { animation-delay: 0.4s; opacity: 0; }
         .animate-delay-600 { animation-delay: 0.6s; opacity: 0; }
+        .animate-delay-800 { animation-delay: 0.8s; opacity: 0; }
 
         /* 导航栏 - Aura 风格 */
         .navbar {
@@ -136,6 +182,7 @@
             letter-spacing: -0.02em;
             color: var(--cream);
             transition: color var(--transition-normal);
+            text-decoration: none;
         }
 
         .navbar.scrolled .logo {
@@ -146,14 +193,15 @@
             display: flex;
             list-style: none;
             gap: var(--space-xl);
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.18em;
             color: rgba(245, 242, 235, 0.9);
             transition: opacity var(--transition-fast);
         }
@@ -164,6 +212,32 @@
 
         .nav-links a:hover {
             opacity: 0.6;
+        }
+
+        .nav-gh {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.9rem;
+            border: 1px solid rgba(245, 242, 235, 0.4);
+            border-radius: 9999px;
+            text-transform: none !important;
+            letter-spacing: 0.02em !important;
+            font-size: 0.8rem !important;
+            transition: all var(--transition-fast) !important;
+        }
+
+        .navbar.scrolled .nav-gh {
+            border-color: var(--warm-gray);
+        }
+
+        .nav-gh:hover {
+            background: rgba(255, 255, 255, 0.12);
+            opacity: 1 !important;
+        }
+
+        .navbar.scrolled .nav-gh:hover {
+            background: var(--cream-dark);
         }
 
         /* Hero 区域 - Aura 风格 */
@@ -200,7 +274,7 @@
         .hero-overlay-2 {
             position: absolute;
             inset: 0;
-            background: rgba(49, 48, 48, 0.2);
+            background: linear-gradient(180deg, rgba(49, 48, 48, 0.1) 0%, rgba(28, 27, 25, 0.55) 100%);
         }
 
         .hero-content {
@@ -213,25 +287,30 @@
 
         .hero-badge {
             display: inline-block;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.22em;
+            color: rgba(255, 255, 255, 0.92);
             margin-bottom: var(--space-md);
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(4px);
             padding: var(--space-xs) var(--space-sm);
             border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-badge .en {
+            opacity: 0.7;
         }
 
         .hero-title {
-            font-size: clamp(3rem, 10vw, 7rem);
+            font-size: clamp(2.8rem, 9vw, 6.5rem);
             font-weight: 400;
             color: white;
             letter-spacing: -0.02em;
             line-height: 1.1;
-            margin-bottom: var(--space-lg);
+            margin-bottom: var(--space-md);
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
 
@@ -240,13 +319,31 @@
             color: var(--cream);
         }
 
+        .hero-title-sub {
+            display: block;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-weight: 400;
+            font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+            letter-spacing: 0;
+        }
+
         .hero-subtitle {
-            max-width: 600px;
+            max-width: 640px;
             margin: 0 auto var(--space-xl);
-            font-size: 1.125rem;
+            font-size: 1.0625rem;
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.92);
+            line-height: 1.85;
+        }
+
+        .hero-subtitle .en {
+            display: block;
+            margin-top: 0.5rem;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 0.95rem;
         }
 
         .hero-cta {
@@ -256,10 +353,10 @@
             padding: var(--space-sm) var(--space-xl);
             border-radius: 9999px;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.16em;
             transition: all var(--transition-normal);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
@@ -270,11 +367,79 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
         }
 
+        /* GitHub 醒目展示卡片 */
+        .gh-showcase {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+            padding: var(--space-sm) var(--space-md);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 9999px;
+            text-decoration: none;
+            color: white;
+            transition: all var(--transition-normal);
+        }
+
+        .gh-showcase:hover {
+            background: rgba(255, 255, 255, 0.16);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .gh-showcase-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: white;
+            color: var(--charcoal);
+            border-radius: 50%;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+        }
+
+        .gh-showcase-text {
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .gh-showcase-handle {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .gh-showcase-sub {
+            font-size: 0.7rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            opacity: 0.72;
+            margin-top: 2px;
+        }
+
+        .gh-showcase-arrow {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: transform var(--transition-fast);
+        }
+
+        .gh-showcase:hover .gh-showcase-arrow {
+            transform: translateX(4px);
+        }
+
         .hero-social {
             display: flex;
             justify-content: center;
             gap: var(--space-md);
-            margin-top: var(--space-xl);
+            margin-top: var(--space-lg);
         }
 
         .hero-social a {
@@ -331,15 +496,26 @@
             color: var(--charcoal);
         }
 
+        .about-intro h2 .lang-sub {
+            font-size: 0.42em;
+            margin-top: var(--space-xs);
+        }
+
         .about-intro-content {
-            max-width: 700px;
+            max-width: 720px;
         }
 
         .about-intro-content p {
             font-size: 1.125rem;
             font-weight: 300;
             color: var(--charcoal-light);
-            line-height: 1.8;
+            line-height: 1.85;
+            margin-bottom: var(--space-sm);
+        }
+
+        .about-intro-content p.en {
+            font-size: 0.9375rem;
+            opacity: 0.65;
             margin-bottom: var(--space-lg);
         }
 
@@ -351,6 +527,13 @@
             font-style: italic;
             font-size: 1.25rem;
             color: var(--charcoal);
+        }
+
+        .about-quote .en {
+            display: block;
+            font-size: 0.95rem;
+            opacity: 0.6;
+            margin-top: 0.4rem;
         }
 
         /* 技能区块 - Aura 风格大分区 */
@@ -393,9 +576,14 @@
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.22em;
             color: var(--charcoal-light);
             margin-bottom: var(--space-md);
+        }
+
+        .skills-label .en-tag {
+            opacity: 0.6;
+            font-weight: 500;
         }
 
         .skills-content.dark .skills-label {
@@ -406,15 +594,25 @@
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 400;
             line-height: 1.2;
-            margin-bottom: var(--space-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        .skills-content h3 .lang-sub {
+            font-size: 0.42em;
         }
 
         .skills-content p {
-            font-size: 1.1rem;
+            font-size: 1.0625rem;
             font-weight: 300;
             line-height: 1.8;
             max-width: 500px;
             color: var(--charcoal-light);
+        }
+
+        .skills-content p.en {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin-top: 0.75rem;
         }
 
         .skills-content.dark p {
@@ -450,20 +648,31 @@
 
         .projects-header {
             text-align: center;
-            max-width: 600px;
+            max-width: 640px;
             margin: 0 auto var(--space-3xl);
         }
 
         .projects-header h2 {
             font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 400;
-            margin-bottom: var(--space-md);
+            margin-bottom: var(--space-sm);
+        }
+
+        .projects-header h2 .lang-sub {
+            font-size: 0.4em;
+            margin-top: 0.4rem;
         }
 
         .projects-header p {
-            font-size: 1.125rem;
+            font-size: 1.0625rem;
             font-weight: 300;
             color: var(--charcoal-light);
+        }
+
+        .projects-header p.en {
+            font-size: 0.9rem;
+            opacity: 0.62;
+            margin-top: 0.5rem;
         }
 
         .projects-grid {
@@ -475,6 +684,7 @@
         }
 
         .project-card {
+            position: relative;
             background: var(--cream-light);
             border-radius: var(--space-sm);
             overflow: hidden;
@@ -509,22 +719,22 @@
             font-size: 0.65rem;
             font-weight: 600;
             padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             color: var(--charcoal);
             border-radius: var(--space-xs);
         }
 
         .featured-badge {
             position: absolute;
-            top: -12px;
+            top: 12px;
             left: var(--space-sm);
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
             padding: 4px 12px;
             background: var(--charcoal);
             color: white;
             border-radius: var(--space-xs);
-            z-index: 1;
+            z-index: 2;
         }
 
         .project-content {
@@ -537,6 +747,15 @@
             font-weight: 600;
             margin-bottom: var(--space-xs);
             color: var(--charcoal);
+            line-height: 1.35;
+        }
+
+        .project-content h4 .en {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 400;
+            opacity: 0.55;
+            margin-top: 2px;
         }
 
         .project-role {
@@ -551,6 +770,13 @@
             font-weight: 300;
             color: var(--charcoal-light);
             line-height: 1.7;
+            margin-bottom: var(--space-md);
+        }
+
+        .project-content p.en {
+            font-size: 0.8125rem;
+            opacity: 0.6;
+            margin-top: -0.5rem;
             margin-bottom: var(--space-md);
         }
 
@@ -581,7 +807,7 @@
         }
 
         .contact-content {
-            max-width: 600px;
+            max-width: 640px;
             margin: 0 auto;
             text-align: center;
         }
@@ -592,11 +818,22 @@
             margin-bottom: var(--space-md);
         }
 
+        .contact-content h3 .lang-sub {
+            font-size: 0.42em;
+            margin-top: 0.4rem;
+        }
+
         .contact-content p {
             font-size: 1.0625rem;
             font-weight: 300;
             color: var(--charcoal-light);
             line-height: 1.8;
+            margin-bottom: var(--space-sm);
+        }
+
+        .contact-content p.en {
+            font-size: 0.9rem;
+            opacity: 0.62;
             margin-bottom: var(--space-xl);
         }
 
@@ -614,10 +851,10 @@
             padding: var(--space-sm) var(--space-lg);
             border-radius: 9999px;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             transition: all var(--transition-fast);
         }
 
@@ -668,15 +905,21 @@
             font-weight: 300;
             color: var(--charcoal-light);
             line-height: 1.7;
-            max-width: 300px;
+            max-width: 320px;
+        }
+
+        .footer-brand p.en {
+            font-size: 0.8125rem;
+            opacity: 0.6;
+            margin-top: 0.5rem;
         }
 
         .footer-links h5 {
             font-family: var(--font-sans);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.14em;
             color: var(--charcoal);
             margin-bottom: var(--space-md);
         }
@@ -742,11 +985,24 @@
             }
 
             .nav-links {
+                gap: var(--space-md);
+            }
+
+            .nav-links a:not(.nav-gh) {
                 display: none;
             }
 
             .hero-title {
-                font-size: clamp(2.5rem, 12vw, 4rem);
+                font-size: clamp(2.3rem, 12vw, 3.8rem);
+            }
+
+            .gh-showcase {
+                flex-direction: row;
+                padding: var(--space-xs) var(--space-sm) var(--space-xs) var(--space-xs);
+            }
+
+            .gh-showcase-sub {
+                display: none;
             }
 
             .hero-social {
@@ -768,7 +1024,7 @@
             }
 
             .contact-btn {
-                width: 200px;
+                width: 220px;
                 justify-content: center;
             }
         }
@@ -790,10 +1046,16 @@
         <div class="navbar-inner">
             <a href="#" class="logo">Jim</a>
             <ul class="nav-links">
-                <li><a href="#about">关于</a></li>
-                <li><a href="#skills">技能</a></li>
-                <li><a href="#projects">项目</a></li>
-                <li><a href="#contact">联系</a></li>
+                <li><a href="#about">关于 / <span class="en">About</span></a></li>
+                <li><a href="#skills">技能 / <span class="en">Skills</span></a></li>
+                <li><a href="#projects">项目 / <span class="en">Work</span></a></li>
+                <li><a href="#contact">联系 / <span class="en">Contact</span></a></li>
+                <li>
+                    <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="nav-gh">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -801,33 +1063,44 @@
     <!-- Hero 区域 -->
     <section id="home" class="hero">
         <div class="hero-bg">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000" 
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000"
                  alt="Serene misty landscape">
             <div class="hero-overlay"></div>
             <div class="hero-overlay-2"></div>
         </div>
         <div class="hero-content">
             <div class="animate-fade-in-up">
-                <span class="hero-badge">AI协作大师 · 全栈产品创造者</span>
+                <span class="hero-badge">AI协作 · 全栈产品创造者 <span class="en">/ AI Collaboration & Full-stack Creator</span></span>
             </div>
             <h1 class="hero-title animate-fade-in-up animate-delay-200">
                 用代码与AI，<br><em>重塑可能性。</em>
+                <span class="hero-title-sub">Reshaping possibilities with code &amp; AI.</span>
             </h1>
             <p class="hero-subtitle animate-fade-in-up animate-delay-400">
                 从2000万+记录的分布式系统到MCP生态构建，<br>
                 40+ 项目 · 全栈开发 · AI应用集成 · 企业数字化转型
+                <span class="en">From distributed systems handling 20M+ records to building the MCP ecosystem — 40+ projects across full-stack, AI integration &amp; digital transformation.</span>
             </p>
             <div class="animate-fade-in-up animate-delay-600">
-                <a href="#about" class="hero-cta">了解更多</a>
+                <a href="#about" class="hero-cta">了解更多 / Learn More</a>
             </div>
-            <div class="hero-social animate-fade-in-up animate-delay-600">
-                <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-github"></i>
-                    <span>GitHub</span>
+
+            <!-- GitHub 醒目展示 -->
+            <div class="animate-fade-in-up animate-delay-800">
+                <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="gh-showcase">
+                    <span class="gh-showcase-icon"><i class="fab fa-github"></i></span>
+                    <span class="gh-showcase-text">
+                        <span class="gh-showcase-handle">@Jim-purch</span>
+                        <span class="gh-showcase-sub">查看全部开源项目 / View on GitHub</span>
+                    </span>
+                    <span class="gh-showcase-arrow"><i class="fas fa-arrow-right"></i></span>
                 </a>
+            </div>
+
+            <div class="hero-social animate-fade-in-up animate-delay-800">
                 <a href="mailto:cxxvcheng@gmail.com">
                     <i class="fas fa-envelope"></i>
-                    <span>邮箱联系</span>
+                    <span>邮箱联系 / Email</span>
                 </a>
             </div>
         </div>
@@ -841,16 +1114,26 @@
     <!-- 关于我 -->
     <section id="about" class="about">
         <div class="about-intro">
-            <h2>扎根实践，<br>放眼创新。</h2>
+            <h2>
+                扎根实践，<br>放眼创新。
+                <span class="lang-sub">Grounded in practice, <br>driven by innovation.</span>
+            </h2>
             <div class="about-intro-content">
                 <p>
                     我相信AI是增强人的工具，而非替代。与AI的协作让创造力得以放大，让想法更快地转化为现实。
                 </p>
+                <p class="en">
+                    I believe AI is a tool that amplifies human capability rather than replaces it. Collaborating with AI expands creativity and turns ideas into reality — faster.
+                </p>
                 <p>
                     40+项目实战，横跨分布式系统架构、全栈SaaS开发、MCP生态构建、AI应用集成等领域。从2000万+记录的企业级数据库到太空探索网页游戏，我专注于将复杂需求转化为可落地的技术方案。
                 </p>
+                <p class="en">
+                    40+ projects spanning distributed systems, full-stack SaaS, the MCP ecosystem, and AI integration. From enterprise databases with 20M+ records to space-exploration web games — I turn complex requirements into shippable solutions.
+                </p>
                 <blockquote class="about-quote">
                     "人提供方向与判断，AI提供执行与可能性。"
+                    <span class="en">"Humans provide direction and judgment; AI provides execution and possibility."</span>
                 </blockquote>
             </div>
         </div>
@@ -860,30 +1143,42 @@
     <section id="skills">
         <div class="skills-section">
             <div class="skills-image">
-                <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=1200" 
+                <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=1200"
                      alt="Natural Stone Texture">
             </div>
             <div class="skills-content">
-                <span class="skills-label">核心能力</span>
-                <h3>AI协作<br>与MCP生态</h3>
+                <span class="skills-label">核心能力 <span class="en-tag">/ Core Capabilities</span></span>
+                <h3>
+                    AI协作<br>与MCP生态
+                    <span class="lang-sub">AI Collaboration &amp; MCP Ecosystem</span>
+                </h3>
                 <p>
                     深度掌握 Claude Code、DeepSeek、ChatGPT 等AI工具。独立开发并发布 MCP 工具服务器 (npm)，打通AI与企业办公数据的连接。擅长多模态AI应用集成。
                 </p>
+                <p class="en">
+                    Deep proficiency with Claude Code, DeepSeek &amp; ChatGPT. Independently developed and published an MCP tool server (npm), bridging AI with enterprise data. Skilled in multimodal AI integration.
+                </p>
                 <div class="skills-list">
                     <span class="skill-tag">MCP协议</span>
-                    <span class="skill-tag">提示工程</span>
+                    <span class="skill-tag">提示工程 / Prompt Eng.</span>
                     <span class="skill-tag">AI服务集成</span>
                     <span class="skill-tag">多模态应用</span>
-                    <span class="skill-tag">语音AI</span>
+                    <span class="skill-tag">语音AI / Voice AI</span>
                 </div>
             </div>
         </div>
         <div class="skills-section">
             <div class="skills-content dark">
-                <span class="skills-label">业务能力</span>
-                <h3>全栈开发<br>与系统架构</h3>
+                <span class="skills-label">业务能力 <span class="en-tag">/ Engineering</span></span>
+                <h3>
+                    全栈开发<br>与系统架构
+                    <span class="lang-sub">Full-stack Development &amp; Architecture</span>
+                </h3>
                 <p>
                     React/Next.js + Python/Flask + PostgreSQL/Redis/Elasticsearch + Docker 全栈交付能力。从SaaS产品到2000万+记录的分布式系统，从桌面应用到网页游戏。
+                </p>
+                <p class="en">
+                    End-to-end delivery with React/Next.js + Python/Flask + PostgreSQL/Redis/Elasticsearch + Docker. From SaaS products to 20M+ record distributed systems, desktop apps to web games.
                 </p>
                 <div class="skills-list">
                     <span class="skill-tag">React/Next.js</span>
@@ -894,7 +1189,7 @@
                 </div>
             </div>
             <div class="skills-image">
-                <img src="https://images.pexels.com/photos/6801917/pexels-photo-6801917.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                <img src="https://images.pexels.com/photos/6801917/pexels-photo-6801917.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                      alt="Calm workspace">
             </div>
         </div>
@@ -903,20 +1198,33 @@
     <!-- 项目展示 -->
     <section id="projects" class="projects">
         <div class="projects-header">
-            <h2>项目作品</h2>
-            <p>40+ 项目实战，横跨分布式系统、SaaS平台、AI应用、企业工具与Web游戏的全栈实践。</p>
+            <span class="section-label" style="justify-content:center;">作品 <span class="en-tag">/ Selected Work</span></span>
+            <h2>
+                项目作品
+                <span class="lang-sub">Selected Projects</span>
+            </h2>
+            <p>
+                40+ 项目实战，横跨分布式系统、SaaS平台、AI应用、企业工具与Web游戏的全栈实践。
+            </p>
+            <p class="en">
+                40+ projects across distributed systems, SaaS platforms, AI apps, enterprise tools &amp; web games.
+            </p>
         </div>
         <div class="projects-grid">
             <div class="project-card featured">
-                <div class="featured-badge">★ 旗舰项目</div>
+                <div class="featured-badge">★ 旗舰项目 / Flagship</div>
                 <div class="project-image">
                     <i class="fas fa-database"></i>
                     <span class="project-badge">🏢 分布式系统</span>
                 </div>
                 <div class="project-content">
-                    <h4>海量配件数据库系统</h4>
-                    <p class="project-role">系统架构师 & 全栈开发者</p>
+                    <h4>
+                        海量配件数据库系统
+                        <span class="en">Massive Parts Database System</span>
+                    </h4>
+                    <p class="project-role">系统架构师 &amp; 全栈开发者 / Architect &amp; Full-stack Dev</p>
                     <p>2000万+配件记录、2900万+转换码记录的分布式系统。PostgreSQL + Redis + Elasticsearch 架构，支持1000+并发，查询提速10-50倍。</p>
+                    <p class="en">Distributed system with 20M+ parts and 29M+ conversion records. PostgreSQL + Redis + Elasticsearch stack, supporting 1000+ concurrent users with 10–50× faster queries.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">分布式架构</span>
                         <span class="project-tag primary">Docker</span>
@@ -926,15 +1234,19 @@
                 </div>
             </div>
             <div class="project-card featured">
-                <div class="featured-badge">★ 旗舰项目</div>
+                <div class="featured-badge">★ 旗舰项目 / Flagship</div>
                 <div class="project-image">
                     <i class="fas fa-plug"></i>
                     <span class="project-badge">🤖 MCP生态</span>
                 </div>
                 <div class="project-content">
-                    <h4>WPS MCP Server</h4>
-                    <p class="project-role">独立开发者 (已发布 npm)</p>
+                    <h4>
+                        WPS MCP Server
+                        <span class="en">Model Context Protocol Integration</span>
+                    </h4>
+                    <p class="project-role">独立开发者（已发布 npm）/ Solo Dev · Published on npm</p>
                     <p>基于 Model Context Protocol 的 WPS 表格集成服务器，让 Claude Desktop 等AI应用直接查询和操作企业云表格数据。</p>
+                    <p class="en">An MCP-based server integrating WPS Spreadsheets, enabling AI apps like Claude Desktop to query and manipulate enterprise cloud sheets directly.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">MCP协议</span>
                         <span class="project-tag primary">npm发布</span>
@@ -944,15 +1256,19 @@
                 </div>
             </div>
             <div class="project-card featured">
-                <div class="featured-badge">★ 旗舰项目</div>
+                <div class="featured-badge">★ 旗舰项目 / Flagship</div>
                 <div class="project-image">
                     <i class="fas fa-cloud"></i>
                     <span class="project-badge">☁️ 全栈SaaS</span>
                 </div>
                 <div class="project-content">
-                    <h4>云表格快速查找 SaaS</h4>
-                    <p class="project-role">全栈开发者 & 产品设计</p>
+                    <h4>
+                        云表格快速查找 SaaS
+                        <span class="en">Cloud Sheet Search SaaS</span>
+                    </h4>
+                    <p class="project-role">全栈开发者 &amp; 产品设计 / Full-stack &amp; Product Design</p>
                     <p>Next.js 16 + Supabase 全栈云表格搜索管理平台。支持跨表多条件搜索、Token管理、用户权限系统和 MCP 配置生成。</p>
+                    <p class="en">A full-stack cloud-sheet search platform built on Next.js 16 + Supabase. Cross-table multi-condition search, token management, RBAC, and MCP config generation.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">Next.js 16</span>
                         <span class="project-tag primary">Supabase</span>
@@ -967,9 +1283,13 @@
                     <span class="project-badge">🧠 AI应用</span>
                 </div>
                 <div class="project-content">
-                    <h4>OH-MindMirror AI心理投射工具</h4>
-                    <p class="project-role">产品设计 & 全栈开发</p>
+                    <h4>
+                        OH-MindMirror AI心理投射工具
+                        <span class="en">AI Psychological Projection Tool</span>
+                    </h4>
+                    <p class="project-role">产品设计 &amp; 全栈开发 / Product &amp; Full-stack</p>
                     <p>基于 OH 卡牌原理的数字疗愈应用，结合 Gemini AI 引导用户进行潜意识探索与自我对话。</p>
+                    <p class="en">A digital wellness app based on OH cards, using Gemini AI to guide users through subconscious exploration and self-dialogue.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">Gemini API</span>
                         <span class="project-tag">React</span>
@@ -983,9 +1303,13 @@
                     <span class="project-badge">🎙️ 智能语音</span>
                 </div>
                 <div class="project-content">
-                    <h4>TeleChat Telegram AI语音机器人</h4>
-                    <p class="project-role">独立开发者</p>
+                    <h4>
+                        TeleChat Telegram AI语音机器人
+                        <span class="en">Telegram AI Voice Bot</span>
+                    </h4>
+                    <p class="project-role">独立开发者 / Solo Developer</p>
                     <p>集成 DeepSeek AI 推理与 MiniMax 语音合成的 Telegram 机器人，提供智能文本+语音双通道交互。Docker 容器化部署。</p>
+                    <p class="en">A Telegram bot combining DeepSeek AI reasoning with MiniMax TTS, offering dual text + voice interaction. Dockerized deployment.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">DeepSeek</span>
                         <span class="project-tag primary">TTS</span>
@@ -1000,9 +1324,13 @@
                     <span class="project-badge">🔐 安全代理</span>
                 </div>
                 <div class="project-content">
-                    <h4>Everything Proxy Service</h4>
-                    <p class="project-role">系统架构师 & 全栈开发</p>
+                    <h4>
+                        Everything Proxy Service
+                        <span class="en">Secure Proxy &amp; Management GUI</span>
+                    </h4>
+                    <p class="project-role">系统架构师 &amp; 全栈开发 / Architect &amp; Full-stack</p>
                     <p>Everything 文件搜索引擎的安全代理服务，增强用户认证、访问日志、路径混淆和 PyQt5 GUI 管理界面。支持自动更新和 FRP 穿透。</p>
+                    <p class="en">A secure proxy for the Everything file-search engine, adding auth, access logging, path obfuscation, and a PyQt5 GUI. Supports auto-update and FRP tunneling.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">Flask</span>
                         <span class="project-tag">安全增强</span>
@@ -1017,9 +1345,13 @@
                     <span class="project-badge">🏢 企业自动化</span>
                 </div>
                 <div class="project-content">
-                    <h4>WPS 企业自动化工具集</h4>
-                    <p class="project-role">产品设计 & 开发</p>
+                    <h4>
+                        WPS 企业自动化工具集
+                        <span class="en">WPS Enterprise Automation Suite</span>
+                    </h4>
+                    <p class="project-role">产品设计 &amp; 开发 / Product Design &amp; Dev</p>
                     <p>基于 WPS 多维表格的企业级自动化方案，涵盖报价系统、库存管理、编码转换和 Bartender 标签打印服务。</p>
+                    <p class="en">Enterprise automation built on WPS multidimensional tables — covering quoting, inventory, code conversion, and Bartender label printing.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">WPS AirScript</span>
                         <span class="project-tag">业务自动化</span>
@@ -1033,9 +1365,13 @@
                     <span class="project-badge">🎮 Web游戏</span>
                 </div>
                 <div class="project-content">
-                    <h4>星海方舟 — 太空探索放置游戏</h4>
-                    <p class="project-role">独立全栈开发</p>
+                    <h4>
+                        星海方舟 — 太空探索放置游戏
+                        <span class="en">Star Ark — Space Idle Game</span>
+                    </h4>
+                    <p class="project-role">独立全栈开发 / Solo Full-stack</p>
                     <p>宇宙方舟主题放置类网页游戏。10种资源、4个星域、科技树、巨型工程和声望系统。Supabase 云端存档 + 离线收益防作弊。</p>
+                    <p class="en">A cosmos-themed idle web game: 10 resources, 4 star regions, a tech tree, mega-projects, and a reputation system. Supabase cloud saves with offline anti-cheat.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">React 18</span>
                         <span class="project-tag primary">TypeScript</span>
@@ -1050,9 +1386,13 @@
                     <span class="project-badge">🖼️ 隐私优先</span>
                 </div>
                 <div class="project-content">
-                    <h4>批量水印工具</h4>
-                    <p class="project-role">独立开发</p>
+                    <h4>
+                        批量水印工具
+                        <span class="en">Privacy-first Batch Watermark Tool</span>
+                    </h4>
+                    <p class="project-role">独立开发 / Solo Developer</p>
                     <p>纯前端批量图片加水印工具，所有处理在浏览器本地完成。Docker 多阶段构建 + Nginx 部署，支持一键私有化。</p>
+                    <p class="en">A fully client-side batch image-watermarking tool — all processing runs locally in the browser. Docker multi-stage build + Nginx, ready for one-click self-hosting.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">Vite</span>
                         <span class="project-tag">Docker</span>
@@ -1066,18 +1406,25 @@
     <!-- 联系方式 -->
     <section id="contact" class="contact">
         <div class="contact-content">
-            <h3>期待与您的合作</h3>
+            <span class="section-label" style="justify-content:center;">联系 <span class="en-tag">/ Get in Touch</span></span>
+            <h3>
+                期待与您的合作
+                <span class="lang-sub">Let's build something together</span>
+            </h3>
             <p>
                 如果您正在寻找AI协作专家、全栈开发工程师、MCP生态构建者或数字化转型顾问，欢迎与我联系探讨合作机会。
+            </p>
+            <p class="en">
+                Looking for an AI collaboration expert, full-stack engineer, MCP ecosystem builder, or digital-transformation advisor? Let's talk.
             </p>
             <div class="contact-buttons">
                 <a href="mailto:cxxvcheng@gmail.com" class="contact-btn primary">
                     <i class="fas fa-envelope"></i>
-                    <span>发送邮件</span>
+                    <span>发送邮件 / Email</span>
                 </a>
                 <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="contact-btn secondary">
                     <i class="fab fa-github"></i>
-                    <span>查看项目</span>
+                    <span>查看项目 / View GitHub</span>
                 </a>
             </div>
         </div>
@@ -1088,27 +1435,28 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <h4>Jim</h4>
-                <p>AI协作大师与全栈数字化产品创造者，专注MCP生态构建、全栈SaaS开发、分布式系统架构和企业数字化转型。</p>
+                <p>AI协作与全栈数字化产品创造者，专注MCP生态构建、全栈SaaS开发、分布式系统架构和企业数字化转型。</p>
+                <p class="en">AI collaboration expert &amp; full-stack digital product creator — focused on the MCP ecosystem, full-stack SaaS, distributed systems, and enterprise digital transformation.</p>
             </div>
             <div class="footer-links">
-                <h5>导航</h5>
+                <h5>导航 / Navigate</h5>
                 <ul>
-                    <li><a href="#about">关于我</a></li>
-                    <li><a href="#skills">核心技能</a></li>
-                    <li><a href="#projects">项目展示</a></li>
-                    <li><a href="#contact">联系方式</a></li>
+                    <li><a href="#about">关于 / About</a></li>
+                    <li><a href="#skills">核心技能 / Skills</a></li>
+                    <li><a href="#projects">项目展示 / Work</a></li>
+                    <li><a href="#contact">联系方式 / Contact</a></li>
                 </ul>
             </div>
             <div class="footer-links">
-                <h5>联系</h5>
+                <h5>联系 / Connect</h5>
                 <ul>
                     <li><a href="mailto:cxxvcheng@gmail.com">cxxvcheng@gmail.com</a></li>
-                    <li><a href="https://github.com/Jim-purch/" target="_blank">GitHub</a></li>
+                    <li><a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> github.com/Jim-purch</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Jim. 保留所有权利。</p>
+            <p>© 2025 Jim. 保留所有权利 · All rights reserved.</p>
         </div>
     </footer>
 
