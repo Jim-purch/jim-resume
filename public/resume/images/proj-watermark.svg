@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+<defs>
+<pattern id="dg" width="30" height="30" patternUnits="userSpaceOnUse">
+<circle cx="1.1" cy="1.1" r="1" fill="#2C2A26" opacity="0.05"/>
+</pattern>
+<clipPath id="front"><rect x="280" y="180" width="250" height="190"/></clipPath>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="800" height="440" fill="#F1ECE3"/>
+<rect width="800" height="440" fill="url(#dg)"/>
+
+<!-- stack of images -->
+<rect x="210" y="120" width="250" height="190" fill="none" stroke="#A8A29E" stroke-width="1.5" stroke-opacity="0.45"/>
+<rect x="245" y="150" width="250" height="190" fill="none" stroke="#A8A29E" stroke-width="1.5" stroke-opacity="0.7"/>
+<rect x="280" y="180" width="250" height="190" fill="#F6F2EA" stroke="#2C2A26" stroke-width="2"/>
+
+<!-- the mark, repeated -->
+<g clip-path="url(#front)" fill="#C1874B" fill-opacity="0.75">
+<rect x="298" y="208" width="14" height="14" transform="rotate(45 305 215)"/>
+<rect x="368" y="208" width="14" height="14" transform="rotate(45 375 215)"/>
+<rect x="438" y="208" width="14" height="14" transform="rotate(45 445 215)"/>
+<rect x="508" y="208" width="14" height="14" transform="rotate(45 515 215)"/>
+<rect x="333" y="268" width="14" height="14" transform="rotate(45 340 275)"/>
+<rect x="403" y="268" width="14" height="14" transform="rotate(45 410 275)"/>
+<rect x="473" y="268" width="14" height="14" transform="rotate(45 480 275)"/>
+<rect x="298" y="328" width="14" height="14" transform="rotate(45 305 335)"/>
+<rect x="368" y="328" width="14" height="14" transform="rotate(45 375 335)"/>
+<rect x="438" y="328" width="14" height="14" transform="rotate(45 445 335)"/>
+<rect x="508" y="328" width="14" height="14" transform="rotate(45 515 335)"/>
+</g>
+
+<!-- count -->
+<text x="570" y="286" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="16" letter-spacing="2" fill="#A8A29E">× N</text>
+<g stroke="#A8A29E" stroke-width="1.5" stroke-opacity="0.6">
+<line x1="570" y1="196" x2="596" y2="196"/>
+<line x1="578" y1="216" x2="604" y2="216"/>
+<line x1="586" y1="236" x2="612" y2="236"/>
+</g>
+
+<text x="48" y="398" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="2.5" fill="#A8A29E">FIG.09 · MARK, NOT TRACK</text>
+<rect width="800" height="440" filter="url(#grain)" opacity="0.045"/>
+</svg>

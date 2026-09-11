@@ -1,9 +1,15 @@
-# Nixpacks 配置 :: Coolify 自动构建纯静态站点
-# 使用 Caddy 作为静态文件服务器（单二进制、零配置、支持 gzip/brotli）
-# Coolify 默认通过 PORT 环境变量注入端口
+# Nixpacks 配置 :: Coolify 自动构建 Next.js 站点
+# - 使用 Node.js 22 LTS 构建
+# - 生产模式通过 `next start` 启动（package.json 中 `serve` 脚本）
 
 [phases.setup]
-nixPkgs = ["caddy"]
+nixPkgs = ["nodejs_22"]
+
+[phases.install]
+cmds = ["npm ci --include=dev || npm install"]
+
+[phases.build]
+cmds = ["npm run build"]
 
 [start]
-cmd = "caddy file-server --listen :${PORT:-8080} --root /app"
+cmd = "npm run serve"
