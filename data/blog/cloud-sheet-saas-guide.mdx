@@ -1,0 +1,84 @@
+---
+title: '基于 Next.js 16 与 Supabase 构建企业云表格 SaaS 实战'
+date: '2024-12-28'
+tags: ['Next.js-16', 'Supabase', 'SaaS', 'TailwindCSS', 'PostgreSQL', '全栈实战']
+draft: false
+summary: '企业轻量级云表格与全文检索引擎的完整开发手记：从 Next.js App Router 架构与 React Server Components、Supabase 行级安全（RLS）多租户隔离，到大体量 Excel 的流式解析入库与高性能虚拟滚动。'
+---
+
+## 为什么要做云表格 SaaS？
+
+在许多中小企业与外贸团队中，大量核心业务数据散落在几十个几百兆的 Excel 文件中。桌面版 Excel 协作困难、版本混乱，而引入成熟的 SAP 或 Salesforce 又成本过高。
+
+开发 **云表格 SaaS（Cloud-Sheet SaaS）** 的初衷，就是为企业提供一个**类似 Airtable 与 Notion Database 般轻盈、同时具备严密数据权限与百万行级全文检索能力的敏捷中台**。
+
+---
+
+## 全栈技术栈选型
+
+- **框架**：Next.js 16（App Router + React Server Components + Server Actions）
+- **数据库与鉴权**：Supabase（PostgreSQL 16 + pgvector + Auth）
+- **UI & 样式**：Tailwind CSS + Radix UI + Lucide Icons
+- **表格核心渲染**：TanStack Table + @tanstack/react-virtual（保证数万行丝滑滚动）
+- **部署运维**：Vercel 边缘网络 + Cloudflare 全球 CDN
+
+---
+
+## 关键技术攻坚
+
+### 1. 多租户行级安全（Row-Level Security, RLS）
+
+企业 SaaS 最红线的问题是数据越权。传统方案通常依赖业务代码中手工书写 `WHERE tenant_id = current_tenant`，一旦遗漏就发生灾难级泄露。
+
+我们直接下沉到 PostgreSQL 引擎内核层，利用 Supabase RLS：
+
+```sql
+-- 开启行级安全策略
+ALTER TABLE public.sheets ENABLE ROW LEVEL SECURITY;
+
+-- 只有归属于同一企业组织的成员才能读取和编辑对应表格
+CREATE POLICY "Tenant Isolation Policy" ON public.sheets
+FOR ALL
+USING (
+  organization_id IN (
+    SELECT org_id FROM public.organization_members
+    WHERE user_id = auth.uid()
+  )
+);
+```
+
+无论前端是 Server Component 还是 Client SDK 查询，数据库引擎自动对结果集进行租户裁剪，杜绝越权。
+
+### 2. 百万级 Excel 大文件的流式导入
+
+当用户上传一个 200MB、数十万行的 `.xlsx` 报表时，如果将整个文件解析进内存，Node.js 进程会直接 OOM 崩溃。
+
+**解决方案：Worker 线程流式解析**
+
+1. 前端直传至 Supabase Storage S3 兼容桶；
+2. 触发后台 Edge Function / Node Worker，采用 `exceljs` 的 `stream.xlsx.WorkbookReader` 流式管道逐行读取；
+3. 以 2000 行为一批次批量执行 `COPY` 或 `UNNEST` 批量入库，配合数据库事务，失败自动回滚；
+4. 客户端通过 Supabase Realtime 订阅 WebSocket，实时展示动态进度条。
+
+### 3. 超大数据量的虚拟滚动（Virtual Scroll）
+
+在前端表格视图中，渲染 10,000 个 DOM 节点会导致明显的掉帧。结合 `@tanstack/react-virtual`，视口中永远只保留可视区域内的 ~30 个表格单元格：
+
+```tsx
+const rowVirtualizer = useVirtualizer({
+  count: rows.length,
+  getScrollElement: () => parentRef.current,
+  estimateSize: () => 36,
+  overscan: 10,
+})
+```
+
+结合 CSS `transform: translateY` 定位，即便是数万行数据的筛选与列排序，帧率依然稳定在 60 FPS。
+
+---
+
+## 项目成果与开源思考
+
+通过这套架构，企业用户实现了从传统杂乱 Excel 文件到在线结构化协同库的平滑迁移，团队检索物料与订单的平均耗时从 3 分钟缩短至 **3 秒以内**。
+
+在架构设计上，保持核心状态与业务边界清晰（“数据库管隔离，服务端管调度，客户端管交互”）是全栈 SaaS 高效交付的核心法则。

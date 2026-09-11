@@ -855,6 +855,139 @@
             color: white;
         }
 
+        /* 博客与技术手记 - Aura 风格 */
+        .blog-section {
+            background: var(--cream);
+            padding: var(--space-4xl) var(--space-lg);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .blog-header {
+            max-width: 800px;
+            margin: 0 auto var(--space-3xl);
+            text-align: center;
+        }
+
+        .blog-header h3 {
+            font-size: clamp(2rem, 5vw, 2.75rem);
+            font-weight: 400;
+            margin-bottom: var(--space-sm);
+        }
+
+        .blog-header p {
+            font-size: 1.0625rem;
+            font-weight: 300;
+            color: var(--charcoal-light);
+            text-wrap: pretty;
+        }
+
+        .blog-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .blog-card {
+            position: relative;
+            background: var(--cream-light);
+            border-radius: var(--space-sm);
+            border: 1px solid rgba(44, 42, 38, 0.08);
+            padding: var(--space-xl);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all var(--transition-normal);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--charcoal-light);
+            box-shadow: 0 16px 36px rgba(44, 42, 38, 0.07);
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+            font-size: 0.75rem;
+            color: var(--charcoal-light);
+            font-family: var(--font-mono);
+            letter-spacing: 0.04em;
+        }
+
+        .blog-cat-badge {
+            font-weight: 600;
+            padding: 2px 8px;
+            background: rgba(193, 135, 75, 0.12);
+            color: var(--terracotta);
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .blog-card h4 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: var(--space-xs);
+            color: var(--charcoal);
+        }
+
+        .blog-card h4 .en-sub {
+            display: block;
+            font-size: 0.78em;
+            font-weight: 400;
+            color: var(--charcoal-light);
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .blog-card p {
+            font-size: 0.875rem;
+            font-weight: 300;
+            color: var(--charcoal-light);
+            line-height: 1.65;
+            margin-bottom: var(--space-md);
+            flex-grow: 1;
+        }
+
+        .blog-card-bottom {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: var(--space-sm);
+            border-top: 1px dashed rgba(44, 42, 38, 0.1);
+        }
+
+        .blog-read-link {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--terracotta);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap var(--transition-fast);
+        }
+
+        .blog-card:hover .blog-read-link {
+            gap: 10px;
+        }
+
+        .blog-action-bar {
+            max-width: 1400px;
+            margin: var(--space-2xl) auto 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
         /* 联系区域 - Aura 风格 */
         .contact {
             background: var(--cream-dark);
@@ -1119,6 +1252,7 @@
                 <li><a href="#about">关于 / <span class="en">About</span></a></li>
                 <li><a href="#skills">技能 / <span class="en">Skills</span></a></li>
                 <li><a href="#projects">项目 / <span class="en">Work</span></a></li>
+                <li><a href="#blog">博客 / <span class="en">Blog</span></a></li>
                 <li><a href="#contact">联系 / <span class="en">Contact</span></a></li>
                 <li>
                     <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="nav-gh">
@@ -1481,6 +1615,206 @@
         </div>
     </section>
 
+    <!-- 技术手记与开源实战 (Blog) -->
+    <section id="blog" class="blog-section">
+        <div class="blog-header">
+            <span class="section-label" style="justify-content:center;">技术手记 <span class="en-tag">/ Notes &amp; Guides</span></span>
+            <h3>
+                开源项目介绍与使用手记
+                <span class="lang-sub">Open Source Notes, Guides &amp; Architecture Insights</span>
+            </h3>
+            <p>
+                记录真实构建中的架构选型、性能攻坚、MCP 协议生态接入及大模型落地方法论，所有方案均源自实际生产与开源工程实践。
+            </p>
+        </div>
+
+        <div class="blog-grid">
+            <!-- Card 1: WPS MCP Server -->
+            <a href="/blog/wps-mcp-server-guide" class="blog-card">
+                <div>
+                    <div class="blog-meta">
+                        <span class="blog-cat-badge">MCP 生态</span>
+                        <span>2025-03 · 实战指南</span>
+                    </div>
+                    <h4>
+                        WPS MCP Server 开源介绍与接入指南
+                        <span class="en-sub">WPS 365 Open API MCP Server Integration Guide</span>
+                    </h4>
+                    <p>
+                        基于 Model Context Protocol 构建的 WPS 365 AI 集成服务端。支持 Claude Desktop、Cline 等主流智能体直接调度表格读取、文档解析与云端自动化协同，从架构设计到一行命令接入实战。
+                    </p>
+                </div>
+                <div class="blog-card-bottom">
+                    <div class="project-tags">
+                        <span class="project-tag primary">MCP</span>
+                        <span class="project-tag">TypeScript</span>
+                        <span class="project-tag">Claude</span>
+                    </div>
+                    <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <!-- Card 2: OH-MindMirror -->
+            <a href="/blog/oh-mindmirror-intro" class="blog-card">
+                <div>
+                    <div class="blog-meta">
+                        <span class="blog-cat-badge">AI 原生产品</span>
+                        <span>2025-02 · 开发手记</span>
+                    </div>
+                    <h4>
+                        OH-MindMirror 心理镜像投射工具手记
+                        <span class="en-sub">OH-Cards &amp; Gemini Multimodal Psychological Mirror</span>
+                    </h4>
+                    <p>
+                        融合 OH 潜意识图像卡与 Gemini 2.0 视觉多模态交互。深入解析如何通过两步引导式提问（外在描述到内在投射）规避模型幻觉与空泛鸡汤，在浏览器端构建高隐私的深度自我对话场域。
+                    </p>
+                </div>
+                <div class="blog-card-bottom">
+                    <div class="project-tags">
+                        <span class="project-tag primary">Gemini 2.0</span>
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">心理学</span>
+                    </div>
+                    <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <!-- Card 3: 2000万+配件数据库架构 -->
+            <a href="/blog/parts-database-architecture" class="blog-card">
+                <div>
+                    <div class="blog-meta">
+                        <span class="blog-cat-badge">高并发架构</span>
+                        <span>2025-01 · 架构实录</span>
+                    </div>
+                    <h4>
+                        2000万+配件数据分布式系统架构实践
+                        <span class="en-sub">20M+ Records Auto-Parts Distributed Search Architecture</span>
+                    </h4>
+                    <p>
+                        汽配行业全车件千万级检索实战剖析：深度对比从纯关系型数据库到 PostgreSQL 分区表 + Redis 多级热点缓存 + Elasticsearch 倒排索引的演进路径，兼顾低延迟、模糊联想与跨国多机房同步。
+                    </p>
+                </div>
+                <div class="blog-card-bottom">
+                    <div class="project-tags">
+                        <span class="project-tag primary">PostgreSQL</span>
+                        <span class="project-tag">Redis</span>
+                        <span class="project-tag">架构设计</span>
+                    </div>
+                    <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <!-- Card 4: Cloud Sheet SaaS -->
+            <a href="/blog/cloud-sheet-saas-guide" class="blog-card">
+                <div>
+                    <div class="blog-meta">
+                        <span class="blog-cat-badge">全栈 SaaS</span>
+                        <span>2024-12 · 全栈构建</span>
+                    </div>
+                    <h4>
+                        基于 Next.js 16 与 Supabase 构建云表格 SaaS
+                        <span class="en-sub">Enterprise Cloud-Sheet SaaS with Next.js 16 &amp; Supabase</span>
+                    </h4>
+                    <p>
+                        企业轻量级云表格与全文检索引擎的完整开发链条：Next.js App Router 架构、Supabase 行级安全（RLS）租户隔离、大文件 Excel 流式解析入库与响应式现代化数据大屏的设计技巧。
+                    </p>
+                </div>
+                <div class="blog-card-bottom">
+                    <div class="project-tags">
+                        <span class="project-tag primary">Next.js 16</span>
+                        <span class="project-tag">Supabase</span>
+                        <span class="project-tag">Tailwind</span>
+                    </div>
+                    <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <!-- Card 5: Mac Voice to Text -->
+            <a href="/blog/mac-voice-to-text-guide" class="blog-card">
+                <div>
+                    <div class="blog-meta">
+                        <span class="blog-cat-badge">原生工具</span>
+                        <span>2024-11 · 原生实践</span>
+                    </div>
+                    <h4>
+                        Mac Voice to Text：系统内录/外录实时听写工具
+                        <span class="en-sub">macOS Dual-Channel Audio Capture &amp; Real-time Dictation</span>
+                    </h4>
+                    <p>
+                        解决 macOS 线上会议、播客录制实时转文字痛点。利用 ScreenCaptureKit 实现免虚拟驱动的系统内录采集，双通道混音与本地轻量 ASR / 云端 Whisper 模型串联，提供开箱即用的安装与配置教程。
+                    </p>
+                </div>
+                <div class="blog-card-bottom">
+                    <div class="project-tags">
+                        <span class="project-tag primary">macOS</span>
+                        <span class="project-tag">Swift</span>
+                        <span class="project-tag">Whisper</span>
+                    </div>
+                    <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <!-- Card 6: 批量水印与隐私保护 -->
+            <a href="/blog/batch-watermark-privacy-guide" class="blog-card">
+                <div>
+                    <div class="blog-meta">
+                        <span class="blog-cat-badge">隐私开源</span>
+                        <span>2024-10 · 容器部署</span>
+                    </div>
+                    <h4>
+                        纯前端隐私优先批量水印工具与 Docker 私有化
+                        <span class="en-sub">Privacy-first Batch Watermark Tool: Canvas &amp; Docker Self-host</span>
+                    </h4>
+                    <p>
+                        零服务端数据上传的图片水印利器。详解 HTML5 Canvas 批量高清排版、Web Worker 异步并发渲染、以及仅 15MB 的 Alpine Nginx 极简 Docker 镜像打包，适合企业敏感证照安全处理。
+                    </p>
+                </div>
+                <div class="blog-card-bottom">
+                    <div class="project-tags">
+                        <span class="project-tag primary">Canvas</span>
+                        <span class="project-tag">Docker</span>
+                        <span class="project-tag">隐私安全</span>
+                    </div>
+                    <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <!-- Card 7: TeleChat 机器人 -->
+            <a href="/blog/telechat-voice-bot" class="blog-card">
+                <div>
+                    <div class="blog-meta">
+                        <span class="blog-cat-badge">Bot 生态</span>
+                        <span>2024-09 · 智能体</span>
+                    </div>
+                    <h4>
+                        TeleChat：DeepSeek + MiniMax 双通道语音机器人
+                        <span class="en-sub">DeepSeek-R1 Reasoning &amp; MiniMax Voice Bot for Telegram</span>
+                    </h4>
+                    <p>
+                        如何打造具有拟人语音回复能力的 Telegram 个人智囊助手？集成 DeepSeek 推理能力与 MiniMax 高拟真语音合成，支持长文本流式分句播报、异步任务队列与防网络抖动的容错机制。
+                    </p>
+                </div>
+                <div class="blog-card-bottom">
+                    <div class="project-tags">
+                        <span class="project-tag primary">DeepSeek</span>
+                        <span class="project-tag">MiniMax</span>
+                        <span class="project-tag">Telegram Bot</span>
+                    </div>
+                    <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+        </div>
+
+        <div class="blog-action-bar">
+            <a href="/blog" class="contact-btn primary">
+                <i class="fas fa-book-open"></i> 查看全部文章与标签归档 / View All Posts
+            </a>
+            <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="contact-btn">
+                <i class="fab fa-github"></i> 访问 GitHub 源码仓库 / GitHub Repos
+            </a>
+        </div>
+    </section>
+
     <!-- 联系方式 -->
     <section id="contact" class="contact">
         <div class="contact-content">
@@ -1522,6 +1856,7 @@
                     <li><a href="#about">关于 / About</a></li>
                     <li><a href="#skills">核心技能 / Skills</a></li>
                     <li><a href="#projects">项目展示 / Work</a></li>
+                    <li><a href="#blog">博客手记 / Blog</a></li>
                     <li><a href="#contact">联系方式 / Contact</a></li>
                 </ul>
             </div>

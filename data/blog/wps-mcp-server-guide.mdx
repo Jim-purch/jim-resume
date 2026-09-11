@@ -1,0 +1,121 @@
+---
+title: 'WPS MCP Server 开源介绍与 Claude Desktop / Cline 接入实战指南'
+date: '2025-03-01'
+tags: ['MCP', 'TypeScript', 'Claude', 'WPS-365', 'AI-Agent', '开源实战']
+draft: false
+summary: '基于 Model Context Protocol (MCP) 构建的 WPS 365 开放接口服务端。支持 Claude Desktop、Cline 等智能体直接调度表格读取、文档解析与云端自动化协同，本文详述架构设计与接入实操。'
+---
+
+## 项目背景
+
+在日常生产力场景中，大语言模型（LLM）擅长理解、归纳与起草内容，但往往无法直接感知并修改本地或云端的企业办公文档。传统的做法是复制粘贴或通过特定脚本转换，效率低下且破坏了上下文连贯性。
+
+**[WPS MCP Server](https://github.com/Jim-purch/wps-mcp-server)** 应运而生。它基于 Anthropic 提出的 **Model Context Protocol (MCP)** 开放协议标准，将金山办公 WPS 365 开放平台的丰富能力（包括多维表格、在线表格、云文档、知识库等）抽象为标准的 Tools 与 Resources，让 Claude Desktop、Cline、Cursor 等 AI 客户端能够像调用本地函数一样操作 WPS 文档。
+
+---
+
+## 核心架构设计
+
+WPS MCP Server 采用分层解耦的架构：
+
+1. **协议接入层（MCP Transport Layer）**：
+   - 支持 `stdio`（用于本地桌面端，如 Claude Desktop）与 `SSE`（Server-Sent Events，用于云端部署与网络交互）。
+   - 严格实现 MCP 协议生命周期协议与 Capabilities 握手。
+
+2. **工具编排与鉴权层（Tools & Auth Engine）**：
+   - 统一管理 WPS 开放平台的 `AppID`、`AppSecret` 以及基于 OAuth 2.0 / 签名机制的令牌刷新缓存。
+   - 针对不同操作提供参数校验（Zod Schema），保证 LLM 传参的强类型安全性。
+
+3. **文档与表格执行引擎（Document & Sheet Adapter）**：
+   - **表格读写**：单元格范围查询、批量追加记录、条件过滤、公式解析。
+   - **文档解析**：提取结构化段落、追加总结批注。
+   - **错误处理**：提供友好的语义化错误提示，指导智能体自动重试或自我修正参数。
+
+---
+
+## 快速上手与配置
+
+### 1. 准备工作
+
+在开始之前，你需要在 [WPS 365 开放平台](https://open.wps.cn/) 注册应用并获取：
+
+- `WPS_APP_ID`: 你的应用 ID
+- `WPS_APP_SECRET`: 你的应用密钥
+
+### 2. 在 Claude Desktop 中接入
+
+编辑 Claude Desktop 的配置文件：
+
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+在 `mcpServers` 字段中添加：
+
+```json
+{
+  "mcpServers": {
+    "wps": {
+      "command": "npx",
+      "args": ["-y", "@jim-purch/wps-mcp-server"],
+      "env": {
+        "WPS_APP_ID": "your_app_id_here",
+        "WPS_APP_SECRET": "your_app_secret_here"
+      }
+    }
+  }
+}
+```
+
+保存后重启 Claude Desktop，界面右下角的小锤子（Tools）图标即会显示 WPS 相关工具已就绪。
+
+### 3. 在 Cline / VS Code 智能体中接入
+
+在 Cline 的 MCP 设置界面中添加该服务端配置：
+
+```json
+{
+  "name": "wps-mcp",
+  "command": "node",
+  "args": ["/path/to/wps-mcp-server/dist/index.js"],
+  "env": {
+    "WPS_APP_ID": "your_app_id",
+    "WPS_APP_SECRET": "your_app_secret"
+  }
+}
+```
+
+---
+
+## 典型使用场景示例
+
+### 场景一：自动汇总并写入工作周报
+
+向 Claude 输入指令：
+
+> “请阅读我最近与客户的讨论总结，并调用 WPS 工具，将这 5 条行动项直接追加到我的 WPS 在线工作周报表格第 2 个工作表中。”
+
+Claude 会自动：
+
+1. 识别目标表格 ID 与 Sheet 索引；
+2. 构造行数据 JSON；
+3. 调用 `wps_append_rows` 写入数据，并返回行号与写入确认。
+
+### 场景二：多维表格智能筛选与分析
+
+向 Claude 输入指令：
+
+> “查询 WPS 多维表格中‘状态’为‘延期’的待办任务，帮我生成一份根因分析和复盘报告。”
+
+智能体通过 `wps_query_records` 快速拉取原始结构化行记录，并在本地推理生成 Markdown 深度分析报告。
+
+---
+
+## 经验总结与后续规划
+
+1. **Token 消耗控制**：大表格返回全部内容容易撑爆上下文。我们在设计 Tool 时引入了 `limit`、`offset` 和按列投影，优先返回概览与统计量。
+2. **连接稳定性**：针对国内企业内网与网络抖动，增加自动指数退避重试（Exponential Backoff）。
+3. **未来路线图**：
+   - 支持 WPS 知识库 RAG 检索端点；
+   - 增加本地离线 `.docx` / `.xlsx` 的混合操作支持。
+
+欢迎在 GitHub 上提出 Issue 或 PR：[Jim-purch/wps-mcp-server](https://github.com/Jim-purch/wps-mcp-server)。

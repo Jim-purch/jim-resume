@@ -110,8 +110,12 @@ module.exports = () => {
     },
     async headers() {
       return [
-        // Legacy static sub-sites get a relaxed CSP that allows Google Fonts
+        // Legacy static sub-sites and root resume get a relaxed CSP that allows Google Fonts
         // and Cloudflare CDN (Font Awesome, pdf.js, jszip, FileSaver.js).
+        {
+          source: '/',
+          headers: legacyStaticHeaders,
+        },
         {
           source: '/resume/:path*',
           headers: legacyStaticHeaders,
@@ -120,10 +124,9 @@ module.exports = () => {
           source: '/tools/:path*',
           headers: legacyStaticHeaders,
         },
-        // Strict CSP applies to all other routes (catch-all excludes the two
-        // legacy prefixes via negative lookahead).
+        // Strict CSP applies to all other routes (catch-all excludes root, resume, and tools).
         {
-          source: '/((?!resume/|tools/).*)',
+          source: '/((?!resume/|tools/|$).*)',
           headers: securityHeaders,
         },
       ]
@@ -131,6 +134,8 @@ module.exports = () => {
     async rewrites() {
       return {
         beforeFiles: [
+          // Serve resume at root path
+          { source: '/', destination: '/resume/index.html' },
           // Serve legacy static index files when their directory is requested
           // (Next.js does not auto-serve index.html under public/ folders).
           { source: '/resume', destination: '/resume/index.html' },

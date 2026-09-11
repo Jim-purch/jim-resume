@@ -7,40 +7,53 @@ interface Project {
 
 const projectsData: Project[] = [
   {
-    title: 'OH-MindMirror',
-    description: `通过类似于 OH 卡的方式进行 AI 引导式自我探索。基于 TypeScript 构建，
-    结合 AI 与心理学意象对话，帮助用户在视觉化的卡片中展开深度自我反思。`,
-    href: 'https://github.com/Jim-purch/OH-MindMirror',
+    title: 'WPS MCP Server（已开源 · npm）',
+    description:
+      '基于 Model Context Protocol 构建的 WPS 365 开放平台服务端，让 Claude / Cursor 等智能体直接调度表格与文档自动化协同。',
+    imgSrc: '/resume/images/proj-mcp.svg',
+    href: '/blog/wps-mcp-server-guide',
   },
   {
-    title: 'Know Yourself Tools',
-    description: `一个可以通过人工咨询 + AI，结合常用工具，帮助你了解你自己的 Web 项目。
-    面向咨询场景的一体化工具平台。`,
-    href: 'https://github.com/Jim-purch/know-yourself-tools',
+    title: 'OH-MindMirror 心理投射工具（开源）',
+    description:
+      '结合经典 OH 卡潜意识投射原理与 Gemini 2.0 多模态能力，通过两步阶梯式引导实现无偏见的自我深度对话，纯前端高隐私运行。',
+    imgSrc: '/resume/images/proj-mindmirror.svg',
+    href: '/blog/oh-mindmirror-intro',
   },
   {
-    title: 'WPS MCP Server',
-    description: `面向 MCP（Model Context Protocol）生态的 WPS 文档服务接入，
-    让 AI 助手能够读写 WPS 文档，是 AI 协作场景下的本地化能力扩展。`,
-    href: 'https://github.com/Jim-purch/jim-wps-mcp-server',
+    title: '2000万+ 配件数据分布式架构实践',
+    description:
+      '工业级全车件数据系统。采用 PostgreSQL 分区、Redis 多级缓存与 Elasticsearch 倒排检索，实现亚秒级模糊响应与跨国数据同步。',
+    imgSrc: '/resume/images/proj-database.svg',
+    href: '/blog/parts-database-architecture',
   },
   {
-    title: 'WebSearch WPS Webhook',
-    description: `结合 Web 搜索能力与 WPS 自动化的 Webhook 服务，已部署到 Vercel。
-    用于把搜索结果实时回流到 WPS 表格中。`,
-    href: 'https://github.com/Jim-purch/websearch-wps-webhook',
+    title: '企业云表格 SaaS 与全文检索系统',
+    description:
+      '基于 Next.js 16 与 Supabase 构建的高性能云表格中台，支持千万级物料模糊搜索、百万行 Excel 流式解析与多租户行级安全隔离。',
+    imgSrc: '/resume/images/proj-saas.svg',
+    href: '/blog/cloud-sheet-saas-guide',
   },
   {
-    title: 'Mac Voice to Text',
-    description: `桌面端应用 —— 可以将内录（系统正在播放的声音）和外录（麦克风输入）
-    实时转为文字，支持 macOS 平台，MIT 开源。`,
-    href: 'https://github.com/Jim-purch/mac-voice-to-text',
+    title: 'Mac Voice to Text（macOS 免驱动内录）',
+    description:
+      '基于 Apple ScreenCaptureKit 实现的系统内录与双通道混音工具，免装虚拟声卡即可实时流式调用 Whisper 进行高精度文字转换。',
+    imgSrc: '/resume/images/proj-telechat.svg',
+    href: '/blog/mac-voice-to-text-guide',
   },
   {
-    title: 'Parts Catalog PDF to XLSX',
-    description: `自动把矢量 PDF 格式的产品手册（含图片）转换为 XLSX 表格，
-    用于零部件目录的批量数字化，节省大量人工录入时间。`,
-    href: 'https://github.com/Jim-purch/parts-catalog-pdf-to-xlsx',
+    title: '纯前端批量水印工具（隐私优先 · Docker）',
+    description:
+      '完全在本地浏览器 Canvas 离屏多线程处理的批量水印工具，零数据上传，附带仅 15MB 极轻量 Docker 镜像方便企业私有化部署。',
+    imgSrc: '/resume/images/proj-watermark.svg',
+    href: '/blog/batch-watermark-privacy-guide',
+  },
+  {
+    title: 'TeleChat 语音思考双通道机器人',
+    description:
+      '整合 DeepSeek 深度推理与 MiniMax 逼真情感语音合成，打造具备多轮上下文记忆与语音实时收发能力的 7x24 小时随身智能助手。',
+    imgSrc: '/resume/images/proj-telechat.svg',
+    href: '/blog/telechat-voice-bot',
   },
 ]
 

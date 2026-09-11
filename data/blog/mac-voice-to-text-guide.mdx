@@ -1,0 +1,70 @@
+---
+title: 'Mac Voice to Text：macOS 免驱动双通道内录与实时语音转文字实战'
+date: '2024-11-15'
+tags: ['macOS', 'Swift', 'Whisper', 'ScreenCaptureKit', '音频工程', '开源工具']
+draft: false
+summary: '解决 macOS 线上会议与播客录音实时转写的痛点。基于 Apple 官方 ScreenCaptureKit 实现免装虚拟声卡的系统内录音频采集，结合双通道混音与本地 Whisper 模型实现低延迟高精度实时文字转换。'
+---
+
+## 痛点：Mac 系统音频内录的传统困局
+
+如果你经常使用 Mac 参加 Zoom / 腾讯会议、收听英文播客或整理访谈录音，你一定遇到过这样的难题：
+
+1. **内录困难**：macOS 为了隐私安全，普通麦克风 API 无法捕获系统其他应用程序发出的声音；
+2. **虚拟声卡繁琐且脆弱**：传统的 BlackHole 或 Soundflower 需要安装内核扩展或系统级音频插件，系统一旦升级就可能失效或引发音画不同步；
+3. **隐私顾虑**：将整场商业会议的音频实时传给第三方云服务，存在极大的合规与泄露风险。
+
+**[Mac Voice to Text](https://github.com/Jim-purch/mac-voice-to-text)** 应运而生，基于现代化 macOS 原生技术栈彻底解决了上述问题。
+
+---
+
+## 核心实现方案
+
+### 1. 免驱动内录采集（Apple ScreenCaptureKit Audio API）
+
+自 macOS 13 (Ventura) 起，苹果推出了高性能的 `ScreenCaptureKit` 框架。除了捕获屏幕画面外，它还提供了对系统音频流（`SCStreamOutputType.audio`）的硬件级无缝拦截：
+
+```swift
+// 开启系统音频内录流捕获示例
+let filter = SCContentFilter(display: display, excludingWindows: [])
+let streamConfig = SCStreamConfiguration()
+streamConfig.capturesAudio = true
+streamConfig.excludesCurrentProcessAudio = true // 防止自身监听发生声反馈回路
+
+let stream = SCStream(filter: filter, configuration: streamConfig, delegate: self)
+try await stream.startCapture()
+```
+
+这种方案的巨大优势是：**零安装虚拟声卡、零内核权限改动、纯用户态运行**。
+
+### 2. 双通道音频对齐与重采样（AVAudioEngine）
+
+真实场景中，往往需要同时记录“对方说话的声音（系统声音）”以及“我自己的发言（麦克风声音）”。
+
+通过 `AVAudioEngine` 将系统音频缓冲区与麦克风输入缓冲区在环形缓冲区（Ring Buffer）中进行降噪混音与时间戳对齐，统一重采样为 Whisper 最佳兼容的 **16kHz 单声道 16-bit PCM** 音频流。
+
+### 3. 本地 Whisper 实时转写流水线
+
+- 支持调用 OpenAI 官方云端 Whisper API；
+- 更推荐使用 **本地轻量级推理引擎（基于 whisper.cpp / CoreML 硬件加速）**，充分榨干 Apple Silicon (M1/M2/M3/M4) 神经网络引擎（ANE）的算力，在完全断网的环境下实现 200ms 内的流式转文字，做到数据 100% 不离机。
+
+---
+
+## 快速安装与使用
+
+### 下载与构建
+
+```bash
+git clone https://github.com/Jim-purch/mac-voice-to-text.git
+cd mac-voice-to-text
+
+# 使用 Swift Package Manager 快速编译
+swift build -c release
+```
+
+### 运行模式
+
+1. **菜单栏悬浮模式**：点击状态栏图标即可一键启动“会议实时速记”，识别结果实时以字幕形式悬浮在屏幕底部；
+2. **自动化导出**：会话结束后自动整理为带时间戳的 Markdown 会议纪要，支持一键发送到剪贴板或保存本地。
+
+开源地址：[Jim-purch/mac-voice-to-text](https://github.com/Jim-purch/mac-voice-to-text)，欢迎体验与贡献。
