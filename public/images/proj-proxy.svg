@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+<defs>
+<pattern id="dg" width="30" height="30" patternUnits="userSpaceOnUse">
+<circle cx="1.1" cy="1.1" r="1" fill="#2C2A26" opacity="0.05"/>
+</pattern>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="800" height="440" fill="#F1ECE3"/>
+<rect width="800" height="440" fill="url(#dg)"/>
+
+<!-- incoming requests -->
+<g fill="#2C2A26" opacity="0.4">
+<circle cx="122" cy="182" r="3.5"/><circle cx="152" cy="242" r="4"/><circle cx="138" cy="288" r="3"/>
+<circle cx="188" cy="200" r="3.5"/><circle cx="204" cy="262" r="4.5"/><circle cx="230" cy="170" r="3"/>
+<circle cx="242" cy="292" r="3.5"/><circle cx="170" cy="308" r="3"/><circle cx="216" cy="228" r="3"/>
+</g>
+<g stroke="#2C2A26" stroke-opacity="0.25" stroke-width="1.5">
+<line x1="106" y1="182" x2="116" y2="182"/>
+<line x1="136" y1="242" x2="146" y2="242"/>
+<line x1="172" y1="200" x2="182" y2="200"/>
+</g>
+
+<!-- the gate -->
+<g fill="none" stroke="#2C2A26" stroke-width="2" stroke-linecap="round">
+<path d="M 444.2 171.9 A 55 55 0 0 1 444.2 278.1" stroke-opacity="0.85"/>
+<path d="M 452.0 142.9 A 85 85 0 0 1 452.0 307.1" stroke-opacity="0.55"/>
+<path d="M 459.8 113.9 A 115 115 0 0 1 459.8 336.1" stroke-opacity="0.35"/>
+</g>
+<circle cx="430" cy="225" r="8" fill="#C1874B"/>
+<circle cx="430" cy="225" r="20" fill="none" stroke="#B87F45" stroke-opacity="0.5" stroke-width="1.4"/>
+<g stroke="#2C2A26" stroke-opacity="0.4" stroke-width="1.5">
+<line x1="466" y1="200" x2="482" y2="200"/>
+<line x1="466" y1="250" x2="482" y2="250"/>
+</g>
+
+<!-- rejected -->
+<path d="M 452 150 Q 400 108 352 104" fill="none" stroke="#A8A29E" stroke-width="1.5" stroke-dasharray="4 6"/>
+<circle cx="350" cy="104" r="3.5" fill="#A8A29E"/>
+
+<!-- clean exit -->
+<circle cx="524" cy="225" r="5" fill="#C1874B"/>
+<circle cx="564" cy="225" r="4" fill="#2C2A26" opacity="0.75"/>
+<circle cx="602" cy="225" r="4" fill="#2C2A26" opacity="0.6"/>
+<circle cx="640" cy="225" r="4" fill="#2C2A26" opacity="0.45"/>
+<circle cx="678" cy="225" r="4" fill="#2C2A26" opacity="0.3"/>
+
+<text x="48" y="398" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="2.5" fill="#A8A29E">FIG.06 · GATEKEEP EVERYTHING</text>
+<rect width="800" height="440" filter="url(#grain)" opacity="0.045"/>
+</svg>

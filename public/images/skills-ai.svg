@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500">
+<defs>
+<pattern id="dg" width="36" height="36" patternUnits="userSpaceOnUse">
+<circle cx="1.3" cy="1.3" r="1.2" fill="#2C2A26" opacity="0.06"/>
+</pattern>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="1200" height="1500" fill="#F5F2EB"/>
+<rect width="1200" height="1500" fill="url(#dg)"/>
+
+<!-- orbits -->
+<circle cx="600" cy="660" r="300" fill="none" stroke="#2C2A26" stroke-opacity="0.22" stroke-width="1" stroke-dasharray="2 9"/>
+<circle cx="600" cy="660" r="470" fill="none" stroke="#2C2A26" stroke-opacity="0.14" stroke-width="1" stroke-dasharray="2 12"/>
+
+<!-- traces -->
+<g fill="none" stroke="#2C2A26" stroke-width="1.6" stroke-opacity="0.5">
+<line x1="600" y1="582" x2="600" y2="232"/>
+<line x1="675" y1="617" x2="970" y2="447"/>
+<line x1="592" y1="746" x2="543" y2="1256"/>
+<line x1="539" y1="721" x2="226" y2="1034"/>
+<line x1="530" y1="611" x2="240" y2="408"/>
+</g>
+<!-- ember trace: the published MCP server -->
+<path d="M 663 719 L 810 719 L 810 1000 L 926 1000" fill="none" stroke="#B87F45" stroke-width="2.2"/>
+<circle cx="810" cy="719" r="4" fill="#B87F45"/>
+<circle cx="810" cy="1000" r="4" fill="#B87F45"/>
+<!-- vias -->
+<g fill="#5D5A53" opacity="0.55">
+<circle cx="600" cy="420" r="3.5"/>
+<circle cx="822" cy="532" r="3.5"/>
+<circle cx="568" cy="1010" r="3.5"/>
+<circle cx="382" cy="878" r="3.5"/>
+<circle cx="385" cy="510" r="3.5"/>
+</g>
+
+<!-- hub: the protocol -->
+<g>
+<circle cx="600" cy="660" r="78" fill="#F5F2EB" stroke="#2C2A26" stroke-width="2"/>
+<circle cx="600" cy="660" r="56" fill="none" stroke="#2C2A26" stroke-opacity="0.4" stroke-width="1"/>
+<g stroke="#2C2A26" stroke-width="2">
+<line x1="600" y1="570" x2="600" y2="556"/><line x1="600" y1="750" x2="600" y2="764"/>
+<line x1="510" y1="660" x2="496" y2="660"/><line x1="690" y1="660" x2="704" y2="660"/>
+<line x1="536" y1="596" x2="526" y2="586"/><line x1="664" y1="596" x2="674" y2="586"/>
+<line x1="536" y1="724" x2="526" y2="734"/><line x1="664" y1="724" x2="674" y2="734"/>
+</g>
+<circle cx="600" cy="660" r="26" fill="none" stroke="#B87F45" stroke-opacity="0.55" stroke-width="1.2"/>
+<circle cx="600" cy="660" r="14" fill="#C1874B"/>
+</g>
+<text x="600" y="800" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="15" letter-spacing="3" fill="#5D5A53">MCP · 协议枢纽</text>
+
+<!-- satellites -->
+<g>
+<circle cx="600" cy="200" r="30" fill="#F5F2EB" stroke="#2C2A26" stroke-width="1.8"/>
+<circle cx="600" cy="200" r="4.5" fill="#2C2A26"/>
+<text x="600" y="256" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="15" letter-spacing="2" fill="#5D5A53">CLAUDE CODE</text>
+</g>
+<g>
+<circle cx="1000" cy="430" r="24" fill="#F5F2EB" stroke="#2C2A26" stroke-width="1.8"/>
+<circle cx="1000" cy="430" r="4" fill="#2C2A26"/>
+<text x="1000" y="482" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="15" letter-spacing="2" fill="#5D5A53">CHATGPT</text>
+</g>
+<g>
+<circle cx="960" cy="1000" r="30" fill="#F5F2EB" stroke="#B87F45" stroke-width="2"/>
+<circle cx="960" cy="1000" r="4.5" fill="#B87F45"/>
+<text x="960" y="1056" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="15" letter-spacing="2" fill="#5D5A53">WPS 365</text>
+<text x="960" y="1080" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="2.5" fill="#B87F45">已发布 · LIVE ON NPM</text>
+</g>
+<g>
+<circle cx="540" cy="1290" r="24" fill="#F5F2EB" stroke="#2C2A26" stroke-width="1.8"/>
+<circle cx="540" cy="1290" r="4" fill="#2C2A26"/>
+<text x="540" y="1252" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="15" letter-spacing="2" fill="#5D5A53">DEEPSEEK</text>
+</g>
+<g>
+<circle cx="200" cy="1060" r="27" fill="#F5F2EB" stroke="#2C2A26" stroke-width="1.8"/>
+<circle cx="200" cy="1060" r="4" fill="#2C2A26"/>
+<text x="200" y="1114" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="15" letter-spacing="2" fill="#5D5A53">NPM · MCP</text>
+</g>
+<g>
+<circle cx="215" cy="390" r="21" fill="#F5F2EB" stroke="#2C2A26" stroke-width="1.8"/>
+<circle cx="215" cy="390" r="4" fill="#2C2A26"/>
+<text x="215" y="440" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="15" letter-spacing="2" fill="#5D5A53">VOICE AI</text>
+</g>
+
+<!-- caption -->
+<text x="600" y="1432" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="13" letter-spacing="4" fill="#A8A29E">ONE PROTOCOL · EVERY TOOL</text>
+
+<rect width="1200" height="1500" filter="url(#grain)" opacity="0.045"/>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+<defs>
+<pattern id="dg" width="30" height="30" patternUnits="userSpaceOnUse">
+<circle cx="1.1" cy="1.1" r="1" fill="#2C2A26" opacity="0.05"/>
+</pattern>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="800" height="440" fill="#F1ECE3"/>
+<rect width="800" height="440" fill="url(#dg)"/>
+
+<!-- enterprise sheet -->
+<rect x="150" y="150" width="120" height="160" rx="8" fill="#F6F2EA" stroke="#2C2A26" stroke-width="2"/>
+<g stroke="#2C2A26" stroke-opacity="0.5" stroke-width="1.5">
+<line x1="170" y1="190" x2="250" y2="190"/>
+<line x1="170" y1="215" x2="250" y2="215"/>
+<line x1="170" y1="240" x2="250" y2="240"/>
+<line x1="170" y1="265" x2="230" y2="265"/>
+</g>
+<text x="210" y="345" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="13" letter-spacing="2" fill="#5D5A53">WPS</text>
+
+<!-- bridge -->
+<line x1="270" y1="230" x2="572" y2="230" stroke="#2C2A26" stroke-width="2"/>
+
+<!-- the plug -->
+<rect x="388" y="206" width="48" height="48" rx="8" fill="#F1ECE3" stroke="#B87F45" stroke-width="2.2"/>
+<circle cx="404" cy="230" r="4" fill="#C1874B"/>
+<circle cx="420" cy="230" r="4" fill="#C1874B"/>
+<g stroke="#B87F45" stroke-width="1.6">
+<line x1="412" y1="196" x2="412" y2="186"/><line x1="396" y1="202" x2="389" y2="195"/><line x1="428" y1="202" x2="435" y2="195"/>
+</g>
+
+<!-- packets in flight -->
+<circle cx="300" cy="230" r="4" fill="#C1874B"/>
+<circle cx="340" cy="230" r="3.5" fill="#C1874B" opacity="0.7"/>
+<circle cx="470" cy="230" r="3.5" fill="#2C2A26" opacity="0.5"/>
+<circle cx="510" cy="230" r="3" fill="#2C2A26" opacity="0.35"/>
+
+<!-- AI chip -->
+<circle cx="620" cy="230" r="48" fill="#F6F2EA" stroke="#2C2A26" stroke-width="2"/>
+<circle cx="620" cy="230" r="32" fill="none" stroke="#2C2A26" stroke-opacity="0.4" stroke-width="1" stroke-dasharray="3 6"/>
+<circle cx="620" cy="230" r="6" fill="#2C2A26"/>
+<g stroke="#2C2A26" stroke-width="2">
+<line x1="620" y1="182" x2="620" y2="168"/><line x1="620" y1="278" x2="620" y2="292"/>
+<line x1="572" y1="230" x2="558" y2="230"/>
+<line x1="588" y1="198" x2="578" y2="188"/><line x1="652" y1="198" x2="662" y2="188"/>
+<line x1="588" y1="262" x2="578" y2="272"/><line x1="652" y1="262" x2="662" y2="272"/>
+</g>
+<text x="620" y="345" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="13" letter-spacing="2" fill="#5D5A53">AI</text>
+
+<text x="48" y="398" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="2.5" fill="#A8A29E">FIG.02 · ONE PROTOCOL, MANY TOOLS</text>
+<rect width="800" height="440" filter="url(#grain)" opacity="0.045"/>
+</svg>

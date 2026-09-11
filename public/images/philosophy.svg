@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1000">
+<defs>
+<pattern id="dg" width="34" height="34" patternUnits="userSpaceOnUse">
+<circle cx="1.2" cy="1.2" r="1.1" fill="#2C2A26" opacity="0.06"/>
+</pattern>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="960" height="1000" fill="#F2EDE4"/>
+<rect width="960" height="1000" fill="url(#dg)"/>
+
+<!-- corner ticks -->
+<g stroke="#2C2A26" stroke-opacity="0.35" stroke-width="1.5">
+<line x1="60" y1="88" x2="60" y2="108"/><line x1="60" y1="88" x2="80" y2="88"/>
+<line x1="900" y1="88" x2="900" y2="108"/><line x1="900" y1="88" x2="880" y2="88"/>
+<line x1="60" y1="922" x2="60" y2="902"/><line x1="60" y1="922" x2="80" y2="922"/>
+<line x1="900" y1="922" x2="900" y2="902"/><line x1="900" y1="922" x2="880" y2="922"/>
+</g>
+
+<!-- figure number -->
+<text x="78" y="126" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="13" letter-spacing="3" fill="#A8A29E">FIG.00</text>
+
+<!-- faint baseline guide -->
+<line x1="90" y1="640" x2="870" y2="640" stroke="#2C2A26" stroke-opacity="0.10" stroke-width="1" stroke-dasharray="1 8"/>
+
+<!-- HUMAN: ember origin of direction -->
+<circle cx="168" cy="520" r="42" fill="none" stroke="#2C2A26" stroke-width="1.5"/>
+<circle cx="168" cy="520" r="30" fill="none" stroke="#2C2A26" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="3 6"/>
+<circle cx="168" cy="520" r="13" fill="#C1874B"/>
+<text x="168" y="608" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="14" letter-spacing="2.5" fill="#5D5A53">人 · HUMAN</text>
+<text x="168" y="632" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="2" fill="#A8A29E">DIRECTION</text>
+
+<!-- direction line -->
+<line x1="214" y1="520" x2="392" y2="520" stroke="#2C2A26" stroke-width="2.5"/>
+<line x1="330" y1="508" x2="330" y2="532" stroke="#2C2A26" stroke-width="2"/>
+
+<!-- AI prism: executes & multiplies -->
+<g>
+<polygon points="420,392 420,648 620,520" fill="#EDE7DB" stroke="#2C2A26" stroke-width="2"/>
+<line x1="420" y1="444" x2="553" y2="520" stroke="#2C2A26" stroke-opacity="0.30" stroke-width="1"/>
+<line x1="420" y1="496" x2="487" y2="520" stroke="#2C2A26" stroke-opacity="0.30" stroke-width="1"/>
+<line x1="420" y1="548" x2="487" y2="520" stroke="#2C2A26" stroke-opacity="0.30" stroke-width="1"/>
+<line x1="420" y1="596" x2="553" y2="520" stroke="#2C2A26" stroke-opacity="0.30" stroke-width="1"/>
+<circle cx="420" cy="520" r="5" fill="#2C2A26"/>
+</g>
+<text x="470" y="692" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="14" letter-spacing="2.5" fill="#5D5A53">AI · ENGINE</text>
+<text x="470" y="716" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="2" fill="#A8A29E">EXECUTION</text>
+
+<!-- fan of possibilities -->
+<g stroke="#2C2A26" stroke-width="1.6">
+<line x1="620" y1="520" x2="812" y2="424"/>
+<line x1="620" y1="520" x2="812" y2="472"/>
+<line x1="620" y1="520" x2="812" y2="520"/>
+<line x1="620" y1="520" x2="812" y2="568"/>
+<line x1="620" y1="520" x2="812" y2="616"/>
+</g>
+<line x1="620" y1="520" x2="812" y2="448" stroke="#C1874B" stroke-width="2.2"/>
+<g fill="#2C2A26">
+<circle cx="822" cy="424" r="5"/>
+<circle cx="822" cy="472" r="5"/>
+<circle cx="822" cy="520" r="5"/>
+<circle cx="822" cy="568" r="5"/>
+<circle cx="822" cy="616" r="5"/>
+</g>
+<circle cx="822" cy="448" r="6" fill="#C1874B"/>
+<circle cx="822" cy="448" r="13" fill="none" stroke="#C1874B" stroke-opacity="0.5" stroke-width="1.2"/>
+<!-- possibility dots beyond -->
+<g fill="#2C2A26" opacity="0.18">
+<circle cx="852" cy="409" r="3"/><circle cx="878" cy="396" r="2.5"/>
+<circle cx="852" cy="472" r="3"/><circle cx="880" cy="472" r="2.5"/>
+<circle cx="852" cy="523" r="3"/><circle cx="880" cy="527" r="2.5"/>
+<circle cx="852" cy="573" r="3"/><circle cx="880" cy="578" r="2.5"/>
+<circle cx="852" cy="626" r="3"/><circle cx="878" cy="636" r="2.5"/>
+</g>
+<text x="840" y="668" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="2" fill="#A8A29E">POSSIBILITY</text>
+
+<!-- caption -->
+<text x="480" y="880" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="13" letter-spacing="4" fill="#5D5A53">DIRECTION × EXECUTION</text>
+<text x="480" y="916" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-size="17" fill="#2C2A26">人提供方向与判断，AI 提供执行与可能性</text>
+
+<rect width="960" height="1000" filter="url(#grain)" opacity="0.045"/>
+</svg>

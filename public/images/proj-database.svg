@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+<defs>
+<pattern id="dg" width="30" height="30" patternUnits="userSpaceOnUse">
+<circle cx="1.1" cy="1.1" r="1" fill="#2C2A26" opacity="0.05"/>
+</pattern>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="800" height="440" fill="#F1ECE3"/>
+<rect width="800" height="440" fill="url(#dg)"/>
+
+<!-- dot matrix: mass made orderly -->
+<g fill="#2C2A26" opacity="0.30">
+<circle cx="170" cy="170" r="3"/><circle cx="200" cy="170" r="3"/><circle cx="230" cy="170" r="3"/><circle cx="260" cy="170" r="3"/><circle cx="290" cy="170" r="3"/><circle cx="320" cy="170" r="3"/><circle cx="350" cy="170" r="3"/><circle cx="380" cy="170" r="3"/><circle cx="410" cy="170" r="3"/><circle cx="440" cy="170" r="3"/><circle cx="470" cy="170" r="3"/><circle cx="500" cy="170" r="3"/><circle cx="530" cy="170" r="3"/><circle cx="560" cy="170" r="3"/><circle cx="590" cy="170" r="3"/><circle cx="620" cy="170" r="3"/>
+<circle cx="170" cy="196" r="3"/><circle cx="200" cy="196" r="3"/><circle cx="230" cy="196" r="3"/><circle cx="260" cy="196" r="3"/><circle cx="290" cy="196" r="3"/><circle cx="320" cy="196" r="3"/><circle cx="350" cy="196" r="3"/><circle cx="380" cy="196" r="3"/><circle cx="410" cy="196" r="3"/><circle cx="440" cy="196" r="3"/><circle cx="470" cy="196" r="3"/><circle cx="500" cy="196" r="3"/><circle cx="530" cy="196" r="3"/><circle cx="560" cy="196" r="3"/><circle cx="590" cy="196" r="3"/><circle cx="620" cy="196" r="3"/>
+<circle cx="170" cy="222" r="3"/><circle cx="200" cy="222" r="3"/><circle cx="230" cy="222" r="3"/><circle cx="260" cy="222" r="3"/><circle cx="290" cy="222" r="3"/><circle cx="320" cy="222" r="3"/><circle cx="350" cy="222" r="3"/><circle cx="380" cy="222" r="3"/><circle cx="410" cy="222" r="3"/><circle cx="440" cy="222" r="3"/><circle cx="470" cy="222" r="3"/><circle cx="500" cy="222" r="3"/><circle cx="530" cy="222" r="3"/><circle cx="560" cy="222" r="3"/><circle cx="590" cy="222" r="3"/><circle cx="620" cy="222" r="3"/>
+<circle cx="170" cy="248" r="3"/><circle cx="200" cy="248" r="3"/><circle cx="230" cy="248" r="3"/><circle cx="290" cy="248" r="3"/><circle cx="320" cy="248" r="3"/><circle cx="350" cy="248" r="3"/><circle cx="380" cy="248" r="3"/><circle cx="410" cy="248" r="3"/><circle cx="470" cy="248" r="3"/><circle cx="500" cy="248" r="3"/><circle cx="530" cy="248" r="3"/><circle cx="560" cy="248" r="3"/><circle cx="620" cy="248" r="3"/>
+<circle cx="170" cy="274" r="3"/><circle cx="200" cy="274" r="3"/><circle cx="230" cy="274" r="3"/><circle cx="260" cy="274" r="3"/><circle cx="290" cy="274" r="3"/><circle cx="320" cy="274" r="3"/><circle cx="350" cy="274" r="3"/><circle cx="380" cy="274" r="3"/><circle cx="410" cy="274" r="3"/><circle cx="440" cy="274" r="3"/><circle cx="470" cy="274" r="3"/><circle cx="500" cy="274" r="3"/><circle cx="530" cy="274" r="3"/><circle cx="560" cy="274" r="3"/><circle cx="590" cy="274" r="3"/><circle cx="620" cy="274" r="3"/>
+<circle cx="170" cy="300" r="3"/><circle cx="200" cy="300" r="3"/><circle cx="230" cy="300" r="3"/><circle cx="260" cy="300" r="3"/><circle cx="290" cy="300" r="3"/><circle cx="320" cy="300" r="3"/><circle cx="350" cy="300" r="3"/><circle cx="380" cy="300" r="3"/><circle cx="410" cy="300" r="3"/><circle cx="440" cy="300" r="3"/><circle cx="470" cy="300" r="3"/><circle cx="500" cy="300" r="3"/><circle cx="530" cy="300" r="3"/><circle cx="560" cy="300" r="3"/><circle cx="590" cy="300" r="3"/><circle cx="620" cy="300" r="3"/>
+</g>
+
+<!-- the query path -->
+<line x1="148" y1="248" x2="646" y2="248" stroke="#B87F45" stroke-width="2"/>
+<circle cx="290" cy="248" r="5.5" fill="#C1874B"/>
+<circle cx="440" cy="248" r="5.5" fill="#C1874B"/>
+<circle cx="440" cy="248" r="11" fill="none" stroke="#B87F45" stroke-opacity="0.5" stroke-width="1.2"/>
+<circle cx="590" cy="248" r="5.5" fill="#C1874B"/>
+
+<!-- caliper -->
+<g stroke="#A8A29E" stroke-width="1.5">
+<line x1="132" y1="170" x2="132" y2="300"/>
+<line x1="124" y1="170" x2="140" y2="170"/>
+<line x1="124" y1="300" x2="140" y2="300"/>
+</g>
+<text x="150" y="330" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="1.5" fill="#A8A29E">≈ 20,000,000 ROWS</text>
+
+<!-- fading tail -->
+<g fill="#2C2A26" opacity="0.12">
+<circle cx="656" cy="183" r="2.5"/><circle cx="676" cy="222" r="2.5"/><circle cx="662" cy="266" r="2.5"/><circle cx="684" cy="296" r="2.5"/>
+</g>
+
+<text x="48" y="398" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="2.5" fill="#A8A29E">FIG.01 · ORDER AT SCALE</text>
+<rect width="800" height="440" filter="url(#grain)" opacity="0.045"/>
+</svg>

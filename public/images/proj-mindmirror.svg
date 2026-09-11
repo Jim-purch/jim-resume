@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+<defs>
+<pattern id="dg" width="30" height="30" patternUnits="userSpaceOnUse">
+<circle cx="1.1" cy="1.1" r="1" fill="#2C2A26" opacity="0.05"/>
+</pattern>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="800" height="440" fill="#F1ECE3"/>
+<rect width="800" height="440" fill="url(#dg)"/>
+
+<!-- mirror axis -->
+<line x1="400" y1="118" x2="400" y2="336" stroke="#A8A29E" stroke-width="1.5" stroke-dasharray="4 8"/>
+
+<!-- left: the unconscious, loose strokes -->
+<g fill="none" stroke="#2C2A26" stroke-opacity="0.5" stroke-width="1.8" stroke-linecap="round">
+<path d="M 150 200 C 190 160, 230 240, 270 190"/>
+<path d="M 160 272 C 210 302, 240 240, 302 282"/>
+<path d="M 190 152 C 220 140, 250 128, 286 140"/>
+</g>
+<g fill="#2C2A26" opacity="0.45">
+<circle cx="200" cy="168" r="6"/>
+<circle cx="252" cy="252" r="4.5"/>
+<circle cx="292" cy="160" r="5.5"/>
+<circle cx="178" cy="232" r="3.5"/>
+</g>
+
+<!-- mirror mapping -->
+<g stroke="#A8A29E" stroke-width="1" stroke-dasharray="1 6" opacity="0.7">
+<line x1="274" y1="190" x2="528" y2="190"/>
+<line x1="306" y1="282" x2="512" y2="282"/>
+</g>
+
+<!-- right: the ordered reflection -->
+<g fill="none" stroke="#2C2A26" stroke-linecap="round">
+<path d="M 600 125 A 40 40 0 0 0 600 325" stroke-opacity="0.8" stroke-width="2"/>
+<path d="M 630 155 A 70 70 0 0 0 630 295" stroke-opacity="0.5" stroke-width="2"/>
+<path d="M 660 185 A 100 100 0 0 0 660 265" stroke-opacity="0.3" stroke-width="2"/>
+</g>
+<g stroke="#2C2A26" stroke-opacity="0.5" stroke-width="1.6">
+<line x1="680" y1="190" x2="726" y2="190"/>
+<line x1="680" y1="225" x2="726" y2="225"/>
+<line x1="680" y1="260" x2="726" y2="260"/>
+</g>
+
+<!-- the self, at the axis -->
+<circle cx="400" cy="225" r="10" fill="#C1874B"/>
+<circle cx="400" cy="225" r="19" fill="none" stroke="#B87F45" stroke-opacity="0.5" stroke-width="1.4"/>
+
+<text x="48" y="398" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" letter-spacing="2.5" fill="#A8A29E">FIG.04 · MIRROR THE MIND</text>
+<rect width="800" height="440" filter="url(#grain)" opacity="0.045"/>
+</svg>

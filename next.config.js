@@ -136,6 +136,8 @@ module.exports = () => {
         beforeFiles: [
           // Serve resume at root path
           { source: '/', destination: '/resume/index.html' },
+          // Rewrite root image requests to resume images folder for backwards compatibility
+          { source: '/images/:path*', destination: '/resume/images/:path*' },
           // Serve legacy static index files when their directory is requested
           // (Next.js does not auto-serve index.html under public/ folders).
           { source: '/resume', destination: '/resume/index.html' },
