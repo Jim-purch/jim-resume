@@ -1,15 +1,13 @@
 @reference "./tailwind.css";
 
 /**
- * CSS Styles for code highlighting.
- * Feel free to customize token styles 
- * by copying from a prismjs compatible theme:
- * https://github.com/PrismJS/prism-themes
+ * Aura Warm Charcoal Code Highlighting Theme
+ * Warm paper aesthetics with terracotta & warm ember accents
  */
 
 /* Code title styles */
 .remark-code-title {
-  @apply rounded-xs bg-gray-700 px-5 py-3 font-mono text-sm font-bold text-gray-200 dark:bg-gray-800;
+  @apply rounded-t-lg border-x border-t border-[#312F2B] bg-[#21201D] px-5 py-3 font-mono text-xs font-semibold tracking-wider text-[#D8D2C5] uppercase;
 }
 
 .remark-code-title + div > pre {
@@ -17,6 +15,14 @@
 }
 
 /* Code block styles */
+pre[class*='language-'],
+pre {
+  background-color: #171615 !important;
+  color: #ede8df;
+  border: 1px solid #2c2a26;
+  border-radius: 0.5rem;
+}
+
 .code-highlight {
   @apply float-left min-w-full;
 }
@@ -26,106 +32,84 @@
 }
 
 .code-line.inserted {
-  @apply bg-green-500/20;
+  background-color: rgba(164, 185, 142, 0.15);
 }
 
 .code-line.deleted {
-  @apply bg-red-500/20;
+  background-color: rgba(215, 142, 110, 0.15);
 }
 
 .highlight-line {
-  @apply border-primary-500 -mx-4 border-l-4 bg-gray-700/50;
+  border-left-color: var(--color-terracotta);
+  background-color: rgba(193, 135, 75, 0.12);
+  @apply -mx-4 border-l-4 pr-4 pl-4;
 }
 
 .line-number::before {
-  @apply mr-4 -ml-2 inline-block w-4 text-right text-gray-400;
+  @apply mr-4 -ml-2 inline-block w-4 text-right text-[#6B665D];
   content: attr(line);
 }
 
-/* Token styles */
-/**
- * MIT License
- * Copyright (c) 2018 Sarah Drasner
- * Sarah Drasner's[@sdras] Night Owl
- * Ported by Sara vieria [@SaraVieira]
- * Added by Souvik Mandal [@SimpleIndian]
- */
+/* Token styles - Aura Warm Palette */
 .token.comment,
 .token.prolog,
+.token.doctype,
 .token.cdata {
-  color: rgb(99, 119, 119);
+  color: #7d776c;
   font-style: italic;
 }
 
 .token.punctuation {
-  color: rgb(199, 146, 234);
+  color: #a69f91;
 }
 
 .namespace {
-  color: rgb(178, 204, 214);
+  color: #c2bbb0;
+  opacity: 0.8;
 }
 
-.token.deleted {
-  color: rgba(239, 83, 80, 0.56);
-  font-style: italic;
-}
-
-.token.symbol,
-.token.property {
-  color: rgb(128, 203, 196);
-}
-
+.token.property,
 .token.tag,
-.token.operator,
-.token.keyword {
-  color: rgb(127, 219, 202);
-}
-
-.token.boolean {
-  color: rgb(255, 88, 116);
-}
-
-.token.number {
-  color: rgb(247, 140, 108);
-}
-
+.token.boolean,
+.token.number,
 .token.constant,
-.token.function,
-.token.builtin,
-.token.char {
-  color: rgb(130, 170, 255);
+.token.symbol {
+  color: #d78e6e;
 }
 
 .token.selector,
-.token.doctype {
-  color: rgb(199, 146, 234);
-  font-style: italic;
-}
-
 .token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
 .token.inserted {
-  color: rgb(173, 219, 103);
-  font-style: italic;
+  color: #a4b98e;
 }
 
-.token.string,
-.token.url,
+.token.operator,
 .token.entity,
+.token.url,
 .language-css .token.string,
 .style .token.string {
-  color: rgb(173, 219, 103);
+  color: #debc92;
 }
 
-.token.class-name,
 .token.atrule,
-.token.attr-value {
-  color: rgb(255, 203, 139);
+.token.attr-value,
+.token.keyword {
+  color: #c1874b;
+  font-weight: 500;
+}
+
+.token.function,
+.token.class-name {
+  color: #e2a36b;
 }
 
 .token.regex,
 .token.important,
 .token.variable {
-  color: rgb(214, 222, 235);
+  color: #ead4b7;
 }
 
 .token.important,
@@ -134,6 +118,15 @@
 }
 
 .token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.deleted {
+  color: #d78e6e;
   font-style: italic;
 }
 

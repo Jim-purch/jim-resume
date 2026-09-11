@@ -7,20 +7,21 @@ import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 
 const Header = () => {
-  let headerClass = 'flex items-center w-full bg-white dark:bg-gray-950 justify-between py-10'
+  let headerClass =
+    'flex items-center w-full bg-cream/85 backdrop-blur-md justify-between py-5 border-b border-warm-gray transition-colors'
   if (siteMetadata.stickyNav) {
     headerClass += ' sticky top-0 z-50'
   }
 
   return (
     <header className={headerClass}>
-      <Link href="/" aria-label={siteMetadata.headerTitle}>
+      <Link href="/" aria-label={siteMetadata.headerTitle} className="group">
         <div className="flex items-center justify-between">
-          <div className="mr-3">
+          <div className="mr-3 transition-transform duration-300 group-hover:scale-105">
             <Logo />
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="hidden h-6 text-2xl font-semibold sm:block">
+            <div className="text-charcoal group-hover:text-terracotta font-serif text-xl font-medium tracking-wider transition-colors sm:block">
               {siteMetadata.headerTitle}
             </div>
           ) : (
@@ -28,23 +29,25 @@ const Header = () => {
           )}
         </div>
       </Link>
-      <div className="flex items-center space-x-4 leading-5 sm:-mr-6 sm:space-x-6">
-        <div className="no-scrollbar hidden max-w-40 items-center gap-x-4 overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
+      <div className="flex items-center space-x-3 leading-5 sm:space-x-5">
+        <nav className="no-scrollbar hidden items-center gap-x-6 overflow-x-auto sm:flex">
           {headerNavLinks
             .filter((link) => link.href !== '/')
             .map((link) => (
               <Link
                 key={link.title}
                 href={link.href}
-                className="hover:text-primary-500 dark:hover:text-primary-400 m-1 font-medium text-gray-900 dark:text-gray-100"
+                className="text-charcoal-light hover:text-terracotta text-sm font-medium tracking-wide transition-colors duration-200"
               >
                 {link.title}
               </Link>
             ))}
+        </nav>
+        <div className="border-warm-gray flex items-center gap-2 border-l pl-3">
+          <SearchButton />
+          <ThemeSwitch />
+          <MobileNav />
         </div>
-        <SearchButton />
-        <ThemeSwitch />
-        <MobileNav />
       </div>
     </header>
   )
