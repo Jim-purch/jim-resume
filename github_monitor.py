@@ -15,6 +15,7 @@ import logging
 from pathlib import Path
 from dataclasses import dataclass, asdict
 from collections import defaultdict
+from report_generator import ResumeReportGenerator
 
 # 配置日志
 logging.basicConfig(
@@ -67,10 +68,12 @@ class GitHubMonitor:
     def __init__(self, token: str, username: str):
         self.token = token
         self.username = username
+        # 仅在存在令牌时设置认证头
         self.headers = {
-            'Authorization': f'token {token}',
             'Accept': 'application/vnd.github.v3+json'
         }
+        if token:
+            self.headers['Authorization'] = f'token {token}'
         self.base_url = 'https://api.github.com'
         
         # 技术栈映射
@@ -116,16 +119,26 @@ class GitHubMonitor:
         per_page = 100
         
         while True:
-            url = f"{self.base_url}/user/repos"
-            params = {
-                'page': page,
-                'per_page': per_page,
-                'sort': 'updated',
-                'direction': 'desc'
-            }
-            
-            if include_private:
-                params['visibility'] = 'all'
+            # 若有令牌且允许私有仓库，使用 /user/repos；否则回退到公开仓库 /users/{username}/repos
+            if self.token:
+                url = f"{self.base_url}/user/repos"
+                params = {
+                    'page': page,
+                    'per_page': per_page,
+                    'sort': 'updated',
+                    'direction': 'desc'
+                }
+                if include_private:
+                    params['visibility'] = 'all'
+            else:
+                url = f"{self.base_url}/users/{self.username}/repos"
+                params = {
+                    'page': page,
+                    'per_page': per_page,
+                    'sort': 'updated',
+                    'direction': 'desc',
+                    'type': 'all'
+                }
             
             response = requests.get(url, headers=self.headers, params=params)
             if response.status_code != 200:
@@ -607,13 +620,29 @@ class GitHubMonitor:
 
 def main():
     """主函数"""
-    # 从环境变量获取配置
+    # 从环境变量或配置文件获取配置
     github_token = os.getenv('GITHUB_TOKEN')
-    github_username = os.getenv('GITHUB_USERNAME', 'Jim-purch')
+    github_username = os.getenv('GITHUB_USERNAME')
+    
+    # 尝试从配置文件读取回退值
+    if not github_token or not github_username:
+        try:
+            config_path = Path('config.json')
+            if config_path.exists():
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    cfg = json.load(f)
+                gh_cfg = cfg.get('github', {})
+                github_token = github_token or gh_cfg.get('token', '')
+                github_username = github_username or gh_cfg.get('username', 'Jim-purch')
+        except Exception as e:
+            logger.warning(f"读取配置文件失败: {e}")
+    
+    if not github_username:
+        github_username = 'Jim-purch'
     
     if not github_token:
-        logger.error("请设置 GITHUB_TOKEN 环境变量")
-        return
+        logger.warning("未设置 GITHUB_TOKEN，将仅分析公开仓库")
+        github_token = None
     
     # 创建监控器
     monitor = GitHubMonitor(github_token, github_username)
@@ -632,8 +661,17 @@ def main():
         # 生成报告
         report = monitor.generate_resume_report(analyses)
         
-        # 保存报告
+        # 保存JSON报告
         report_file = monitor.save_report(report)
+        
+        # 生成并保存Markdown版简历到仓库根目录
+        try:
+            generator = ResumeReportGenerator()
+            md_content = generator.generate_report(report, 'markdown')
+            resume_md_path = generator.save_report(md_content, 'Jim_Resume.md', 'markdown')
+            logger.info(f"Markdown简历已生成: {resume_md_path}")
+        except Exception as e:
+            logger.error(f"生成Markdown简历失败: {e}")
         
         logger.info("简历更新报告生成完成!")
         logger.info(f"报告文件: {report_file}")

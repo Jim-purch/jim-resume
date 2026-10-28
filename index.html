@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jim - AI协作专家 & 产品经理 | 个人简历</title>
+    <!-- Canonical & Hreflang -->
+    <link rel="canonical" href="https://jim.aquor.space/" id="canonicalLink">
+    <link rel="alternate" href="https://jim.aquor.space/" hreflang="zh-CN" id="hreflangZh">
+    <link rel="alternate" href="https://jim.aquor.space/?lang=en" hreflang="en" id="hreflangEn">
     
     <!-- 性能优化 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,11 +24,25 @@
     <meta name="description" content="Jim - AI协作专家与数字化产品经理，专注AI工具应用、业务流程数字化和企业自动化解决方案">
     <meta name="keywords" content="Jim,AI协作专家,产品经理,AI工具,数字化转型,业务自动化,需求分析">
     <meta name="author" content="Jim">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#10b981">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Jim - AI协作专家 & 产品经理">
     <meta property="og:description" content="AI工具协作专家，专注需求分析与实现、业务流程数字化、企业自动化解决方案设计">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jim.aquor.space/" id="ogUrl">
+    <meta property="og:image" content="/favicon.svg">
+    <meta property="og:site_name" content="Jim Resume">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jim - AI协作专家 & 产品经理">
+    <meta name="twitter:description" content="AI工具协作专家，专注需求分析与实现、业务流程数字化、企业自动化解决方案设计">
+    <meta name="twitter:image" content="/favicon.svg">
+
+    <!-- JSON-LD Placeholder: injected later -->
+    <script type="application/ld+json" id="jsonldPlaceholder"></script>
 
     <style>
         /* 现代化CSS变量系统 - 参考OpenAI & Notion设计 */
@@ -880,19 +898,163 @@
             }
         }
     </style>
+    <style>
+        /* 动态效果增强：滚动进度条、reveal、倾斜卡片、噪声层、视差 */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary-solid), rgba(6, 182, 212, 0.8), rgba(139, 92, 246, 0.8));
+            z-index: 1000;
+            transition: width 0.1s ease-out;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s var(--ease-out-cubic), transform 0.6s var(--ease-out-cubic);
+        }
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-card, .project-card {
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        .hero .noise-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.10), transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.08), transparent 45%),
+                radial-gradient(circle at 30% 80%, rgba(139, 92, 246, 0.08), transparent 45%),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 2px);
+            mix-blend-mode: multiply;
+            opacity: 0.6;
+            animation: grainShift 12s steps(10) infinite;
+        }
+        @keyframes grainShift {
+            0% { transform: translate3d(0,0,0); }
+            10% { transform: translate3d(-5%, -5%, 0); }
+            20% { transform: translate3d(3%, -8%, 0); }
+            30% { transform: translate3d(-8%, 4%, 0); }
+            40% { transform: translate3d(4%, 6%, 0); }
+            50% { transform: translate3d(-6%, -4%, 0); }
+            60% { transform: translate3d(6%, -2%, 0); }
+            70% { transform: translate3d(-3%, 8%, 0); }
+            80% { transform: translate3d(2%, -6%, 0); }
+            90% { transform: translate3d(-2%, 3%, 0); }
+            100% { transform: translate3d(0,0,0); }
+        }
+        /* 报告动作区域与打印样式 */
+        .report-actions {
+            display: flex;
+            gap: var(--space-3);
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-md);
+            background: var(--primary);
+            color: #fff;
+            box-shadow: var(--shadow-md);
+            text-decoration: none;
+            transition: transform 0.2s var(--ease-out-cubic), box-shadow 0.2s var(--ease-out-cubic);
+        }
+        .action-button.secondary {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--text);
+        }
+        .action-button:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .action-button i { font-size: 1rem; }
+
+        /* 语言切换按钮 */
+        .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--primary-solid);
+            cursor: pointer;
+            transition: all 0.2s var(--ease-out-cubic);
+        }
+        .lang-toggle:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .lang-toggle .label { font-weight: 600; }
+
+        /* 专业分析维度摘要样式 */
+        .analysis-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+        }
+        .analysis-item {
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s var(--ease-out-cubic), transform 0.2s var(--ease-out-cubic);
+        }
+        .analysis-item:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .analysis-item h4 { font-size: 1rem; font-weight: 700; margin-bottom: var(--space-3); }
+        .analysis-item ul { margin-left: 1rem; }
+        .analysis-item .pill {
+            display: inline-block;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--primary-solid);
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media print {
+            body { background: #fff; }
+            .navbar, .floating-email, .scroll-progress { display: none !important; }
+            .section { display: none !important; }
+            #report.section { display: block !important; }
+            #report { padding-top: 0; }
+            .project-card { box-shadow: none; border: 1px solid #e5e7eb; }
+        }
+    </style>
 </head>
 <body>
+    <!-- 页面滚动进度条 -->
+    <div class="scroll-progress"></div>
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">Jim AI</div>
             <ul class="nav-links">
-                <li><a href="#home">首页</a></li>
-                <li><a href="#about">关于</a></li>
-                <li><a href="#skills">技能</a></li>
-                <li><a href="#projects">项目</a></li>
-                <li><a href="#contact">联系</a></li>
-                <li><a href="/converter.html" title="PDF 转 SVG/PNG 工具">PDF转换</a></li>
+                <li><a href="#home" data-i18n="nav_home">首页</a></li>
+                <li><a href="#about" data-i18n="nav_about">关于</a></li>
+                <li><a href="#skills" data-i18n="nav_skills">技能</a></li>
+                <li><a href="#report" data-i18n="nav_report">报告</a></li>
+                <li><a href="#projects" data-i18n="nav_projects">项目</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">联系</a></li>
+                <li><a href="/converter.html" title="PDF 转 SVG/PNG 工具" data-i18n="nav_converter">PDF转换</a></li>
+                <li>
+                    <button id="langToggle" class="lang-toggle" aria-label="Language Toggle" title="切换语言">
+                        <i class="fas fa-language"></i>
+                        <span class="label" data-i18n="lang_toggle">English</span>
+                    </button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -904,6 +1066,8 @@
             <div class="shape"></div>
             <div class="shape"></div>
         </div>
+        <!-- 英雄区噪声覆盖层 -->
+        <div class="noise-layer"></div>
         <div class="hero-content">
             <h1 class="hero-title">AI协作专家<br>数字化产品经理</h1>
             <p class="hero-subtitle">精通CMS系统架构与AI工具协作，专注需求分析与实现、业务流程数字化<br>14个专业项目经验，致力于用技术创新驱动业务价值</p>
@@ -1008,6 +1172,149 @@
                     </div>
                     <h4>跨领域业务</h4>
                     <p>外贸、制造、内容管理等多领域的AI化改造经验，擅长跨领域整合和创新实践。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 简历更新报告 -->
+    <section id="report" class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="report_title">简历更新报告</h2>
+            <div class="report-actions reveal">
+                <button class="action-button" id="printReport" title="下载 PDF">
+                    <i class="fas fa-file-pdf"></i>
+                    <span data-i18n="download_pdf">下载报告 PDF</span>
+                </button>
+                <a class="action-button secondary" href="/Jim_Resume.md" target="_blank" rel="noopener noreferrer" title="查看完整报告">
+                    <i class="fas fa-file-alt"></i>
+                    <span data-i18n="view_markdown">查看完整报告（Markdown）</span>
+                </a>
+            </div>
+            <div class="project-card">
+                <div class="project-content">
+                    <p><strong data-i18n="generated_at_label">生成时间</strong>: 2025年10月13日 15:43</p>
+                    <div class="project-metrics">
+                        <div class="metric">
+                            <span class="metric-value">6</span>
+                            <span class="metric-label" data-i18n="metric_total">总项目数</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">5</span>
+                            <span class="metric-label" data-i18n="metric_recent">最近更新</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">4</span>
+                            <span class="metric-label" data-i18n="metric_significant">显著更新</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">4</span>
+                            <span class="metric-label" data-i18n="metric_ai">AI协作项目</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">0.18</span>
+                            <span class="metric-label" data-i18n="metric_complexity">平均复杂度</span>
+                        </div>
+                    </div>
+                    <h3 data-i18n="exec_summary">执行摘要</h3>
+                    <ul>
+                        <li>企业级 CMS 系统生产上线，支持 20 人并发协作。</li>
+                        <li>构建多角色 AI 协作体系与高效人机工作流，覆盖全链路。</li>
+                        <li>效率提升 300%+，人力成本优化 67%，50 万+记录数据处理经验。</li>
+                    </ul>
+                    <h3 data-i18n="value_prop">价值主张</h3>
+                    <ul>
+                        <li>用 AI 驱动业务增效，以可量化指标衡量方案效果。</li>
+                        <li>以产品思维落地技术，实现需求到上线的闭环交付。</li>
+                        <li>可复制的协作框架，快速迁移到不同业务场景。</li>
+                    </ul>
+                    <h3 data-i18n="analysis_title">专业分析维度（摘要）</h3>
+                    <div class="analysis-summary">
+                        <div class="analysis-item">
+                            <h4>SFIA</h4>
+                            <p>
+                                <span class="pill">Solution Architecture L5</span>
+                                <span class="pill">Methods & Tools L5</span>
+                                <span class="pill">Programming L4</span>
+                                <span class="pill">Stakeholder Mgmt L5</span>
+                            </p>
+                            <p data-i18n="sfia_note">基于交付范围、独立性与影响力综合评估。</p>
+                        </div>
+                        <div class="analysis-item">
+                            <h4>OKR</h4>
+                            <ul>
+                                <li data-i18n="okr_o1">强化 AI 协作商业落地：新增 2 个企业案例</li>
+                                <li data-i18n="okr_o2">提升交付效率与质量：自动化覆盖 ≥60%</li>
+                                <li data-i18n="okr_o3">扩大开源影响力：Star +100 / Demo 3 个</li>
+                            </ul>
+                        </div>
+                        <div class="analysis-item">
+                            <h4 data-i18n="vc_title">价值-复杂度优先</h4>
+                            <ul>
+                                <li data-i18n="vc_item1">CMS 权限与流程模板库：高价值 / 中复杂</li>
+                                <li data-i18n="vc_item2">订单→文档自动化：高价值 / 中高复杂</li>
+                                <li data-i18n="vc_item3">WPS 邮件智能助手：中高价值 / 中复杂</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="report-actions" style="margin-top: var(--space-4);">
+                        <a class="action-button secondary" href="/Jim_Resume.md" target="_blank" rel="noopener noreferrer" title="查看完整维度">
+                            <i class="fas fa-layer-group"></i>
+                            <span data-i18n="view_full_dims">查看完整维度</span>
+                        </a>
+                    </div>
+                    <h3>核心能力地图（精选）</h3>
+                    <div class="project-tags" style="margin-bottom: var(--space-4);">
+                        <span class="tag primary">AI协作与提示工程</span>
+                        <span class="tag">数字化产品设计</span>
+                        <span class="tag">数据处理与自动化</span>
+                        <span class="tag">Web与系统架构</span>
+                    </div>
+                    <h3>重点项目推荐</h3>
+                    <ul>
+                        <li><strong>tmt-blog</strong> — Web应用；AI集成 / Web界面 / API接口 / 数据处理</li>
+                        <li><strong>telechat</strong> — AI工具；AI集成 / Web界面 / API接口 / 数据处理 / 文件管理</li>
+                        <li><strong>book-index-tts</strong> — Web应用；AI集成 / Web界面 / API接口</li>
+                    </ul>
+                    <h3>最近更新项目（5）</h3>
+                    <ul>
+                        <li><strong>jim-resume</strong> — 10月13日更新 | 复杂度: 0.1 | 基础价值 - 学习项目</li>
+                        <li><strong>pdf-to-svg-png</strong> — 10月13日更新 | 复杂度: 0.1 | 中等价值 - AI工具应用</li>
+                        <li><strong>tmt-blog</strong> — 10月11日更新 | 复杂度: 0.4 | 中等价值 - AI工具应用</li>
+                        <li><strong>pic-auto-zip</strong> — 10月09日更新 | 复杂度: 0.0 | 基础价值 - 学习项目</li>
+                        <li><strong>telechat</strong> — 09月29日更新 | 复杂度: 0.3 | 中等价值 - AI工具应用</li>
+                    </ul>
+                    <h3>技能矩阵高频标签</h3>
+                    <div class="project-tags" style="margin-bottom: var(--space-4);">
+                        <span class="tag primary">AI协作</span>
+                        <span class="tag primary">AI协作专家</span>
+                        <span class="tag">数据处理</span>
+                        <span class="tag">AI/ML</span>
+                        <span class="tag">Web开发</span>
+                        <span class="tag">自动化</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Web应用</span>
+                        <span class="tag">前端开发</span>
+                        <span class="tag">React</span>
+                        <span class="tag">部署自动化</span>
+                        <span class="tag">Web前端</span>
+                    </div>
+                    <h3>简历更新建议</h3>
+                    <ul>
+                        <li>发现 5 个最近更新的项目，建议更新项目展示部分</li>
+                        <li>新增 3 个 AI协作项目，突出 AI 专家定位</li>
+                        <li>新增技能标签: 容器化、脚本工具、用户界面、自动化、运维自动化</li>
+                    </ul>
+                    <div class="report-actions" style="margin-top: var(--space-4);">
+                        <button class="action-button" id="printReportBottom" title="下载 PDF">
+                            <i class="fas fa-file-pdf"></i>
+                            <span data-i18n="download_pdf">下载报告 PDF</span>
+                        </button>
+                        <a class="action-button secondary" href="/Jim_Resume.md" target="_blank" rel="noopener noreferrer" title="查看完整报告">
+                            <i class="fas fa-file-alt"></i>
+                            <span data-i18n="view_markdown">查看完整报告（Markdown）</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1335,6 +1642,127 @@
                 item.classList.add('animate-in');
             });
         }, 500);
+    </script>
+    <script src="/i18n.js"></script>
+    <script>
+        // 增强动态效果：滚动进度条、Reveal、卡片倾斜、视差
+        (function() {
+            // 页面滚动进度条
+            const progressBar = document.querySelector('.scroll-progress');
+            const updateProgress = () => {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                if (progressBar) progressBar.style.width = progress + '%';
+            };
+            window.addEventListener('scroll', updateProgress, { passive: true });
+            updateProgress();
+
+            // Reveal 动画：为关键板块添加显隐动画
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.section-title, .hero-content, .about-grid, .skills-grid, .projects-grid, #report .container > *').forEach(el => {
+                el.classList.add('reveal');
+                revealObserver.observe(el);
+            });
+
+            // 卡片倾斜交互（tilt）
+            const addTilt = (card) => {
+                const maxTilt = 10; // 角度
+                const handleMove = (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width;
+                    const y = (e.clientY - rect.top) / rect.height;
+                    const rotateY = (x - 0.5) * (maxTilt * 2);
+                    const rotateX = (0.5 - y) * (maxTilt * 2);
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+                    card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.12)';
+                };
+                const reset = () => {
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                };
+                card.addEventListener('mousemove', handleMove);
+                card.addEventListener('mouseleave', reset);
+            };
+            document.querySelectorAll('.project-card, .skill-card').forEach(addTilt);
+
+            // 英雄区视差移动（浮动图形随滚动轻微移动）
+            const shapes = document.querySelectorAll('.floating-shapes .shape');
+            const parallax = () => {
+                const y = window.scrollY;
+                shapes.forEach((shape, i) => {
+                    const speed = (i + 1) * 0.05;
+                    shape.style.transform = `translateY(${y * speed}px)`;
+                });
+            };
+            window.addEventListener('scroll', parallax, { passive: true });
+        })();
+    </script>
+    <script>
+        // 报告打印（PDF）按钮
+        const printButtons = ['printReport', 'printReportBottom']
+            .map(id => document.getElementById(id))
+            .filter(Boolean);
+        printButtons.forEach(btn => btn.addEventListener('click', () => window.print()));
+    </script>
+    <script>
+        // SEO: 动态更新 canonical / og:url / hreflang，并注入结构化数据
+        (function() {
+            const origin = (window.location.origin || 'http://127.0.0.1:5501');
+            const path = window.location.pathname || '/';
+            const lang = document.documentElement.getAttribute('lang') || 'zh-CN';
+            const baseUrl = origin + path;
+
+            // canonical
+            const canonicalLink = document.getElementById('canonicalLink');
+            if (canonicalLink) {
+                canonicalLink.setAttribute('href', lang === 'en' ? baseUrl + '?lang=en' : baseUrl);
+            }
+
+            // hreflang
+            const zh = document.getElementById('hreflangZh');
+            const en = document.getElementById('hreflangEn');
+            if (zh) zh.setAttribute('href', baseUrl);
+            if (en) en.setAttribute('href', baseUrl + '?lang=en');
+
+            // og:url
+            const ogUrl = document.getElementById('ogUrl');
+            if (ogUrl) ogUrl.setAttribute('content', lang === 'en' ? (baseUrl + '?lang=en') : baseUrl);
+
+            // JSON-LD: WebSite + Person
+            const json = {
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                'url': baseUrl,
+                'name': 'Jim Resume',
+                'inLanguage': lang,
+                'publisher': {
+                    '@type': 'Person',
+                    'name': 'Jim',
+                    'email': 'cxxvcheng@gmail.com',
+                    'url': baseUrl,
+                    'sameAs': [
+                        'https://github.com/Jim-purch/'
+                    ]
+                },
+                'potentialAction': {
+                    '@type': 'SearchAction',
+                    'target': baseUrl + '?q={search_term_string}',
+                    'query-input': 'required name=search_term_string'
+                }
+            };
+            const script = document.getElementById('jsonldPlaceholder');
+            if (script) {
+                script.textContent = JSON.stringify(json);
+            }
+        })();
     </script>
 </body>
 </html>
