@@ -1,10 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#282520" />
+      <stop offset="100%" stop-color="#151412" />
     </linearGradient>
+    <radialGradient id="glow" cx="72%" cy="28%" r="48%">
+      <stop offset="0%" stop-color="#DCA468" stop-opacity="0.34" />
+      <stop offset="100%" stop-color="#DCA468" stop-opacity="0" />
+    </radialGradient>
   </defs>
-  <rect width="32" height="32" rx="8" fill="url(#grad)"/>
-  <text x="16" y="22" font-family="Inter, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">J</text>
+  <rect width="64" height="64" rx="15" fill="url(#bg)" />
+  <rect width="64" height="64" rx="15" fill="url(#glow)" />
+  <rect x="1.25" y="1.25" width="61.5" height="61.5" rx="13.75" fill="none" stroke="#DCA468" stroke-opacity="0.42" stroke-width="1.5" />
+  <!-- Architectural Editorial J Monogram -->
+  <path d="M 24 18 H 34 M 31 18 V 39.5 C 31 45.2 27 49 21.8 49 C 18 49 15.5 46.8 14.5 44" fill="none" stroke="#F5F2EB" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Warm Terracotta Direction Beacon -->
+  <circle cx="46.5" cy="18.5" r="7" fill="none" stroke="#DCA468" stroke-opacity="0.42" stroke-width="1.2" />
+  <circle cx="46.5" cy="18.5" r="3.4" fill="#DCA468" />
 </svg>

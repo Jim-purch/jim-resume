@@ -1,14 +1,19 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "Jim — AI Collaboration & Full-stack Creator",
+  "short_name": "Jim",
   "icons": [
     {
-      "src": "/android-chrome-96x96.png",
+      "src": "/static/favicons/android-chrome-96x96.png",
       "sizes": "96x96",
       "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ],
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#151412",
+  "background_color": "#F5F2EB",
   "display": "standalone"
 }

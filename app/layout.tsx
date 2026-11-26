@@ -80,9 +80,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${inter.variable} ${cinzel.variable} ${jetbrainsMono.variable} scroll-smooth`}
       suppressHydrationWarning
     >
+      <link rel="icon" type="image/svg+xml" href={`${basePath}/favicon.svg`} />
       <link
         rel="apple-touch-icon"
-        sizes="76x76"
+        sizes="180x180"
         href={`${basePath}/static/favicons/apple-touch-icon.png`}
       />
       <link
@@ -101,10 +102,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link
         rel="mask-icon"
         href={`${basePath}/static/favicons/safari-pinned-tab.svg`}
-        color="#5bbad5"
+        color="#c1874b"
       />
-      <meta name="msapplication-TileColor" content="#000000" />
-      <meta name="theme-color" content="#FDFBF7" />
+      <meta name="msapplication-TileColor" content="#151412" />
+      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5F2EB" />
+      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#151412" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       <body
         className={`${inter.variable} ${cinzel.variable} ${jetbrainsMono.variable} bg-cream text-charcoal selection:bg-terracotta/20 selection:text-charcoal flex min-h-screen flex-col pl-[calc(100vw-100%)] font-sans antialiased`}

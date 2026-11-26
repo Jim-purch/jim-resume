@@ -399,7 +399,7 @@
     const { Engine, Bodies, Body, Composite, Mouse, MouseConstraint } = window.Matter
 
     const CHIPS = [
-      { label: '★ MCP Protocol', variant: 'accent' },
+      { label: 'MCP Protocol · npm', variant: 'accent' },
       { label: 'Claude Code', variant: 'dark-chip' },
       { label: 'Next.js 16', variant: 'accent' },
       { label: 'PostgreSQL · 20M+', variant: 'dark-chip' },

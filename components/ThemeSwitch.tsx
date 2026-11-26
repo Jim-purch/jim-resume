@@ -15,57 +15,66 @@ import {
 const Sun = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className="group:hover:text-gray-100 h-6 w-6"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-4 w-4"
   >
-    <path
-      fillRule="evenodd"
-      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-      clipRule="evenodd"
-    />
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
   </svg>
 )
+
 const Moon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className="group:hover:text-gray-100 h-6 w-6"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-4 w-4"
   >
-    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
   </svg>
 )
+
 const Monitor = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
+    viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="2"
+    strokeWidth="1.75"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="group:hover:text-gray-100 h-6 w-6"
+    className="h-4 w-4"
   >
-    <rect x="3" y="3" width="14" height="10" rx="2" ry="2"></rect>
-    <line x1="7" y1="17" x2="13" y2="17"></line>
-    <line x1="10" y1="13" x2="10" y2="17"></line>
+    <rect x="2" y="3" width="20" height="14" rx="2" />
+    <path d="M8 21h8M12 17v4" />
   </svg>
 )
-const Blank = () => <svg className="h-6 w-6" />
+
+const Blank = () => <svg className="h-4 w-4" />
 
 const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme, resolvedTheme } = useTheme()
 
-  // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), [])
 
   return (
     <div className="flex items-center">
       <Menu as="div" className="relative inline-block text-left">
-        <div className="hover:text-primary-500 dark:hover:text-primary-400 flex items-center justify-center">
-          <MenuButton aria-label="Theme switcher">
+        <div className="flex items-center justify-center">
+          <MenuButton
+            aria-label="Theme switcher"
+            className="border-warm-gray bg-cream-light text-charcoal hover:border-terracotta hover:text-terracotta inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border transition-colors"
+          >
             {mounted ? resolvedTheme === 'dark' ? <Moon /> : <Sun /> : <Blank />}
           </MenuButton>
         </div>
@@ -80,17 +89,17 @@ const ThemeSwitch = () => {
         >
           <MenuItems className="border-warm-gray bg-cream-light text-charcoal absolute right-0 z-50 mt-2 w-36 origin-top-right rounded-lg border p-1 shadow-xl focus:outline-hidden">
             <RadioGroup value={theme} onChange={setTheme}>
-              <div className="p-1">
+              <div className="space-y-0.5 p-0.5">
                 <Radio value="light">
                   <MenuItem>
                     {({ focus }) => (
                       <button
-                        className={`${focus ? 'bg-primary-600 text-white' : ''} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                        className={`${focus ? 'bg-terracotta/15 text-terracotta' : ''} group flex w-full cursor-pointer items-center rounded-md px-2.5 py-1.5 font-mono text-xs transition-colors`}
                       >
                         <div className="mr-2">
                           <Sun />
                         </div>
-                        Light
+                        暖纸 Light
                       </button>
                     )}
                   </MenuItem>
@@ -100,13 +109,13 @@ const ThemeSwitch = () => {
                     {({ focus }) => (
                       <button
                         className={`${
-                          focus ? 'bg-primary-600 text-white' : ''
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          focus ? 'bg-terracotta/15 text-terracotta' : ''
+                        } group flex w-full cursor-pointer items-center rounded-md px-2.5 py-1.5 font-mono text-xs transition-colors`}
                       >
                         <div className="mr-2">
                           <Moon />
                         </div>
-                        Dark
+                        暗夜 Dark
                       </button>
                     )}
                   </MenuItem>
@@ -116,13 +125,13 @@ const ThemeSwitch = () => {
                     {({ focus }) => (
                       <button
                         className={`${
-                          focus ? 'bg-primary-600 text-white' : ''
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          focus ? 'bg-terracotta/15 text-terracotta' : ''
+                        } group flex w-full cursor-pointer items-center rounded-md px-2.5 py-1.5 font-mono text-xs transition-colors`}
                       >
                         <div className="mr-2">
                           <Monitor />
                         </div>
-                        System
+                        跟随系统
                       </button>
                     )}
                   </MenuItem>
