@@ -759,6 +759,69 @@
           window.location.href = '/blog/cloud-sheet-saas-guide'
         },
       },
+
+      {
+        group: 'GitHub 开源仓库 / Repositories',
+        icon: 'fab fa-github',
+        title: 'Jim-purch/jim-wps-mcp-server (WPS MCP Server)',
+        sub: 'GitHub',
+        keywords: 'github repo wps mcp npm',
+        action: () =>
+          window.open('https://github.com/Jim-purch/jim-wps-mcp-server', '_blank', 'noopener'),
+      },
+      {
+        group: 'GitHub 开源仓库 / Repositories',
+        icon: 'fab fa-github',
+        title: 'Jim-purch/websearch-wps-webhook (云表格快速查找 SaaS)',
+        sub: 'GitHub',
+        keywords: 'github repo websearch cloud sheet saas',
+        action: () =>
+          window.open('https://github.com/Jim-purch/websearch-wps-webhook', '_blank', 'noopener'),
+      },
+      {
+        group: 'GitHub 开源仓库 / Repositories',
+        icon: 'fab fa-github',
+        title: 'Jim-purch/sheets2kdocs (Google Sheets → 金山文档同步)',
+        sub: 'GitHub',
+        keywords: 'github repo sheets2kdocs kdocs google sheets sync',
+        action: () =>
+          window.open('https://github.com/Jim-purch/sheets2kdocs', '_blank', 'noopener'),
+      },
+      {
+        group: 'GitHub 开源仓库 / Repositories',
+        icon: 'fab fa-github',
+        title: 'Jim-purch/mac-voice-to-text (macOS 实时语音转文字)',
+        sub: 'GitHub',
+        keywords: 'github repo macos voice whisper swift',
+        action: () =>
+          window.open('https://github.com/Jim-purch/mac-voice-to-text', '_blank', 'noopener'),
+      },
+      {
+        group: 'GitHub 开源仓库 / Repositories',
+        icon: 'fab fa-github',
+        title: 'Jim-purch/OH-MindMirror (AI 心理投射工具)',
+        sub: 'GitHub',
+        keywords: 'github repo oh mindmirror gemini',
+        action: () =>
+          window.open('https://github.com/Jim-purch/OH-MindMirror', '_blank', 'noopener'),
+      },
+      {
+        group: 'GitHub 开源仓库 / Repositories',
+        icon: 'fab fa-github',
+        title: 'Jim-purch/telechat (Telegram 双通道语音机器人)',
+        sub: 'GitHub',
+        keywords: 'github repo telechat deepseek minimax telegram',
+        action: () => window.open('https://github.com/Jim-purch/telechat', '_blank', 'noopener'),
+      },
+      {
+        group: 'GitHub 开源仓库 / Repositories',
+        icon: 'fab fa-github',
+        title: 'Jim-purch/put-watermark-web (纯前端批量水印工具)',
+        sub: 'GitHub',
+        keywords: 'github repo watermark canvas docker',
+        action: () =>
+          window.open('https://github.com/Jim-purch/put-watermark-web', '_blank', 'noopener'),
+      },
     ]
 
     let filtered = COMMANDS.slice()

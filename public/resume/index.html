@@ -1555,6 +1555,160 @@
             border: 1px solid rgba(193, 135, 75, 0.28);
         }
 
+        .project-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+            margin-top: var(--space-md);
+            padding-top: 0.9rem;
+            border-top: 1px dashed var(--card-border);
+        }
+
+        .project-gh-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.42rem;
+            padding: 0.36rem 0.82rem;
+            border-radius: 9999px;
+            border: 1px solid var(--warm-gray);
+            background: var(--cream);
+            color: var(--charcoal);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .project-gh-link:hover {
+            border-color: var(--terracotta);
+            background: var(--terracotta-soft);
+            color: var(--terracotta);
+            transform: translateY(-1px);
+        }
+
+        .project-doc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--terracotta);
+            text-decoration: none;
+            padding: 0.32rem 0.45rem;
+            transition: opacity var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .project-doc-link:hover {
+            opacity: 0.82;
+            transform: translateX(2px);
+        }
+
+        .project-private-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--stone);
+            padding: 0.3rem 0.7rem;
+            border-radius: 9999px;
+            background: var(--warm-gray-subtle);
+        }
+
+        /* 更多公开开源仓库矩阵 */
+        .oss-matrix-box {
+            max-width: 1400px;
+            margin: var(--space-2xl) auto 0;
+            padding: var(--space-lg) var(--space-xl);
+            background: var(--cream-light);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+        }
+
+        .oss-matrix-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .oss-matrix-title {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--terracotta);
+        }
+
+        .oss-matrix-all {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--charcoal);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .oss-matrix-all:hover {
+            color: var(--terracotta);
+        }
+
+        .oss-matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .oss-repo-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding: 0.75rem 0.95rem;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: var(--cream);
+            text-decoration: none;
+            color: inherit;
+            transition: all var(--transition-fast);
+        }
+
+        .oss-repo-item:hover {
+            border-color: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        .oss-repo-name {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .oss-repo-item:hover .oss-repo-name {
+            color: var(--terracotta);
+        }
+
+        .oss-repo-desc {
+            font-size: 0.78rem;
+            font-weight: 300;
+            color: var(--charcoal-light);
+            line-height: 1.5;
+        }
+
         /* 博客与技术手记 */
         .blog-section {
             position: relative;
@@ -2437,6 +2591,14 @@
                         <span class="project-tag">PostgreSQL</span>
                         <span class="project-tag">Elasticsearch</span>
                     </div>
+                    <div class="project-links">
+                        <span class="project-private-pill"><i class="fas fa-lock"></i> 企业私有核心库</span>
+                        <a href="https://github.com/Jim-purch/parts-catalog-pdf-to-xlsx" target="_blank" rel="noopener noreferrer" class="project-gh-link">
+                            <i class="fab fa-github"></i>
+                            <span>配件目录提取开源</span>
+                        </a>
+                        <a href="/blog/parts-database-architecture" class="project-doc-link">架构实录 &rarr;</a>
+                    </div>
                 </div>
             </div>
             <div class="project-card featured corner-ticks">
@@ -2458,6 +2620,13 @@
                         <span class="project-tag primary">npm发布</span>
                         <span class="project-tag">TypeScript</span>
                         <span class="project-tag">AI工具</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Jim-purch/jim-wps-mcp-server" target="_blank" rel="noopener noreferrer" class="project-gh-link">
+                            <i class="fab fa-github"></i>
+                            <span>jim-wps-mcp-server</span>
+                        </a>
+                        <a href="/blog/wps-mcp-server-guide" class="project-doc-link">接入指南 &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -2481,6 +2650,13 @@
                         <span class="project-tag">React 19</span>
                         <span class="project-tag">RLS安全</span>
                     </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Jim-purch/websearch-wps-webhook" target="_blank" rel="noopener noreferrer" class="project-gh-link">
+                            <i class="fab fa-github"></i>
+                            <span>websearch-wps-webhook</span>
+                        </a>
+                        <a href="/blog/cloud-sheet-saas-guide" class="project-doc-link">架构手记 &rarr;</a>
+                    </div>
                 </div>
             </div>
             <div class="project-card">
@@ -2500,6 +2676,13 @@
                         <span class="project-tag primary">Gemini API</span>
                         <span class="project-tag">React</span>
                         <span class="project-tag">TypeScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Jim-purch/OH-MindMirror" target="_blank" rel="noopener noreferrer" class="project-gh-link">
+                            <i class="fab fa-github"></i>
+                            <span>OH-MindMirror</span>
+                        </a>
+                        <a href="/blog/oh-mindmirror-intro" class="project-doc-link">开发手记 &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -2522,6 +2705,13 @@
                         <span class="project-tag">Docker</span>
                         <span class="project-tag">Node.js</span>
                     </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Jim-purch/telechat" target="_blank" rel="noopener noreferrer" class="project-gh-link">
+                            <i class="fab fa-github"></i>
+                            <span>telechat</span>
+                        </a>
+                        <a href="/blog/telechat-voice-bot" class="project-doc-link">部署指南 &rarr;</a>
+                    </div>
                 </div>
             </div>
             <div class="project-card">
@@ -2543,6 +2733,13 @@
                         <span class="project-tag">PyQt5</span>
                         <span class="project-tag">FRP</span>
                     </div>
+                    <div class="project-links">
+                        <span class="project-private-pill"><i class="fas fa-lock"></i> 企业私有内网代理</span>
+                        <a href="https://github.com/Jim-purch/qiniuyun-upload-auth" target="_blank" rel="noopener noreferrer" class="project-gh-link">
+                            <i class="fab fa-github"></i>
+                            <span>鉴权服务开源</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="project-card">
@@ -2556,12 +2753,18 @@
                         <span class="en">WPS Enterprise Automation Suite</span>
                     </h4>
                     <p class="project-role">产品设计 &amp; 开发 / Product Design &amp; Dev</p>
-                    <p>基于 WPS 多维表格的企业级自动化方案，涵盖报价系统、库存管理、编码转换和 Bartender 标签打印服务。</p>
-                    <p class="en">Enterprise automation built on WPS multidimensional tables — covering quoting, inventory, code conversion, and Bartender label printing.</p>
+                    <p>基于 WPS 多维表格的企业级自动化方案，涵盖报价系统、库存管理、编码转换、跨表定时同步和 Bartender 标签打印服务。</p>
+                    <p class="en">Enterprise automation built on WPS multidimensional tables — covering quoting, inventory, code conversion, scheduled sync, and Bartender label printing.</p>
                     <div class="project-tags">
                         <span class="project-tag primary">WPS AirScript</span>
                         <span class="project-tag">业务自动化</span>
                         <span class="project-tag">Python</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Jim-purch/sheets2kdocs" target="_blank" rel="noopener noreferrer" class="project-gh-link">
+                            <i class="fab fa-github"></i>
+                            <span>sheets2kdocs (金山文档同步)</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -2584,6 +2787,13 @@
                         <span class="project-tag">Zustand</span>
                         <span class="project-tag">Supabase</span>
                     </div>
+                    <div class="project-links">
+                        <span class="project-private-pill"><i class="fas fa-lock"></i> 独立私有仓库</span>
+                        <a href="https://github.com/Jim-purch/ball-webgame" target="_blank" rel="noopener noreferrer" class="project-gh-link">
+                            <i class="fab fa-github"></i>
+                            <span>公开小游戏 ball-webgame</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="project-card">
@@ -2604,7 +2814,58 @@
                         <span class="project-tag">Docker</span>
                         <span class="project-tag">Nginx</span>
                     </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Jim-purch/put-watermark-web" target="_blank" rel="noopener noreferrer" class="project-gh-link">
+                            <i class="fab fa-github"></i>
+                            <span>put-watermark-web</span>
+                        </a>
+                        <a href="/blog/batch-watermark-privacy-guide" class="project-doc-link">私有化手记 &rarr;</a>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- 更多公开开源仓库速览 -->
+        <div class="oss-matrix-box corner-ticks">
+            <div class="oss-matrix-head">
+                <span class="oss-matrix-title"><i class="fab fa-github"></i> MORE OPEN-SOURCE REPOSITORIES · 更多公开开源工具与 AI Skill</span>
+                <a href="https://github.com/Jim-purch?tab=repositories" target="_blank" rel="noopener noreferrer" class="oss-matrix-all">
+                    浏览全部 27+ 公开仓库 / View All on GitHub &rarr;
+                </a>
+            </div>
+            <div class="oss-matrix-grid">
+                <a href="https://github.com/Jim-purch/mac-voice-to-text" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
+                    <span class="oss-repo-name"><span>mac-voice-to-text</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
+                    <span class="oss-repo-desc">macOS 免装虚拟声卡系统内录 + 麦克风实时语音转文字桌面应用</span>
+                </a>
+                <a href="https://github.com/Jim-purch/soul-mirror-with-other.skill" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
+                    <span class="oss-repo-name"><span>soul-mirror-with-other.skill</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
+                    <span class="oss-repo-desc">AI 引导式多人关系探索与深度对话 Agent Skill</span>
+                </a>
+                <a href="https://github.com/Jim-purch/know-yourself-tools" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
+                    <span class="oss-repo-name"><span>know-yourself-tools</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
+                    <span class="oss-repo-desc">人工咨询 + AI 结合的自我认知与量表探索 Web 项目</span>
+                </a>
+                <a href="https://github.com/Jim-purch/bgremove-zbar-rename" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
+                    <span class="oss-repo-name"><span>bgremove-zbar-rename</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
+                    <span class="oss-repo-desc">产品图自动去背景 + 识别条码归档重命名批处理管线</span>
+                </a>
+                <a href="https://github.com/Jim-purch/quick-form-filling-chrome-plugin" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
+                    <span class="oss-repo-name"><span>quick-form-filling-chrome-plugin</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
+                    <span class="oss-repo-desc">Chrome 网页固定表单批量极速填充扩展，消除机械粘贴</span>
+                </a>
+                <a href="https://github.com/Jim-purch/pdf-picture-extract-pc-tool" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
+                    <span class="oss-repo-name"><span>pdf-picture-extract-pc-tool</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
+                    <span class="oss-repo-desc">标签 PDF 批量提取高清二维码桌面工具（GitHub Actions 自动构建）</span>
+                </a>
+                <a href="https://github.com/Jim-purch/qq-music-local-web-control" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
+                    <span class="oss-repo-name"><span>qq-music-local-web-control</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
+                    <span class="oss-repo-desc">局域网浏览器远程协同控制办公室电脑 QQ 音乐播放</span>
+                </a>
+                <a href="https://github.com/Jim-purch/tv-webserver" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
+                    <span class="oss-repo-name"><span>tv-webserver</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
+                    <span class="oss-repo-desc">局域网内多端同步轮播看板网页列表，支持大屏 TV 投屏展示</span>
+                </a>
             </div>
         </div>
     </section>
