@@ -95,13 +95,14 @@ export default function ListLayoutWithTags({
       <div className="border-warm-gray border-b pb-8">
         <div className="text-terracotta flex items-center gap-2 font-mono text-xs font-medium tracking-widest uppercase">
           <span className="bg-terracotta inline-block h-1.5 w-1.5 rounded-full" />
-          Engineering Notes & Open Source
+          FIG.04 // Engineering Notes &amp; Open Source
         </div>
         <h1 className="text-charcoal mt-2 font-serif text-3xl font-medium tracking-tight sm:text-4xl md:text-5xl">
-          {title}
+          <span data-rough="underline">{title}</span>
         </h1>
         <p className="text-charcoal-light mt-2 text-sm sm:text-base">
-          记录在 AI 生态构建、MCP 扩展、分布式高并发与垂直 SaaS 产品开发中的深度实战经验。
+          记录在 <span data-rough="highlight">AI 生态构建、MCP 扩展</span>、分布式高并发与垂直 SaaS
+          产品开发中的深度实战经验。
         </p>
       </div>
 
@@ -154,7 +155,7 @@ export default function ListLayoutWithTags({
               const { path, date, title: postTitle, summary, tags } = post
               return (
                 <li key={path}>
-                  <article className="group border-warm-gray bg-cream-light hover:border-charcoal-light/30 relative rounded-lg border p-6 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                  <article className="group aura-spotlight-card aura-corner-ticks border-warm-gray bg-cream-light hover:border-terracotta/50 relative rounded-xl border p-6 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
                     <div className="text-stone flex items-center justify-between font-mono text-xs">
                       <time dateTime={date} suppressHydrationWarning>
                         {formatDate(date, siteMetadata.locale)}

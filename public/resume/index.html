@@ -7,6 +7,19 @@
     <title>Jim - AI协作 & 全栈数字化产品创造者 | Personal Portfolio</title>
     <link rel="icon" type="image/svg+xml" href="/resume/favicon.svg">
 
+    <!-- 主题同步初始化（防止暗色模式闪烁，与 Next.js 子站共享 localStorage.theme） -->
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (stored === 'dark' || ((!stored || stored === 'system') && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     <!-- 性能优化 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +35,7 @@
 
     <!-- SEO 优化 -->
     <meta name="description" content="Jim - AI协作与全栈数字化产品创造者，专注AI生态构建(MCP)、全栈SaaS开发、企业级分布式系统和企业数字化转型 | AI Collaboration Expert & Full-stack Digital Product Creator">
-    <meta name="keywords" content="Jim,AI协作，全栈开发,MCP,Next.js,数字化产品,分布式系统,AI应用,企业自动化,AI Collaboration,Full-stack,MCP">
+    <meta name="keywords" content="Jim,AI协作,全栈开发,MCP,Next.js,数字化产品,分布式系统,AI应用,企业自动化,AI Collaboration,Full-stack,MCP">
     <meta name="author" content="Jim">
 
     <!-- Open Graph -->
@@ -31,19 +44,61 @@
     <meta property="og:type" content="website">
 
     <style>
-        /* Aura 设计系统 - 温暖极简主义 */
-        :root {
-            /* 配色 - 暖奶油色调 */
-            --cream: #F5F2EB;
-            --cream-light: #FAF9F6;
-            --cream-dark: #EBE7DE;
-            --warm-gray: #D6D1C7;
-            --charcoal: #2C2A26;
-            --charcoal-light: #5D5A53;
-            --stone: #A8A29E;
+        /* ==========================================================================
+           CSS Typed OM (@property) — 硬件加速聚光微粒坐标插值
+           ========================================================================== */
+        @property --spot-x {
+            syntax: '<percentage>';
+            initial-value: 68%;
+            inherits: false;
+        }
 
-            /* GitHub 强调色 */
-            --gh-accent: #6B4EFF;
+        @property --spot-y {
+            syntax: '<percentage>';
+            initial-value: 42%;
+            inherits: false;
+        }
+
+        @property --spot-alpha {
+            syntax: '<number>';
+            initial-value: 0.45;
+            inherits: false;
+        }
+
+        @property --card-x {
+            syntax: '<length-percentage>';
+            initial-value: 50%;
+            inherits: false;
+        }
+
+        @property --card-y {
+            syntax: '<length-percentage>';
+            initial-value: 50%;
+            inherits: false;
+        }
+
+        /* ==========================================================================
+           Aura Warm-Tech 设计系统 — 暖纸晨光 (Light) & 黑曜石暗夜 (Dark)
+           ========================================================================== */
+        :root {
+            --cream: #F5F2EB;
+            --cream-light: #FAF8F3;
+            --cream-dark: #ECE7DD;
+            --warm-gray: #D6D0C4;
+            --warm-gray-subtle: rgba(44, 42, 38, 0.08);
+            --charcoal: #22201D;
+            --charcoal-light: #5A564F;
+            --stone: #968F85;
+
+            /* 陶土琥珀核心能量色（人本未来感标志色） */
+            --terracotta: #C1874B;
+            --terracotta-glow: #DCA468;
+            --terracotta-dark: #9E6A34;
+            --terracotta-soft: rgba(193, 135, 75, 0.14);
+
+            --surface-elevated: rgba(250, 248, 243, 0.88);
+            --card-border: rgba(44, 42, 38, 0.08);
+            --nav-scrolled-bg: rgba(245, 242, 235, 0.86);
 
             /* 字体 - 中英双语 */
             --font-serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
@@ -60,11 +115,31 @@
             --space-3xl: 6rem;
             --space-4xl: 8rem;
 
-            /* 动画 */
+            /* 动画阻尼 */
             --ease-out: cubic-bezier(0.2, 1, 0.3, 1);
             --transition-slow: 0.7s var(--ease-out);
-            --transition-normal: 0.5s var(--ease-out);
-            --transition-fast: 0.3s var(--ease-out);
+            --transition-normal: 0.45s var(--ease-out);
+            --transition-fast: 0.25s var(--ease-out);
+        }
+
+        html.dark {
+            --cream: #151412;
+            --cream-light: #1D1B18;
+            --cream-dark: #100F0D;
+            --warm-gray: #2E2B26;
+            --warm-gray-subtle: rgba(245, 242, 235, 0.08);
+            --charcoal: #F3EFE6;
+            --charcoal-light: #B2ABA0;
+            --stone: #7E786E;
+
+            --terracotta: #DCA468;
+            --terracotta-glow: #E8B982;
+            --terracotta-dark: #C1874B;
+            --terracotta-soft: rgba(220, 164, 104, 0.16);
+
+            --surface-elevated: rgba(29, 27, 24, 0.9);
+            --card-border: rgba(245, 242, 235, 0.09);
+            --nav-scrolled-bg: rgba(21, 20, 18, 0.86);
         }
 
         /* 基础重置 */
@@ -74,9 +149,14 @@
             box-sizing: border-box;
         }
 
+        ::selection {
+            background: rgba(193, 135, 75, 0.24);
+            color: var(--charcoal);
+        }
+
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 80px;
+            scroll-padding-top: 84px;
         }
 
         body {
@@ -87,6 +167,20 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             font-feature-settings: "kern", "liga";
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        /* 全局微妙纸张点阵纹理 */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background-image: radial-gradient(var(--charcoal) 0.75px, transparent 0.75px);
+            background-size: 32px 32px;
+            opacity: 0.028;
         }
 
         h1, h2, h3, h4, .font-serif {
@@ -105,24 +199,26 @@
             display: inline-flex;
             align-items: center;
             gap: 0.6rem;
+            font-family: var(--font-mono);
             font-size: 0.7rem;
-            font-weight: 600;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.22em;
-            color: var(--charcoal-light);
+            letter-spacing: 0.2em;
+            color: var(--terracotta);
             margin-bottom: var(--space-md);
         }
 
         .section-label::before {
             content: "";
-            width: 28px;
+            width: 24px;
             height: 1px;
-            background: var(--charcoal-light);
+            background: var(--terracotta);
         }
 
         .section-label .en-tag {
-            opacity: 0.6;
-            font-weight: 500;
+            color: var(--charcoal-light);
+            opacity: 0.75;
+            font-weight: 400;
         }
 
         .lang-sub {
@@ -133,38 +229,306 @@
             opacity: 0.55;
         }
 
-        /* 动画 */
+        /* 精密仪器角标装饰 (Daylight / Warm-Tech 风格) */
+        .corner-ticks {
+            position: relative;
+        }
+
+        .corner-ticks::before,
+        .corner-ticks::after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            opacity: 0.45;
+            transition: opacity var(--transition-fast), border-color var(--transition-fast);
+        }
+
+        .corner-ticks::before {
+            top: 10px;
+            left: 10px;
+            border-top: 1.5px solid var(--terracotta);
+            border-left: 1.5px solid var(--terracotta);
+        }
+
+        .corner-ticks::after {
+            bottom: 10px;
+            right: 10px;
+            border-bottom: 1.5px solid var(--terracotta);
+            border-right: 1.5px solid var(--terracotta);
+        }
+
+        .corner-ticks:hover::before,
+        .corner-ticks:hover::after {
+            opacity: 0.95;
+        }
+
+        /* ==========================================================================
+           CSS 动态粒子层 1：单元素多重 box-shadow 微尘与陶土星火 (60fps 合成器动画)
+           ========================================================================== */
+        .css-particle-stage {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .css-dust-parchment,
+        .css-dust-amber {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: transparent;
+            will-change: transform, opacity;
+        }
+
+        /* 暖白微尘矩阵 */
+        .css-dust-parchment {
+            box-shadow:
+                6vw 14vh 0 0.5px rgba(245, 242, 235, 0.28),
+                14vw 72vh 1px 0.5px rgba(245, 242, 235, 0.22),
+                21vw 38vh 0 0px rgba(245, 242, 235, 0.30),
+                28vw 86vh 1px 0.5px rgba(245, 242, 235, 0.18),
+                34vw 19vh 0 0.5px rgba(245, 242, 235, 0.24),
+                42vw 64vh 0 0px rgba(245, 242, 235, 0.20),
+                49vw 28vh 1px 0.5px rgba(245, 242, 235, 0.26),
+                56vw 82vh 0 0.5px rgba(245, 242, 235, 0.22),
+                63vw 15vh 0 0px rgba(245, 242, 235, 0.32),
+                71vw 49vh 1px 0.5px rgba(245, 242, 235, 0.25),
+                78vw 76vh 0 0.5px rgba(245, 242, 235, 0.20),
+                84vw 24vh 0 1px rgba(245, 242, 235, 0.28),
+                91vw 58vh 1px 0px rgba(245, 242, 235, 0.22),
+                95vw 88vh 0 0.5px rgba(245, 242, 235, 0.18),
+                11vw 48vh 0 0.5px rgba(245, 242, 235, 0.20),
+                38vw 92vh 1px 0.5px rgba(245, 242, 235, 0.25),
+                67vw 33vh 0 0.5px rgba(245, 242, 235, 0.28),
+                82vw 11vh 0 0px rgba(245, 242, 235, 0.24);
+            animation: particle-drift-up 34s linear infinite;
+        }
+
+        .css-dust-parchment::after {
+            content: "";
+            position: absolute;
+            top: 100vh;
+            left: 0;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            box-shadow: inherit;
+        }
+
+        /* 陶土琥珀能量星火矩阵 */
+        .css-dust-amber {
+            width: 2.5px;
+            height: 2.5px;
+            box-shadow:
+                16vw 62vh 3px 0.5px rgba(220, 164, 104, 0.55),
+                29vw 44vh 4px 1px rgba(220, 164, 104, 0.42),
+                46vw 75vh 3px 0.5px rgba(193, 135, 75, 0.50),
+                58vw 36vh 5px 1px rgba(220, 164, 104, 0.62),
+                69vw 66vh 4px 0.5px rgba(220, 164, 104, 0.48),
+                74vw 39vh 6px 1.2px rgba(220, 164, 104, 0.72),
+                83vw 52vh 3px 0.5px rgba(193, 135, 75, 0.52),
+                89vw 31vh 4px 0.8px rgba(220, 164, 104, 0.58),
+                35vw 24vh 3px 0.5px rgba(220, 164, 104, 0.40),
+                64vw 85vh 4px 0.8px rgba(220, 164, 104, 0.46);
+            animation: particle-drift-amber 26s ease-in-out infinite alternate, ember-pulse 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes particle-drift-up {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(18px, -100vh, 0); }
+        }
+
+        @keyframes particle-drift-amber {
+            0% { transform: translate3d(-12px, 10px, 0) scale(1); }
+            50% { transform: translate3d(16px, -28px, 0) scale(1.08); }
+            100% { transform: translate3d(-6px, -54px, 0) scale(0.96); }
+        }
+
+        @keyframes ember-pulse {
+            0% { opacity: 0.45; }
+            100% { opacity: 0.95; }
+        }
+
+        /* ==========================================================================
+           CSS 动态粒子层 2：@property 琥珀光标聚光灯唤醒精密点阵
+           ========================================================================== */
+        .hero-spotlight-matrix {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            --spot-x: 72%;
+            --spot-y: 40%;
+            --spot-alpha: 0.55;
+            transition: --spot-x 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        --spot-y 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        --spot-alpha 0.4s ease;
+            background-image:
+                radial-gradient(560px circle at var(--spot-x) var(--spot-y), rgba(220, 164, 104, calc(0.18 * var(--spot-alpha))), transparent 68%),
+                radial-gradient(circle, rgba(220, 164, 104, 0.48) 1.15px, transparent 1.25px);
+            background-size: 100% 100%, 28px 28px;
+            -webkit-mask-image: radial-gradient(420px circle at var(--spot-x) var(--spot-y), rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.25) 55%, transparent 100%);
+            mask-image: radial-gradient(420px circle at var(--spot-x) var(--spot-y), rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.25) 55%, transparent 100%);
+        }
+
+        /* ==========================================================================
+           CSS 动态粒子层 3：SVG offset-path 路径流光脉冲（活化概念配图）
+           ========================================================================== */
+        .pulse-svg-overlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .photon-dot {
+            offset-rotate: 0deg;
+            will-change: offset-distance, opacity;
+        }
+
+        /* Hero 混沌归于秩序五条贝塞尔能量流 */
+        .hero-photon-1 {
+            offset-path: path('M 520 1120 Q 1040 400 1560 560');
+            animation: photon-stream 7.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+        }
+        .hero-photon-2 {
+            offset-path: path('M 760 1230 Q 1220 310 1680 470');
+            animation: photon-stream 8.8s cubic-bezier(0.25, 0.1, 0.25, 1) 1.6s infinite;
+        }
+        .hero-photon-3 {
+            offset-path: path('M 1030 1090 Q 1420 500 1810 660');
+            animation: photon-stream 6.8s cubic-bezier(0.25, 0.1, 0.25, 1) 3.1s infinite;
+        }
+        .hero-photon-4 {
+            offset-path: path('M 1260 1210 Q 1595 370 1930 530');
+            animation: photon-stream 9.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.8s infinite;
+        }
+        .hero-photon-5 {
+            offset-path: path('M 1430 1000 Q 1730 250 2030 410');
+            animation: photon-stream 7.9s cubic-bezier(0.25, 0.1, 0.25, 1) 2.4s infinite;
+        }
+
+        .beacon-sonar {
+            transform-origin: 1780px 520px;
+            animation: beacon-ripple 4.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        }
+        .beacon-sonar.delay {
+            animation-delay: 2.4s;
+        }
+
+        /* 协作观 (Philosophy) 人 → AI 棱镜 → 万般可能 脉冲 */
+        .phil-photon-in {
+            offset-path: path('M 168 520 L 420 520');
+            animation: prism-in 3.8s ease-in infinite;
+        }
+        .phil-photon-out-1 {
+            offset-path: path('M 620 520 L 822 424');
+            animation: prism-out 3.8s ease-out infinite;
+        }
+        .phil-photon-out-2 {
+            offset-path: path('M 620 520 L 822 448');
+            animation: prism-out 3.8s ease-out infinite;
+        }
+        .phil-photon-out-3 {
+            offset-path: path('M 620 520 L 822 520');
+            animation: prism-out 3.8s ease-out infinite;
+        }
+        .phil-photon-out-4 {
+            offset-path: path('M 620 520 L 822 568');
+            animation: prism-out 3.8s ease-out infinite;
+        }
+        .phil-photon-out-5 {
+            offset-path: path('M 620 520 L 822 616');
+            animation: prism-out 3.8s ease-out infinite;
+        }
+
+        /* MCP 枢纽电路脉冲 */
+        .mcp-photon-npm {
+            offset-path: path('M 600 660 L 663 719 L 810 719 L 810 1000 L 960 1000');
+            animation: photon-stream 4.2s ease-in-out infinite;
+        }
+        .mcp-photon-claude {
+            offset-path: path('M 600 582 L 600 200');
+            animation: photon-stream 3.6s ease-in-out 0.9s infinite;
+        }
+        .mcp-photon-deepseek {
+            offset-path: path('M 592 746 L 540 1290');
+            animation: photon-stream 4.5s ease-in-out 1.8s infinite;
+        }
+        .mcp-photon-voice {
+            offset-path: path('M 530 611 L 215 390');
+            animation: photon-stream 3.9s ease-in-out 2.5s infinite;
+        }
+
+        @keyframes photon-stream {
+            0% { offset-distance: 0%; opacity: 0; }
+            12% { opacity: 0.95; }
+            85% { opacity: 0.85; }
+            100% { offset-distance: 100%; opacity: 0; }
+        }
+
+        @keyframes beacon-ripple {
+            0% { transform: scale(0.35); opacity: 0.75; }
+            100% { transform: scale(1.85); opacity: 0; }
+        }
+
+        @keyframes prism-in {
+            0% { offset-distance: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            46% { offset-distance: 100%; opacity: 1; }
+            50%, 100% { offset-distance: 100%; opacity: 0; }
+        }
+
+        @keyframes prism-out {
+            0%, 48% { offset-distance: 0%; opacity: 0; }
+            54% { opacity: 1; }
+            92% { offset-distance: 100%; opacity: 0.9; }
+            100% { offset-distance: 100%; opacity: 0; }
+        }
+
+        /* 入场动画 */
         @keyframes fade-in-up {
-            0% { opacity: 0; transform: translateY(30px); }
+            0% { opacity: 0; transform: translateY(26px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
         .animate-fade-in-up {
-            animation: fade-in-up 1s var(--ease-out) forwards;
+            animation: fade-in-up 0.75s var(--ease-out) forwards;
         }
 
-        .animate-delay-200 { animation-delay: 0.2s; opacity: 0; }
-        .animate-delay-400 { animation-delay: 0.4s; opacity: 0; }
-        .animate-delay-600 { animation-delay: 0.6s; opacity: 0; }
-        .animate-delay-800 { animation-delay: 0.8s; opacity: 0; }
+        .animate-delay-200 { animation-delay: 0.08s; opacity: 0; }
+        .animate-delay-400 { animation-delay: 0.16s; opacity: 0; }
+        .animate-delay-600 { animation-delay: 0.24s; opacity: 0; }
+        .animate-delay-800 { animation-delay: 0.32s; opacity: 0; }
 
-        /* 导航栏 - Aura 风格 */
+        /* ==========================================================================
+           导航栏 - Warm-Tech 精密悬浮顶栏
+           ========================================================================== */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 50;
-            transition: all var(--transition-slow);
-            padding: var(--space-lg) var(--space-lg);
+            transition: all var(--transition-normal);
+            padding: 1.4rem var(--space-lg);
         }
 
         .navbar.scrolled {
-            background: rgba(245, 242, 235, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: var(--space-sm) var(--space-lg);
-            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+            background: var(--nav-scrolled-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 0.85rem var(--space-lg);
+            border-bottom: 1px solid var(--card-border);
         }
 
         .navbar-inner {
@@ -173,16 +537,28 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: var(--space-md);
         }
 
         .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
             font-family: var(--font-serif);
-            font-size: 1.875rem;
+            font-size: 1.65rem;
             font-weight: 500;
             letter-spacing: -0.02em;
-            color: var(--cream);
+            color: #F5F2EB;
             transition: color var(--transition-normal);
             text-decoration: none;
+        }
+
+        .logo-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--terracotta-glow);
+            box-shadow: 0 0 10px rgba(220, 164, 104, 0.8);
         }
 
         .navbar.scrolled .logo {
@@ -192,62 +568,96 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: var(--space-xl);
+            gap: var(--space-lg);
             align-items: center;
         }
 
-        .nav-links a {
+        .nav-links a.nav-item {
             text-decoration: none;
-            font-size: 0.72rem;
+            font-size: 0.74rem;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: rgba(245, 242, 235, 0.9);
-            transition: opacity var(--transition-fast);
+            letter-spacing: 0.16em;
+            color: rgba(245, 242, 235, 0.88);
+            transition: color var(--transition-fast), opacity var(--transition-fast);
         }
 
-        .navbar.scrolled .nav-links a {
-            color: var(--charcoal);
+        .navbar.scrolled .nav-links a.nav-item {
+            color: var(--charcoal-light);
         }
 
-        .nav-links a:hover {
-            opacity: 0.6;
+        .nav-links a.nav-item:hover {
+            color: var(--terracotta-glow);
         }
 
-        .nav-gh {
+        .navbar.scrolled .nav-links a.nav-item:hover {
+            color: var(--terracotta);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .nav-pill-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.45rem 0.9rem;
-            border: 1px solid rgba(245, 242, 235, 0.4);
+            gap: 0.45rem;
+            padding: 0.42rem 0.82rem;
+            border: 1px solid rgba(245, 242, 235, 0.28);
             border-radius: 9999px;
-            text-transform: none !important;
-            letter-spacing: 0.02em !important;
-            font-size: 0.8rem !important;
-            transition: all var(--transition-fast) !important;
+            background: rgba(255, 255, 255, 0.06);
+            color: #F5F2EB;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            backdrop-filter: blur(8px);
         }
 
-        .navbar.scrolled .nav-gh {
+        .nav-pill-btn:hover {
+            background: rgba(220, 164, 104, 0.18);
+            border-color: var(--terracotta-glow);
+            transform: translateY(-1px);
+        }
+
+        .navbar.scrolled .nav-pill-btn {
+            color: var(--charcoal);
             border-color: var(--warm-gray);
+            background: var(--cream-light);
         }
 
-        .nav-gh:hover {
-            background: rgba(255, 255, 255, 0.12);
-            opacity: 1 !important;
+        .navbar.scrolled .nav-pill-btn:hover {
+            border-color: var(--terracotta);
+            color: var(--terracotta);
         }
 
-        .navbar.scrolled .nav-gh:hover {
-            background: var(--cream-dark);
+        .nav-pill-btn kbd {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            opacity: 0.85;
         }
 
-        /* Hero 区域 - Aura 风格 */
+        .theme-icon-btn {
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            justify-content: center;
+        }
+
+        /* ==========================================================================
+           Hero 区域 — 释放琥珀灯塔 + Pts.js 几何秩序向量场 + CSS 动态粒子
+           ========================================================================== */
         .hero {
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
             overflow: hidden;
-            background: var(--warm-gray);
+            background: #1C1A17;
         }
 
         .hero-bg {
@@ -255,49 +665,74 @@
             inset: 0;
             width: 100%;
             height: 100%;
+            z-index: 1;
         }
 
         .hero-bg img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(100%) contrast(0.7) brightness(0.95);
+            /* 保留 #DCA468 暖琥珀灯塔原色，不再使用 grayscale(100%) 抹杀暖光 */
+            filter: contrast(1.03) brightness(0.94);
+            transform: scale(1.01);
         }
 
-        .hero-overlay {
+        .hero-overlay-vignette {
             position: absolute;
             inset: 0;
-            background: rgba(67, 62, 56, 0.18);
-            mix-blend-mode: multiply;
+            z-index: 2;
+            background:
+                radial-gradient(circle at 72% 40%, rgba(220, 164, 104, 0.12) 0%, transparent 48%),
+                linear-gradient(180deg, rgba(22, 20, 18, 0.36) 0%, rgba(22, 20, 18, 0.22) 48%, rgba(22, 20, 18, 0.72) 100%);
+            pointer-events: none;
         }
 
-        .hero-overlay-2 {
+        /* Pts.js 几何秩序向量画布 */
+        #hero-pts-canvas {
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(49, 48, 48, 0.1) 0%, rgba(28, 27, 25, 0.55) 100%);
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
         }
 
         .hero-content {
             position: relative;
             z-index: 10;
             width: 100%;
-            padding: 0 var(--space-lg);
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 5rem var(--space-lg) 3.5rem;
             text-align: center;
         }
 
         .hero-badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-family: var(--font-mono);
             font-size: 0.72rem;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.22em;
-            color: rgba(255, 255, 255, 0.92);
+            letter-spacing: 0.18em;
+            color: rgba(245, 242, 235, 0.94);
             margin-bottom: var(--space-md);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(4px);
-            padding: var(--space-xs) var(--space-sm);
+            background: rgba(245, 242, 235, 0.07);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 0.45rem 1rem;
             border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(220, 164, 104, 0.32);
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #DCA468;
+            box-shadow: 0 0 8px #DCA468;
+            animation: ember-pulse 2.2s ease-in-out infinite alternate;
         }
 
         .hero-badge .en {
@@ -305,18 +740,19 @@
         }
 
         .hero-title {
-            font-size: clamp(2.8rem, 9vw, 6.5rem);
+            font-size: clamp(2.5rem, 6.2vw, 4.9rem);
             font-weight: 400;
-            color: white;
+            color: #FAF8F3;
             letter-spacing: -0.02em;
-            line-height: 1.1;
-            margin-bottom: var(--space-md);
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            line-height: 1.12;
+            margin-bottom: 1.15rem;
+            text-shadow: 0 6px 32px rgba(0, 0, 0, 0.32);
         }
 
         .hero-title em {
             font-style: italic;
-            color: var(--cream);
+            color: #F5E6D3;
+            padding: 0 0.08em;
         }
 
         .hero-title-sub {
@@ -324,47 +760,58 @@
             font-family: var(--font-serif);
             font-style: italic;
             font-weight: 400;
-            font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 0.5rem;
+            font-size: clamp(1.08rem, 2.1vw, 1.55rem);
+            color: rgba(245, 242, 235, 0.72);
+            margin-top: 0.65rem;
             letter-spacing: 0;
         }
 
         .hero-subtitle {
-            max-width: 640px;
-            margin: 0 auto var(--space-xl);
-            font-size: 1.0625rem;
+            max-width: 650px;
+            margin: 0 auto var(--space-lg);
+            font-size: 1.02rem;
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.92);
-            line-height: 1.85;
+            color: rgba(245, 242, 235, 0.9);
+            line-height: 1.8;
         }
 
         .hero-subtitle .en {
             display: block;
             margin-top: 0.5rem;
-            color: rgba(255, 255, 255, 0.62);
-            font-size: 0.95rem;
+            color: rgba(245, 242, 235, 0.6);
+            font-size: 0.92rem;
+        }
+
+        .hero-cta-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
         }
 
         .hero-cta {
-            display: inline-block;
-            background: var(--cream);
-            color: var(--charcoal);
-            padding: var(--space-sm) var(--space-xl);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            background: #F5F2EB;
+            color: #1E1D1A;
+            padding: 0.9rem 2rem;
             border-radius: 9999px;
             text-decoration: none;
             font-size: 0.78rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.16em;
+            letter-spacing: 0.15em;
             transition: all var(--transition-normal);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 26px rgba(0, 0, 0, 0.24);
         }
 
         .hero-cta:hover {
-            background: white;
+            background: #DCA468;
+            color: #151412;
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 34px rgba(220, 164, 104, 0.35);
         }
 
         /* GitHub 醒目展示卡片 */
@@ -373,22 +820,22 @@
             align-items: center;
             gap: var(--space-md);
             margin-top: var(--space-lg);
-            padding: var(--space-sm) var(--space-md);
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 0.65rem 1.25rem 0.65rem 0.75rem;
+            background: rgba(245, 242, 235, 0.07);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 242, 235, 0.18);
             border-radius: 9999px;
             text-decoration: none;
-            color: white;
+            color: #FAF8F3;
             transition: all var(--transition-normal);
         }
 
         .gh-showcase:hover {
-            background: rgba(255, 255, 255, 0.16);
+            background: rgba(220, 164, 104, 0.14);
             transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.35);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            border-color: rgba(220, 164, 104, 0.48);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
         }
 
         .gh-showcase-icon {
@@ -397,8 +844,8 @@
             justify-content: center;
             width: 36px;
             height: 36px;
-            background: white;
-            color: var(--charcoal);
+            background: #F5F2EB;
+            color: #1E1D1A;
             border-radius: 50%;
             font-size: 1.15rem;
             flex-shrink: 0;
@@ -406,77 +853,107 @@
 
         .gh-showcase-text {
             text-align: left;
-            line-height: 1.2;
+            line-height: 1.25;
         }
 
         .gh-showcase-handle {
+            display: block;
             font-family: var(--font-mono);
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 500;
             letter-spacing: -0.01em;
         }
 
         .gh-showcase-sub {
-            font-size: 0.7rem;
+            display: block;
+            font-size: 0.68rem;
             font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: 0.16em;
+            letter-spacing: 0.14em;
             opacity: 0.72;
             margin-top: 2px;
         }
 
         .gh-showcase-arrow {
             font-size: 0.85rem;
-            opacity: 0.7;
+            opacity: 0.75;
             transition: transform var(--transition-fast);
         }
 
         .gh-showcase:hover .gh-showcase-arrow {
             transform: translateX(4px);
+            color: #DCA468;
         }
 
         .hero-social {
             display: flex;
             justify-content: center;
             gap: var(--space-md);
-            margin-top: var(--space-lg);
+            margin-top: var(--space-md);
         }
 
         .hero-social a {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: var(--space-xs);
-            color: rgba(255, 255, 255, 0.8);
+            gap: 0.45rem;
+            color: rgba(245, 242, 235, 0.78);
             text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 400;
+            font-size: 0.84rem;
             transition: all var(--transition-fast);
-            padding: var(--space-xs) var(--space-sm);
-            border-radius: var(--space-xs);
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
         }
 
         .hero-social a:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
+            color: #DCA468;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Hero 左下角精密仪器遥测铭牌 */
+        .hero-telemetry {
+            position: absolute;
+            bottom: 1.75rem;
+            left: var(--space-lg);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(245, 242, 235, 0.46);
+            pointer-events: none;
+        }
+
+        .hero-telemetry strong {
+            color: #DCA468;
+            font-weight: 500;
         }
 
         .scroll-indicator {
             position: absolute;
-            bottom: var(--space-xl);
+            bottom: 1.6rem;
             left: 50%;
+            z-index: 10;
             transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.5);
-            animation: bounce 2s infinite;
+            color: rgba(245, 242, 235, 0.48);
+            animation: bounce 2.4s infinite;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
+            50% { transform: translateX(-50%) translateY(8px); }
         }
 
-        /* 关于我 - Aura 风格 */
+        /* ==========================================================================
+           关于我 — 手绘墨迹批注 (Rough Notation) + 活化协作棱镜
+           ========================================================================== */
         .about {
+            position: relative;
+            z-index: 2;
             background: var(--cream-dark);
+            border-bottom: 1px solid var(--card-border);
         }
 
         .about-intro {
@@ -484,61 +961,16 @@
             max-width: 1800px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 0.9fr 1.6fr 1.1fr;
+            grid-template-columns: 0.9fr 1.55fr 1.15fr;
             gap: var(--space-2xl);
             align-items: start;
         }
 
         .about-intro h2 {
             word-break: keep-all;
-        }
-
-        /* 协作观图解 */
-        .about-visual {
-            margin-top: var(--space-sm);
-            border: 1px solid var(--warm-gray);
-            background: #F2EDE4;
-            padding: var(--space-sm);
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-        }
-
-        .about-visual:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 40px rgba(44, 42, 38, 0.08);
-        }
-
-        .about-visual img {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        .about-visual figcaption {
-            padding: var(--space-sm) var(--space-xs) var(--space-xs);
-        }
-
-        .about-visual figcaption span {
-            display: block;
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--stone);
-            margin-bottom: 0.4rem;
-        }
-
-        .about-visual figcaption em {
-            font-family: var(--font-serif);
-            font-style: italic;
-            font-size: 0.95rem;
-            color: var(--charcoal);
-            line-height: 1.6;
-        }
-
-        .about-intro h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: clamp(2rem, 4.8vw, 3.4rem);
             font-weight: 400;
-            line-height: 1.2;
+            line-height: 1.22;
             color: var(--charcoal);
         }
 
@@ -555,54 +987,121 @@
             font-size: 1.125rem;
             font-weight: 300;
             color: var(--charcoal-light);
-            line-height: 1.85;
+            line-height: 1.88;
             margin-bottom: var(--space-sm);
         }
 
         .about-intro-content p.en {
             font-size: 0.9375rem;
-            opacity: 0.65;
+            opacity: 0.68;
             margin-bottom: var(--space-lg);
         }
 
         .about-quote {
-            border-left: 2px solid var(--charcoal);
-            padding-left: var(--space-md);
-            margin: var(--space-xl) 0;
+            border-left: 2px solid var(--terracotta);
+            padding: 0.4rem 0 0.4rem var(--space-md);
+            margin: var(--space-xl) 0 0;
             font-family: var(--font-serif);
             font-style: italic;
             font-size: 1.25rem;
             color: var(--charcoal);
+            background: linear-gradient(90deg, var(--terracotta-soft), transparent 85%);
+            border-radius: 0 6px 6px 0;
         }
 
         .about-quote .en {
             display: block;
             font-size: 0.95rem;
-            opacity: 0.6;
+            opacity: 0.65;
             margin-top: 0.4rem;
         }
 
-        /* 技能区块 - Aura 风格大分区 */
+        /* 协作观图解 + SVG 实时棱镜脉冲 */
+        .about-visual {
+            margin-top: var(--space-xs);
+            border: 1px solid var(--warm-gray);
+            background: var(--cream-light);
+            padding: var(--space-sm);
+            border-radius: 8px;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+        }
+
+        .about-visual:hover {
+            transform: translateY(-4px);
+            border-color: var(--terracotta);
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.08);
+        }
+
+        .visual-stage {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .visual-stage img {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: filter var(--transition-normal);
+        }
+
+        html.dark .about-visual .visual-stage img,
+        html.dark .skills-image img {
+            filter: invert(0.9) hue-rotate(180deg) contrast(0.92);
+        }
+
+        .about-visual figcaption {
+            padding: var(--space-sm) var(--space-xs) var(--space-xs);
+        }
+
+        .about-visual figcaption span {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--terracotta);
+            margin-bottom: 0.35rem;
+        }
+
+        .about-visual figcaption em {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        /* ==========================================================================
+           核心技能 + Matter.js 2D 物理「技能重力沙盒」
+           ========================================================================== */
+        #skills {
+            position: relative;
+            z-index: 2;
+        }
+
         .skills-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            min-height: 80vh;
+            min-height: 76vh;
         }
 
         .skills-image {
             position: relative;
             overflow: hidden;
+            background: var(--cream);
         }
 
         .skills-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 2s var(--ease-out);
+            transition: transform 1.8s var(--ease-out), filter var(--transition-normal);
         }
 
         .skills-image:hover img {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .skills-content {
@@ -610,30 +1109,32 @@
             flex-direction: column;
             justify-content: center;
             padding: var(--space-3xl);
-            background: var(--warm-gray);
+            background: var(--cream-dark);
+            border-top: 1px solid var(--card-border);
         }
 
         .skills-content.dark {
-            background: var(--charcoal);
-            color: var(--cream);
+            background: #1D1B18;
+            color: #F5F2EB;
         }
 
         .skills-label {
+            font-family: var(--font-mono);
             font-size: 0.7rem;
-            font-weight: 600;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.22em;
-            color: var(--charcoal-light);
+            letter-spacing: 0.2em;
+            color: var(--terracotta);
             margin-bottom: var(--space-md);
         }
 
         .skills-label .en-tag {
-            opacity: 0.6;
-            font-weight: 500;
+            color: var(--charcoal-light);
+            opacity: 0.75;
         }
 
-        .skills-content.dark .skills-label {
-            color: var(--stone);
+        .skills-content.dark .skills-label .en-tag {
+            color: #9E988E;
         }
 
         .skills-content h3 {
@@ -650,51 +1151,209 @@
         .skills-content p {
             font-size: 1.0625rem;
             font-weight: 300;
-            line-height: 1.8;
-            max-width: 500px;
+            line-height: 1.82;
+            max-width: 520px;
             color: var(--charcoal-light);
         }
 
         .skills-content p.en {
             font-size: 0.9rem;
-            opacity: 0.6;
+            opacity: 0.65;
             margin-top: 0.75rem;
         }
 
         .skills-content.dark p {
-            color: var(--stone);
+            color: #B8B2A7;
         }
 
         .skills-list {
             display: flex;
             flex-wrap: wrap;
-            gap: var(--space-sm);
+            gap: var(--space-xs);
             margin-top: var(--space-lg);
         }
 
         .skill-tag {
-            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
             font-weight: 500;
-            padding: var(--space-xs) var(--space-sm);
-            background: rgba(44, 42, 38, 0.08);
-            border-radius: var(--space-xs);
+            padding: 0.42rem 0.85rem;
+            background: var(--warm-gray-subtle);
+            border: 1px solid var(--card-border);
+            border-radius: 9999px;
             color: var(--charcoal);
+            transition: border-color var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .skill-tag:hover {
+            border-color: var(--terracotta);
+            transform: translateY(-2px);
         }
 
         .skills-content.dark .skill-tag {
-            background: rgba(245, 242, 235, 0.1);
-            color: var(--cream);
+            background: rgba(245, 242, 235, 0.08);
+            border-color: rgba(245, 242, 235, 0.14);
+            color: #F5F2EB;
         }
 
-        /* 项目展示 - Aura 简洁风格 */
+        /* Matter.js 2D 物理技能引力沙盒 */
+        .physics-chamber-wrap {
+            background: var(--cream-dark);
+            padding: var(--space-2xl) var(--space-lg) var(--space-3xl);
+            border-top: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .physics-chamber {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--cream-light);
+            border: 1px solid var(--warm-gray);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.04);
+        }
+
+        .physics-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            padding: 0.9rem 1.35rem;
+            border-bottom: 1px solid var(--card-border);
+            background: var(--cream);
+        }
+
+        .physics-title {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--charcoal-light);
+        }
+
+        .physics-title-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--terracotta);
+            box-shadow: 0 0 8px rgba(193, 135, 75, 0.55);
+        }
+
+        .physics-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .physics-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.34rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid var(--warm-gray);
+            background: var(--cream-light);
+            color: var(--charcoal);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .physics-btn:hover,
+        .physics-btn.active {
+            border-color: var(--terracotta);
+            background: var(--terracotta-soft);
+            color: var(--terracotta);
+        }
+
+        .physics-stage {
+            position: relative;
+            width: 100%;
+            height: 290px;
+            overflow: hidden;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: pan-y;
+            background-image:
+                radial-gradient(var(--warm-gray) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .physics-stage:active {
+            cursor: grabbing;
+        }
+
+        .physics-hint {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--stone);
+            pointer-events: none;
+            letter-spacing: 0.06em;
+        }
+
+        .matter-pill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.48rem 1rem;
+            border-radius: 9999px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 500;
+            white-space: nowrap;
+            background: var(--cream);
+            color: var(--charcoal);
+            border: 1px solid var(--warm-gray);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            pointer-events: none;
+            will-change: transform;
+            transform-origin: center center;
+        }
+
+        .matter-pill.accent {
+            background: var(--terracotta);
+            color: #FAF8F3;
+            border-color: var(--terracotta-dark);
+            box-shadow: 0 6px 18px rgba(193, 135, 75, 0.28);
+        }
+
+        .matter-pill.dark-chip {
+            background: #22201D;
+            color: #F5F2EB;
+            border-color: #3A3630;
+        }
+
+        html.dark .matter-pill.dark-chip {
+            background: #2C2924;
+            border-color: #464139;
+        }
+
+        /* ==========================================================================
+           项目展示 & 博客手记 — @property 边缘追光聚光卡片
+           ========================================================================== */
         .projects {
+            position: relative;
+            z-index: 2;
             background: var(--cream);
             padding: var(--space-4xl) var(--space-lg);
         }
 
         .projects-header {
             text-align: center;
-            max-width: 640px;
+            max-width: 660px;
             margin: 0 auto var(--space-3xl);
         }
 
@@ -718,7 +1377,7 @@
 
         .projects-header p.en {
             font-size: 0.9rem;
-            opacity: 0.62;
+            opacity: 0.65;
             margin-top: 0.5rem;
         }
 
@@ -726,40 +1385,72 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: var(--space-lg);
         }
 
-        .project-card {
+        /* 光标追光聚光卡片通用机制 */
+        .project-card,
+        .blog-card {
             position: relative;
             background: var(--cream-light);
-            border-radius: var(--space-sm);
+            border-radius: 12px;
             overflow: hidden;
-            transition: all var(--transition-normal);
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+            border: 1px solid var(--card-border);
+            --card-x: 50%;
+            --card-y: 50%;
+        }
+
+        .project-card::after,
+        .blog-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            background: radial-gradient(420px circle at var(--card-x) var(--card-y), rgba(220, 164, 104, 0.13), transparent 65%);
+            z-index: 1;
+        }
+
+        .project-card:hover::after,
+        .blog-card:hover::after {
+            opacity: 1;
         }
 
         .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-6px);
+            border-color: rgba(193, 135, 75, 0.45);
+            box-shadow: 0 20px 44px rgba(0, 0, 0, 0.08);
         }
 
         .project-card.featured {
-            border: 1px solid var(--warm-gray);
+            border-color: var(--warm-gray);
+        }
+
+        .project-card.featured:hover {
+            border-color: var(--terracotta);
         }
 
         .project-image {
             position: relative;
             height: 220px;
             overflow: hidden;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            border-bottom: 1px solid var(--card-border);
+            background: var(--cream-dark);
         }
 
         .project-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 1.2s var(--ease-out);
+            transition: transform 1.2s var(--ease-out), filter var(--transition-normal);
+        }
+
+        html.dark .project-image img {
+            filter: brightness(0.92) contrast(1.04);
         }
 
         .project-card:hover .project-image img {
@@ -770,28 +1461,34 @@
             position: absolute;
             top: var(--space-sm);
             right: var(--space-sm);
-            font-size: 0.65rem;
+            font-size: 0.66rem;
             font-weight: 600;
             padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.92);
-            color: var(--charcoal);
-            border-radius: var(--space-xs);
+            background: rgba(250, 248, 243, 0.92);
+            color: #22201D;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+            z-index: 2;
         }
 
         .featured-badge {
             position: absolute;
             top: 12px;
             left: var(--space-sm);
-            font-size: 0.68rem;
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
             font-weight: 600;
             padding: 4px 12px;
-            background: var(--charcoal);
-            color: white;
-            border-radius: var(--space-xs);
+            background: #22201D;
+            color: #DCA468;
+            border: 1px solid rgba(220, 164, 104, 0.4);
+            border-radius: 6px;
             z-index: 2;
         }
 
         .project-content {
+            position: relative;
+            z-index: 2;
             padding: var(--space-lg);
         }
 
@@ -806,16 +1503,17 @@
 
         .project-content h4 .en {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.84rem;
             font-weight: 400;
-            opacity: 0.55;
+            opacity: 0.58;
             margin-top: 2px;
         }
 
         .project-role {
-            font-size: 0.875rem;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
             font-weight: 500;
-            color: var(--charcoal-light);
+            color: var(--terracotta);
             margin-bottom: var(--space-sm);
         }
 
@@ -823,14 +1521,14 @@
             font-size: 0.9375rem;
             font-weight: 300;
             color: var(--charcoal-light);
-            line-height: 1.7;
+            line-height: 1.72;
             margin-bottom: var(--space-md);
             text-wrap: pretty;
         }
 
         .project-content p.en {
             font-size: 0.8125rem;
-            opacity: 0.6;
+            opacity: 0.64;
             margin-top: -0.5rem;
             margin-bottom: var(--space-md);
         }
@@ -838,28 +1536,32 @@
         .project-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: var(--space-xs);
+            gap: 0.4rem;
         }
 
         .project-tag {
-            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
             font-weight: 500;
             padding: 4px 10px;
-            background: rgba(44, 42, 38, 0.06);
+            background: var(--warm-gray-subtle);
             border-radius: 9999px;
             color: var(--charcoal-light);
         }
 
         .project-tag.primary {
-            background: var(--charcoal);
-            color: white;
+            background: var(--terracotta-soft);
+            color: var(--terracotta);
+            border: 1px solid rgba(193, 135, 75, 0.28);
         }
 
-        /* 博客与技术手记 - Aura 风格 */
+        /* 博客与技术手记 */
         .blog-section {
+            position: relative;
+            z-index: 2;
             background: var(--cream);
             padding: var(--space-4xl) var(--space-lg);
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--card-border);
         }
 
         .blog-header {
@@ -885,28 +1587,28 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: var(--space-lg);
         }
 
         .blog-card {
-            position: relative;
-            background: var(--cream-light);
-            border-radius: var(--space-sm);
-            border: 1px solid rgba(44, 42, 38, 0.08);
             padding: var(--space-xl);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all var(--transition-normal);
             text-decoration: none;
             color: inherit;
         }
 
+        .blog-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
         .blog-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--charcoal-light);
-            box-shadow: 0 16px 36px rgba(44, 42, 38, 0.07);
+            transform: translateY(-5px);
+            border-color: var(--terracotta);
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.07);
         }
 
         .blog-meta {
@@ -914,16 +1616,16 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: var(--space-sm);
-            font-size: 0.75rem;
-            color: var(--charcoal-light);
+            font-size: 0.74rem;
+            color: var(--stone);
             font-family: var(--font-mono);
             letter-spacing: 0.04em;
         }
 
         .blog-cat-badge {
             font-weight: 600;
-            padding: 2px 8px;
-            background: rgba(193, 135, 75, 0.12);
+            padding: 2px 9px;
+            background: var(--terracotta-soft);
             color: var(--terracotta);
             border-radius: 4px;
             text-transform: uppercase;
@@ -932,25 +1634,31 @@
         .blog-card h4 {
             font-size: 1.25rem;
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.42;
             margin-bottom: var(--space-xs);
             color: var(--charcoal);
+            transition: color var(--transition-fast);
+        }
+
+        .blog-card:hover h4 {
+            color: var(--terracotta);
         }
 
         .blog-card h4 .en-sub {
             display: block;
-            font-size: 0.78em;
+            font-family: var(--font-sans);
+            font-size: 0.76em;
             font-weight: 400;
             color: var(--charcoal-light);
-            opacity: 0.7;
-            margin-top: 2px;
+            opacity: 0.72;
+            margin-top: 3px;
         }
 
         .blog-card p {
-            font-size: 0.875rem;
+            font-size: 0.885rem;
             font-weight: 300;
             color: var(--charcoal-light);
-            line-height: 1.65;
+            line-height: 1.68;
             margin-bottom: var(--space-md);
             flex-grow: 1;
         }
@@ -960,17 +1668,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: var(--space-xs);
             padding-top: var(--space-sm);
-            border-top: 1px dashed rgba(44, 42, 38, 0.1);
+            border-top: 1px dashed var(--card-border);
         }
 
         .blog-read-link {
-            font-size: 0.8125rem;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
             font-weight: 500;
             color: var(--terracotta);
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap;
             transition: gap var(--transition-fast);
         }
 
@@ -988,20 +1699,28 @@
             flex-wrap: wrap;
         }
 
-        /* 联系区域 - Aura 风格 */
+        /* ==========================================================================
+           联系区域 & 页脚
+           ========================================================================== */
         .contact {
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
             background: var(--cream-dark);
             padding: var(--space-4xl) var(--space-lg);
+            border-top: 1px solid var(--card-border);
         }
 
         .contact-content {
+            position: relative;
+            z-index: 4;
             max-width: 640px;
             margin: 0 auto;
             text-align: center;
         }
 
         .contact-content h3 {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-size: clamp(1.85rem, 4vw, 2.6rem);
             font-weight: 400;
             margin-bottom: var(--space-md);
         }
@@ -1021,7 +1740,7 @@
 
         .contact-content p.en {
             font-size: 0.9rem;
-            opacity: 0.62;
+            opacity: 0.65;
             margin-bottom: var(--space-xl);
         }
 
@@ -1035,24 +1754,28 @@
         .contact-btn {
             display: inline-flex;
             align-items: center;
-            gap: var(--space-xs);
-            padding: var(--space-sm) var(--space-lg);
+            gap: 0.55rem;
+            padding: 0.9rem 1.75rem;
             border-radius: 9999px;
             text-decoration: none;
             font-size: 0.78rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.12em;
+            cursor: pointer;
             transition: all var(--transition-fast);
         }
 
         .contact-btn.primary {
             background: var(--charcoal);
-            color: white;
+            color: var(--cream);
+            border: 1px solid var(--charcoal);
         }
 
         .contact-btn.primary:hover {
-            background: var(--charcoal-light);
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            color: #FAF8F3;
             transform: translateY(-2px);
         }
 
@@ -1063,12 +1786,16 @@
         }
 
         .contact-btn.secondary:hover {
-            background: var(--cream);
-            border-color: var(--charcoal-light);
+            background: var(--cream-light);
+            border-color: var(--terracotta);
+            color: var(--terracotta);
+            transform: translateY(-2px);
         }
 
-        /* 页脚 - Aura 风格 */
+        /* 页脚 */
         .footer {
+            position: relative;
+            z-index: 2;
             background: var(--cream-dark);
             padding: var(--space-3xl) var(--space-lg) var(--space-xl);
             border-top: 1px solid var(--warm-gray);
@@ -1085,7 +1812,7 @@
         .footer-brand h4 {
             font-size: 1.5rem;
             font-weight: 400;
-            margin-bottom: var(--space-md);
+            margin-bottom: var(--space-sm);
         }
 
         .footer-brand p {
@@ -1093,17 +1820,25 @@
             font-weight: 300;
             color: var(--charcoal-light);
             line-height: 1.7;
-            max-width: 320px;
+            max-width: 360px;
         }
 
         .footer-brand p.en {
             font-size: 0.8125rem;
-            opacity: 0.6;
+            opacity: 0.62;
             margin-top: 0.5rem;
         }
 
+        .footer-motto {
+            margin-top: var(--space-md);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            color: var(--terracotta);
+        }
+
         .footer-links h5 {
-            font-family: var(--font-sans);
+            font-family: var(--font-mono);
             font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -1117,7 +1852,7 @@
         }
 
         .footer-links li {
-            margin-bottom: var(--space-sm);
+            margin-bottom: 0.75rem;
         }
 
         .footer-links a {
@@ -1129,29 +1864,208 @@
         }
 
         .footer-links a:hover {
-            color: var(--charcoal);
-            text-decoration: underline;
-            text-underline-offset: 4px;
+            color: var(--terracotta);
         }
 
         .footer-bottom {
             max-width: 1800px;
             margin: var(--space-xl) auto 0;
             padding-top: var(--space-lg);
-            border-top: 1px solid var(--warm-gray);
-            font-size: 0.7rem;
+            border-top: 1px solid var(--card-border);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
             color: var(--stone);
             text-align: center;
         }
 
-        /* 响应式设计 */
+        /* ==========================================================================
+           ⌘K 极客命令面板 (Warm-Tech Command Palette & 移动端快捷中枢)
+           ========================================================================== */
+        .cmd-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(18, 17, 15, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 12vh 1rem 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.22s ease, visibility 0.22s ease;
+        }
+
+        .cmd-backdrop.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cmd-modal {
+            width: 100%;
+            max-width: 580px;
+            background: var(--cream-light);
+            border: 1px solid var(--warm-gray);
+            border-radius: 14px;
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+            overflow: hidden;
+            transform: translateY(12px) scale(0.98);
+            transition: transform 0.24s var(--ease-out);
+        }
+
+        .cmd-backdrop.open .cmd-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .cmd-input-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.95rem 1.2rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .cmd-input-wrap i {
+            color: var(--terracotta);
+            font-size: 0.95rem;
+        }
+
+        .cmd-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--charcoal);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+        }
+
+        .cmd-input::placeholder {
+            color: var(--stone);
+        }
+
+        .cmd-esc {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid var(--warm-gray);
+            color: var(--stone);
+            cursor: pointer;
+            background: var(--cream);
+        }
+
+        .cmd-list {
+            max-height: 360px;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .cmd-group-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--stone);
+            padding: 0.55rem 0.75rem 0.3rem;
+        }
+
+        .cmd-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.62rem 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--charcoal);
+            text-align: left;
+            font-family: var(--font-sans);
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .cmd-item:hover,
+        .cmd-item.active {
+            background: var(--terracotta-soft);
+            color: var(--terracotta);
+        }
+
+        .cmd-item-left {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            min-width: 0;
+        }
+
+        .cmd-item-left i {
+            width: 18px;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+
+        .cmd-item-sub {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--stone);
+            flex-shrink: 0;
+        }
+
+        .cmd-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.55rem 1rem;
+            border-top: 1px solid var(--card-border);
+            background: var(--cream);
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            color: var(--stone);
+        }
+
+        /* 轻提示 Toast */
+        .aura-toast {
+            position: fixed;
+            bottom: 1.75rem;
+            right: 1.75rem;
+            z-index: 120;
+            padding: 0.7rem 1.15rem;
+            border-radius: 9999px;
+            background: var(--charcoal);
+            color: var(--cream);
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .aura-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Rough Notation 手绘层不遮挡点击 */
+        .rough-annotation {
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           响应式适配
+           ========================================================================== */
         @media (max-width: 1280px) {
             .about-intro {
                 grid-template-columns: 1fr 2fr;
             }
-
             .about-visual {
                 grid-column: 1 / -1;
                 max-width: 640px;
@@ -1163,81 +2077,66 @@
                 grid-template-columns: 1fr;
                 gap: var(--space-xl);
             }
-
-            .about-visual {
-                max-width: 560px;
-            }
-
             .skills-section {
                 grid-template-columns: 1fr;
             }
-
             .skills-image {
-                height: 400px;
+                height: 380px;
             }
-
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: var(--space-xl);
             }
         }
 
-        @media (max-width: 768px) {
-            .navbar {
-                padding: var(--space-sm);
-            }
-
-            .nav-links {
-                gap: var(--space-md);
-            }
-
-            .nav-links a:not(.nav-gh) {
+        @media (max-width: 600px) {
+            .hero-telemetry {
                 display: none;
             }
+        }
 
+        @media (max-width: 820px) {
+            .navbar {
+                padding: 0.85rem 1rem;
+            }
+            .nav-links {
+                display: none;
+            }
             .hero-title {
-                font-size: clamp(2.3rem, 12vw, 3.8rem);
+                font-size: clamp(2.25rem, 11vw, 3.6rem);
             }
-
-            .gh-showcase {
-                flex-direction: row;
-                padding: var(--space-xs) var(--space-sm) var(--space-xs) var(--space-xs);
-            }
-
             .gh-showcase-sub {
                 display: none;
             }
-
-            .hero-social {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .projects-grid {
+            .projects-grid,
+            .blog-grid {
                 grid-template-columns: 1fr;
             }
-
             .skills-content {
                 padding: var(--space-xl);
             }
-
+            .physics-stage {
+                height: 330px;
+            }
             .contact-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-
             .contact-btn {
-                width: 220px;
+                width: 240px;
                 justify-content: center;
             }
         }
 
-        /* 可访问性 */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
+                animation-delay: 0ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
+            }
+            .animate-fade-in-up {
+                opacity: 1 !important;
             }
         }
     </style>
@@ -1247,37 +2146,75 @@
     <!-- 导航栏 -->
     <nav class="navbar" id="navbar">
         <div class="navbar-inner">
-            <a href="#" class="logo">Jim</a>
+            <a href="#home" class="logo">
+                <span class="logo-dot"></span>
+                <span>Jim</span>
+            </a>
+
             <ul class="nav-links">
-                <li><a href="#about">关于 / <span class="en">About</span></a></li>
-                <li><a href="#skills">技能 / <span class="en">Skills</span></a></li>
-                <li><a href="#projects">项目 / <span class="en">Work</span></a></li>
-                <li><a href="#blog">博客 / <span class="en">Blog</span></a></li>
-                <li><a href="#contact">联系 / <span class="en">Contact</span></a></li>
-                <li>
-                    <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="nav-gh">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub</span>
-                    </a>
-                </li>
+                <li><a href="#about" class="nav-item">关于 / <span class="en">About</span></a></li>
+                <li><a href="#skills" class="nav-item">技能 / <span class="en">Skills</span></a></li>
+                <li><a href="#projects" class="nav-item">项目 / <span class="en">Work</span></a></li>
+                <li><a href="#blog" class="nav-item">手记 / <span class="en">Blog</span></a></li>
+                <li><a href="#contact" class="nav-item">联系 / <span class="en">Contact</span></a></li>
             </ul>
+
+            <div class="nav-actions">
+                <button type="button" class="nav-pill-btn" id="cmd-trigger" aria-label="打开命令面板 (Cmd+K)">
+                    <i class="fas fa-terminal"></i>
+                    <kbd>⌘K</kbd>
+                    <span>导航</span>
+                </button>
+                <button type="button" class="nav-pill-btn theme-icon-btn" id="theme-toggle" aria-label="切换暖纸或暗夜主题" title="切换暖纸 / 黑曜石暗夜主题">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="nav-pill-btn">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
         </div>
     </nav>
 
     <!-- Hero 区域 -->
     <section id="home" class="hero">
+        <!-- 底层概念图（保留琥珀暖光）+ SVG offset-path 粒子脉冲 -->
         <div class="hero-bg">
             <img src="/resume/images/hero.svg" fetchpriority="high"
                  alt="概念图：混沌的点在视野中沉淀为秩序，一点暖光指引方向 — 人提供方向，AI提供执行">
-            <div class="hero-overlay"></div>
-            <div class="hero-overlay-2"></div>
+            <svg class="pulse-svg-overlay" viewBox="0 0 2400 1350" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <circle class="photon-dot hero-photon-1" r="4" fill="#DCA468" />
+                <circle class="photon-dot hero-photon-2" r="3.5" fill="#F5F2EB" />
+                <circle class="photon-dot hero-photon-3" r="4" fill="#DCA468" />
+                <circle class="photon-dot hero-photon-4" r="3" fill="#F5F2EB" />
+                <circle class="photon-dot hero-photon-5" r="4" fill="#DCA468" />
+                <circle class="beacon-sonar" cx="1780" cy="520" r="56" fill="none" stroke="#DCA468" stroke-width="1.5" />
+                <circle class="beacon-sonar delay" cx="1780" cy="520" r="56" fill="none" stroke="#DCA468" stroke-width="1" />
+            </svg>
+            <div class="hero-overlay-vignette"></div>
         </div>
+
+        <!-- CSS 动态粒子层 1：多重 box-shadow 微尘与琥珀星火 -->
+        <div class="css-particle-stage" aria-hidden="true">
+            <div class="css-dust-parchment"></div>
+            <div class="css-dust-amber"></div>
+        </div>
+
+        <!-- CSS 动态粒子层 2：@property 琥珀光标聚光灯唤醒精密点阵 -->
+        <div class="hero-spotlight-matrix" id="hero-spotlight" aria-hidden="true"></div>
+
+        <!-- 插件 1：Pts.js 几何秩序向量场 -->
+        <canvas id="hero-pts-canvas" aria-hidden="true"></canvas>
+
         <div class="hero-content">
             <div class="animate-fade-in-up">
-                <span class="hero-badge">AI协作 · 全栈产品创造者 <span class="en">/ AI Collaboration & Full-stack Creator</span></span>
+                <span class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    <span>AI协作 · 全栈产品创造者 <span class="en">/ AI Collaboration &amp; Full-stack Creator</span></span>
+                </span>
             </div>
             <h1 class="hero-title animate-fade-in-up animate-delay-200">
-                用代码与AI，<br><em>重塑可能性。</em>
+                用代码与AI，<br><em id="rough-hero-em">重塑可能性。</em>
                 <span class="hero-title-sub">Reshaping possibilities with code &amp; AI.</span>
             </h1>
             <p class="hero-subtitle animate-fade-in-up animate-delay-400">
@@ -1285,7 +2222,7 @@
                 40+ 项目 · 全栈开发 · AI应用集成 · 企业数字化转型
                 <span class="en">From distributed systems handling 20M+ records to building the MCP ecosystem — 40+ projects across full-stack, AI integration &amp; digital transformation.</span>
             </p>
-            <div class="animate-fade-in-up animate-delay-600">
+            <div class="hero-cta-row animate-fade-in-up animate-delay-600">
                 <a href="#about" class="hero-cta">了解更多 / Learn More</a>
             </div>
 
@@ -1306,11 +2243,22 @@
                     <i class="fas fa-envelope"></i>
                     <span>邮箱联系 / Email</span>
                 </a>
+                <a href="/blog">
+                    <i class="fas fa-feather-pointed"></i>
+                    <span>技术手记 / Blog</span>
+                </a>
             </div>
         </div>
+
+        <div class="hero-telemetry" aria-hidden="true">
+            <span>FIG.00 // VECTOR FIELD</span>
+            <span>·</span>
+            <span>HUMAN_INTENT &rarr; <strong id="pts-telemetry-state">STANDBY</strong></span>
+        </div>
+
         <div class="scroll-indicator">
             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
             </svg>
         </div>
     </section>
@@ -1318,54 +2266,75 @@
     <!-- 关于我 -->
     <section id="about" class="about">
         <div class="about-intro">
-            <h2>
-                扎根实践，<br>放眼创新。
-                <span class="lang-sub">Grounded in practice, <br>driven by innovation.</span>
-            </h2>
+            <div>
+                <span class="section-label">01 / 理念 <span class="en-tag">Philosophy</span></span>
+                <h2>
+                    扎根实践，<br>放眼创新。
+                    <span class="lang-sub">Grounded in practice, <br>driven by innovation.</span>
+                </h2>
+            </div>
             <div class="about-intro-content">
                 <p>
-                    我相信AI是增强人的工具，而非替代。与AI的协作让创造力得以放大，让想法更快地转化为现实。
+                    我相信AI是<span id="rough-amplify">增强人的工具，而非替代</span>。与AI的协作让创造力得以放大，让想法更快地转化为现实。
                 </p>
                 <p class="en">
                     I believe AI is a tool that amplifies human capability rather than replaces it. Collaborating with AI expands creativity and turns ideas into reality — faster.
                 </p>
                 <p>
-                    40+项目实战，横跨分布式系统架构、全栈SaaS开发、MCP生态构建、AI应用集成等领域。从2000万+记录的企业级数据库到太空探索网页游戏，我专注于将复杂需求转化为可落地的技术方案。
+                    40+项目实战，横跨分布式系统架构、全栈SaaS开发、MCP生态构建、AI应用集成等领域。从<span id="rough-records">2000万+记录的企业级数据库</span>到太空探索网页游戏，我专注于将复杂需求转化为可落地的技术方案。
                 </p>
                 <p class="en">
                     40+ projects spanning distributed systems, full-stack SaaS, the MCP ecosystem, and AI integration. From enterprise databases with 20M+ records to space-exploration web games — I turn complex requirements into shippable solutions.
                 </p>
-                <blockquote class="about-quote">
+                <blockquote class="about-quote" id="rough-quote">
                     "人提供方向与判断，AI提供执行与可能性。"
                     <span class="en">"Humans provide direction and judgment; AI provides execution and possibility."</span>
                 </blockquote>
             </div>
-            <figure class="about-visual animate-fade-in-up animate-delay-400">
-                <img src="/resume/images/philosophy.svg" loading="lazy" decoding="async"
-                     alt="协作观图解：一点暖光（人）发出一条方向线，穿过 AI 棱镜后展开为多条执行路径">
+            <figure class="about-visual corner-ticks">
+                <div class="visual-stage">
+                    <img src="/resume/images/philosophy.svg" loading="lazy" decoding="async"
+                         alt="协作观图解：一点暖光（人）发出一条方向线，穿过 AI 棱镜后展开为多条执行路径">
+                    <!-- CSS offset-path 实时棱镜折射光点 -->
+                    <svg class="pulse-svg-overlay" viewBox="0 0 960 1000" aria-hidden="true">
+                        <circle class="photon-dot phil-photon-in" r="6" fill="#C1874B" />
+                        <circle class="photon-dot phil-photon-out-1" r="4.5" fill="#2C2A26" />
+                        <circle class="photon-dot phil-photon-out-2" r="5.5" fill="#C1874B" />
+                        <circle class="photon-dot phil-photon-out-3" r="4.5" fill="#2C2A26" />
+                        <circle class="photon-dot phil-photon-out-4" r="4.5" fill="#2C2A26" />
+                        <circle class="photon-dot phil-photon-out-5" r="4.5" fill="#2C2A26" />
+                    </svg>
+                </div>
                 <figcaption>
-                    <span>协作观 / Philosophy</span>
+                    <span>FIG.01 · 协作观 / Philosophy</span>
                     <em>人定方向，AI 执万般可能。</em>
                 </figcaption>
             </figure>
         </div>
     </section>
 
-    <!-- 核心技能 -->
+    <!-- 核心技能 + Matter.js 2D 物理重力盒 -->
     <section id="skills">
         <div class="skills-section">
             <div class="skills-image">
                 <img src="/resume/images/skills-ai.svg" loading="lazy" decoding="async"
                      alt="MCP 协议枢纽图解：中心协议通过电路走线连接 Claude、ChatGPT、WPS 等工具节点">
+                <!-- MCP 协议总线实时能量脉冲 -->
+                <svg class="pulse-svg-overlay" viewBox="0 0 1200 1500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                    <circle class="photon-dot mcp-photon-npm" r="6.5" fill="#C1874B" />
+                    <circle class="photon-dot mcp-photon-claude" r="5" fill="#5D5A53" />
+                    <circle class="photon-dot mcp-photon-deepseek" r="5" fill="#5D5A53" />
+                    <circle class="photon-dot mcp-photon-voice" r="5" fill="#5D5A53" />
+                </svg>
             </div>
             <div class="skills-content">
-                <span class="skills-label">核心能力 <span class="en-tag">/ Core Capabilities</span></span>
+                <span class="skills-label">02A / 核心能力 <span class="en-tag">Core Capabilities</span></span>
                 <h3>
                     AI协作<br>与MCP生态
                     <span class="lang-sub">AI Collaboration &amp; MCP Ecosystem</span>
                 </h3>
                 <p>
-                    深度掌握 Claude Code、DeepSeek、ChatGPT 等AI工具。独立开发并发布 MCP 工具服务器 (npm)，打通AI与企业办公数据的连接。擅长多模态AI应用集成。
+                    深度掌握 Claude Code、DeepSeek、ChatGPT 等AI工具。<span id="rough-mcp">独立开发并发布 MCP 工具服务器 (npm)</span>，打通AI与企业办公数据的连接。擅长多模态AI应用集成。
                 </p>
                 <p class="en">
                     Deep proficiency with Claude Code, DeepSeek &amp; ChatGPT. Independently developed and published an MCP tool server (npm), bridging AI with enterprise data. Skilled in multimodal AI integration.
@@ -1381,7 +2350,7 @@
         </div>
         <div class="skills-section">
             <div class="skills-content dark">
-                <span class="skills-label">业务能力 <span class="en-tag">/ Engineering</span></span>
+                <span class="skills-label">02B / 业务能力 <span class="en-tag">Engineering</span></span>
                 <h3>
                     全栈开发<br>与系统架构
                     <span class="lang-sub">Full-stack Development &amp; Architecture</span>
@@ -1405,12 +2374,37 @@
                      alt="全栈架构图解：界面、服务、数据、基础设施四层等距分层，一条暖色意图线贯穿全栈">
             </div>
         </div>
+
+        <!-- 插件 3：Matter.js 2D 刚体物理「技能引力沙盒」 -->
+        <div class="physics-chamber-wrap">
+            <div class="physics-chamber corner-ticks">
+                <div class="physics-header">
+                    <div class="physics-title">
+                        <span class="physics-title-dot"></span>
+                        <span>FIG.02 // TACTILE STACK GRAVITY SANDBOX · 技能引力交互沙盒</span>
+                    </div>
+                    <div class="physics-controls">
+                        <button type="button" class="physics-btn" id="physics-zerog-btn">
+                            <i class="fas fa-satellite"></i>
+                            <span>失重模式 / Zero-G</span>
+                        </button>
+                        <button type="button" class="physics-btn" id="physics-reset-btn">
+                            <i class="fas fa-rotate-right"></i>
+                            <span>重新散落 / Drop</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="physics-stage" id="skills-physics-stage" aria-label="可拖拽碰撞的技术栈胶囊沙盒">
+                    <span class="physics-hint">DRAG &amp; FLING CHIPS · 拖拽或拨动筹码</span>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- 项目展示 -->
     <section id="projects" class="projects">
         <div class="projects-header">
-            <span class="section-label" style="justify-content:center;">作品 <span class="en-tag">/ Selected Work</span></span>
+            <span class="section-label" style="justify-content:center;">03 / 作品 <span class="en-tag">Selected Work</span></span>
             <h2>
                 项目作品
                 <span class="lang-sub">Selected Projects</span>
@@ -1423,7 +2417,7 @@
             </p>
         </div>
         <div class="projects-grid">
-            <div class="project-card featured">
+            <div class="project-card featured corner-ticks">
                 <div class="featured-badge">★ 旗舰项目 / Flagship</div>
                 <div class="project-image">
                     <img src="/resume/images/proj-database.svg" loading="lazy" decoding="async" alt="海量配件数据库概念图：点阵构成的有序数据场中，一条暖色查询路径命中目标行">
@@ -1445,7 +2439,7 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card featured">
+            <div class="project-card featured corner-ticks">
                 <div class="featured-badge">★ 旗舰项目 / Flagship</div>
                 <div class="project-image">
                     <img src="/resume/images/proj-mcp.svg" loading="lazy" decoding="async" alt="WPS MCP Server 概念图：企业表格文档经协议桥接与 AI 芯片相连">
@@ -1467,7 +2461,7 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card featured">
+            <div class="project-card featured corner-ticks">
                 <div class="featured-badge">★ 旗舰项目 / Flagship</div>
                 <div class="project-image">
                     <img src="/resume/images/proj-saas.svg" loading="lazy" decoding="async" alt="云表格搜索概念图：多层云表格之上，一道搜索光线命中目标单元格">
@@ -1618,7 +2612,7 @@
     <!-- 技术手记与开源实战 (Blog) -->
     <section id="blog" class="blog-section">
         <div class="blog-header">
-            <span class="section-label" style="justify-content:center;">技术手记 <span class="en-tag">/ Notes &amp; Guides</span></span>
+            <span class="section-label" style="justify-content:center;">04 / 技术手记 <span class="en-tag">Notes &amp; Guides</span></span>
             <h3>
                 开源项目介绍与使用手记
                 <span class="lang-sub">Open Source Notes, Guides &amp; Architecture Insights</span>
@@ -1629,7 +2623,6 @@
         </div>
 
         <div class="blog-grid">
-            <!-- Card 1: WPS MCP Server -->
             <a href="/blog/wps-mcp-server-guide" class="blog-card">
                 <div>
                     <div class="blog-meta">
@@ -1654,7 +2647,6 @@
                 </div>
             </a>
 
-            <!-- Card 2: OH-MindMirror -->
             <a href="/blog/oh-mindmirror-intro" class="blog-card">
                 <div>
                     <div class="blog-meta">
@@ -1679,7 +2671,6 @@
                 </div>
             </a>
 
-            <!-- Card 3: 2000万+配件数据库架构 -->
             <a href="/blog/parts-database-architecture" class="blog-card">
                 <div>
                     <div class="blog-meta">
@@ -1704,7 +2695,6 @@
                 </div>
             </a>
 
-            <!-- Card 4: Cloud Sheet SaaS -->
             <a href="/blog/cloud-sheet-saas-guide" class="blog-card">
                 <div>
                     <div class="blog-meta">
@@ -1729,7 +2719,6 @@
                 </div>
             </a>
 
-            <!-- Card 5: Mac Voice to Text -->
             <a href="/blog/mac-voice-to-text-guide" class="blog-card">
                 <div>
                     <div class="blog-meta">
@@ -1754,7 +2743,6 @@
                 </div>
             </a>
 
-            <!-- Card 6: 批量水印与隐私保护 -->
             <a href="/blog/batch-watermark-privacy-guide" class="blog-card">
                 <div>
                     <div class="blog-meta">
@@ -1779,7 +2767,6 @@
                 </div>
             </a>
 
-            <!-- Card 7: TeleChat 机器人 -->
             <a href="/blog/telechat-voice-bot" class="blog-card">
                 <div>
                     <div class="blog-meta">
@@ -1809,16 +2796,19 @@
             <a href="/blog" class="contact-btn primary">
                 <i class="fas fa-book-open"></i> 查看全部文章与标签归档 / View All Posts
             </a>
-            <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="contact-btn">
-                <i class="fab fa-github"></i> 访问 GitHub 源码仓库 / GitHub Repos
+            <a href="/projects" class="contact-btn secondary">
+                <i class="fas fa-layer-group"></i> 浏览项目库专页 / Projects Archive
             </a>
         </div>
     </section>
 
     <!-- 联系方式 -->
     <section id="contact" class="contact">
+        <div class="css-particle-stage" aria-hidden="true">
+            <div class="css-dust-amber"></div>
+        </div>
         <div class="contact-content">
-            <span class="section-label" style="justify-content:center;">联系 <span class="en-tag">/ Get in Touch</span></span>
+            <span class="section-label" style="justify-content:center;">05 / 联系 <span class="en-tag">Get in Touch</span></span>
             <h3>
                 期待与您的合作
                 <span class="lang-sub">Let's build something together</span>
@@ -1834,6 +2824,10 @@
                     <i class="fas fa-envelope"></i>
                     <span>发送邮件 / Email</span>
                 </a>
+                <button type="button" class="contact-btn secondary" id="copy-email-btn">
+                    <i class="far fa-copy"></i>
+                    <span>复制邮箱 / Copy Email</span>
+                </button>
                 <a href="https://github.com/Jim-purch/" target="_blank" rel="noopener noreferrer" class="contact-btn secondary">
                     <i class="fab fa-github"></i>
                     <span>查看项目 / View GitHub</span>
@@ -1849,6 +2843,7 @@
                 <h4>Jim</h4>
                 <p>AI协作与全栈数字化产品创造者，专注MCP生态构建、全栈SaaS开发、分布式系统架构和企业数字化转型。</p>
                 <p class="en">AI collaboration expert &amp; full-stack digital product creator — focused on the MCP ecosystem, full-stack SaaS, distributed systems, and enterprise digital transformation.</p>
+                <div class="footer-motto">HUMAN DIRECTION · AI POSSIBILITY</div>
             </div>
             <div class="footer-links">
                 <h5>导航 / Navigate</h5>
@@ -1856,8 +2851,8 @@
                     <li><a href="#about">关于 / About</a></li>
                     <li><a href="#skills">核心技能 / Skills</a></li>
                     <li><a href="#projects">项目展示 / Work</a></li>
-                    <li><a href="#blog">博客手记 / Blog</a></li>
-                    <li><a href="#contact">联系方式 / Contact</a></li>
+                    <li><a href="/blog">博客手记 / Blog</a></li>
+                    <li><a href="/projects">项目归档 / Projects</a></li>
                 </ul>
             </div>
             <div class="footer-links">
@@ -1869,67 +2864,33 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Jim. 保留所有权利 · All rights reserved.</p>
+            <p>© 2026 Jim · Warm-Tech Edition · All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').slice(1);
-                if (!targetId) {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    return;
-                }
-                const element = document.getElementById(targetId);
-                if (element) {
-                    const headerOffset = 80;
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.scrollY - headerOffset;
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+    <!-- ⌘K 极客命令面板 -->
+    <div class="cmd-backdrop" id="cmd-backdrop" role="dialog" aria-modal="true" aria-label="站点快速指令面板">
+        <div class="cmd-modal">
+            <div class="cmd-input-wrap">
+                <i class="fas fa-magnifying-glass"></i>
+                <input type="text" class="cmd-input" id="cmd-input" placeholder="输入项目、章节、技术栈或指令 (如 MCP, 暗夜, 邮箱)..." autocomplete="off">
+                <button type="button" class="cmd-esc" id="cmd-close">ESC</button>
+            </div>
+            <div class="cmd-list" id="cmd-list"></div>
+            <div class="cmd-footer">
+                <span>↑↓ 选择 · Enter 执行</span>
+                <span>HUMAN DIRECTION × AI EXECUTION</span>
+            </div>
+        </div>
+    </div>
 
-        // 导航栏滚动效果
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+    <div class="aura-toast" id="aura-toast" role="status" aria-live="polite"></div>
 
-        // 元素进入视口动画
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // 观察项目卡片
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.6s cubic-bezier(0.2, 1, 0.3, 1)';
-            observer.observe(card);
-        });
-    </script>
+    <!-- 本地化创意插件 (零外部 CDN 阻塞，严格兼容 CSP) -->
+    <script src="/resume/vendor/rough-notation.min.js" defer></script>
+    <script src="/resume/vendor/pts.min.js" defer></script>
+    <script src="/resume/vendor/matter.min.js" defer></script>
+    <script src="/resume/aura-resume.js" defer></script>
 </body>
 
 </html>

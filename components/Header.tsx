@@ -7,11 +7,8 @@ import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 
 const Header = () => {
-  let headerClass =
-    'flex items-center w-full bg-cream/85 backdrop-blur-md justify-between py-5 border-b border-warm-gray transition-colors'
-  if (siteMetadata.stickyNav) {
-    headerClass += ' sticky top-0 z-50'
-  }
+  const headerClass =
+    'sticky top-0 z-50 flex items-center w-full bg-cream/85 backdrop-blur-md justify-between py-4 border-b border-warm-gray transition-colors'
 
   return (
     <header className={headerClass}>
@@ -21,8 +18,9 @@ const Header = () => {
             <Logo />
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="text-charcoal group-hover:text-terracotta font-serif text-xl font-medium tracking-wider transition-colors sm:block">
-              {siteMetadata.headerTitle}
+            <div className="text-charcoal group-hover:text-terracotta flex items-center gap-2 font-serif text-xl font-medium tracking-wider transition-colors sm:flex">
+              <span>{siteMetadata.headerTitle}</span>
+              <span className="bg-terracotta inline-block h-1.5 w-1.5 rounded-full shadow-[0_0_8px_rgba(193,135,75,0.8)]" />
             </div>
           ) : (
             siteMetadata.headerTitle
@@ -31,19 +29,17 @@ const Header = () => {
       </Link>
       <div className="flex items-center space-x-3 leading-5 sm:space-x-5">
         <nav className="no-scrollbar hidden items-center gap-x-6 overflow-x-auto sm:flex">
-          {headerNavLinks
-            .filter((link) => link.href !== '/')
-            .map((link) => (
-              <Link
-                key={link.title}
-                href={link.href}
-                className="text-charcoal-light hover:text-terracotta text-sm font-medium tracking-wide transition-colors duration-200"
-              >
-                {link.title}
-              </Link>
-            ))}
+          {headerNavLinks.map((link) => (
+            <Link
+              key={link.title}
+              href={link.href}
+              className="text-charcoal-light hover:text-terracotta text-sm font-medium tracking-wide transition-colors duration-200"
+            >
+              {link.title}
+            </Link>
+          ))}
         </nav>
-        <div className="border-warm-gray flex items-center gap-2 border-l pl-3">
+        <div className="border-warm-gray flex items-center gap-2.5 border-l pl-3">
           <SearchButton />
           <ThemeSwitch />
           <MobileNav />

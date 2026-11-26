@@ -10,13 +10,14 @@ export default function Projects() {
       <div className="border-warm-gray border-b pb-8">
         <div className="text-terracotta flex items-center gap-2 font-mono text-xs font-medium tracking-widest uppercase">
           <span className="bg-terracotta inline-block h-1.5 w-1.5 rounded-full" />
-          Featured Work & Architecture
+          FIG.03 // Featured Work &amp; Architecture
         </div>
         <h1 className="text-charcoal mt-2 font-serif text-3xl font-medium tracking-tight sm:text-4xl md:text-5xl">
-          精选项目与工程实践
+          <span data-rough="underline">精选项目</span>与工程实践
         </h1>
         <p className="text-charcoal-light mt-2 text-sm sm:text-base">
-          涵盖 AI Agent 协议实现 (MCP)、千万级分布式数据库架构、垂直领域 SaaS 与端侧语音效率工具。
+          涵盖 <span data-rough="highlight">AI Agent 协议实现 (MCP)</span>
+          、千万级分布式数据库架构、垂直领域 SaaS 与端侧语音效率工具。
         </p>
       </div>
       <div className="py-10 sm:py-12">

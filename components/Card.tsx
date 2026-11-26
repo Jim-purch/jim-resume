@@ -3,7 +3,7 @@ import Link from './Link'
 
 const Card = ({ title, description, imgSrc, href }) => (
   <div className="md max-w-[544px] p-4 md:w-1/2">
-    <div className="group border-warm-gray bg-cream-light hover:border-charcoal-light/30 flex h-full flex-col overflow-hidden rounded-lg border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <div className="group aura-spotlight-card aura-corner-ticks border-warm-gray bg-cream-light hover:border-terracotta/50 flex h-full flex-col overflow-hidden rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       {imgSrc &&
         (href ? (
           <Link href={href} aria-label={`Link to ${title}`} className="overflow-hidden">
