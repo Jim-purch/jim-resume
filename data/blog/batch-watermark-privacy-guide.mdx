@@ -76,10 +76,11 @@ docker run -d --name put-watermark-web -p 8080:80 --restart unless-stopped put-w
 
 ---
 
-## 后续优化方向
+## 在线体验与源码地址
 
-- 修复 `pdfjs-dist` 升级后 PDF 转矢量 SVG 的兼容问题，并移除测试期遗留的示例品牌图；
-- 为超大批量高分辨率图引入 `OffscreenCanvas` + Web Worker 并发队列，进一步提升极端大批量场景的界面流畅度；
-- 发布公开在线 Demo 站点，开箱即用。
+- **在线体验 Demo**：[put-watermark-web.vercel.app](https://put-watermark-web.vercel.app)（100% 浏览器本地运行，零图片上传，内置 3 套开源 SVG 水印预设与四合一前端工具箱）
+- **GitHub 源码与 Docker 配置**：[Jim-purch/put-watermark-web](https://github.com/Jim-purch/put-watermark-web)
 
-源码与部署配置：[GitHub Jim-purch/put-watermark-web](https://github.com/Jim-purch/put-watermark-web)。
+### 后续优化方向
+
+- 为超大批量高分辨率图引入 `OffscreenCanvas` + Web Worker 并发队列，进一步提升极端大批量场景的界面流畅度。

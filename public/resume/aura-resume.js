@@ -761,6 +761,48 @@
       },
 
       {
+        group: '在线体验 / Live Demos',
+        icon: 'fas fa-arrow-up-right-from-square',
+        title: '云表格快速查找 SaaS · 免登录沙盒 Demo',
+        sub: 'Live Demo',
+        keywords: 'demo websearch cloud sheet saas wps',
+        action: () =>
+          window.open('https://websearch-wps-webhook.vercel.app/demo', '_blank', 'noopener'),
+      },
+      {
+        group: '在线体验 / Live Demos',
+        icon: 'fas fa-arrow-up-right-from-square',
+        title: 'OH-MindMirror · AI 心理投射工具 Demo',
+        sub: 'Live Demo',
+        keywords: 'demo oh mindmirror cards gemini',
+        action: () => window.open('https://oh-mindmirror.vercel.app', '_blank', 'noopener'),
+      },
+      {
+        group: '在线体验 / Live Demos',
+        icon: 'fas fa-arrow-up-right-from-square',
+        title: '知己工具箱 Know Yourself Tools · 在线体验',
+        sub: 'Live Demo',
+        keywords: 'demo know yourself mbti bazi ziwei oh cards',
+        action: () => window.open('https://know-yourself-tools.vercel.app', '_blank', 'noopener'),
+      },
+      {
+        group: '在线体验 / Live Demos',
+        icon: 'fas fa-gamepad',
+        title: '台球大师 ball-webgame · 在线试玩',
+        sub: 'Live Demo',
+        keywords: 'demo ball webgame billiards snooker game',
+        action: () => window.open('https://ball-webgame.vercel.app', '_blank', 'noopener'),
+      },
+      {
+        group: '在线体验 / Live Demos',
+        icon: 'fas fa-arrow-up-right-from-square',
+        title: '纯前端批量水印与图片工具箱 · 在线体验',
+        sub: 'Live Demo',
+        keywords: 'demo watermark canvas pdf ico privacy',
+        action: () => window.open('https://put-watermark-web.vercel.app', '_blank', 'noopener'),
+      },
+
+      {
         group: 'GitHub 开源仓库 / Repositories',
         icon: 'fab fa-github',
         title: 'Jim-purch/jim-wps-mcp-server (WPS MCP Server)',

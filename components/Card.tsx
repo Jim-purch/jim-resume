@@ -1,12 +1,16 @@
 import Image from './Image'
 import Link from './Link'
 
-const Card = ({ title, description, imgSrc, href, repo }) => (
+const Card = ({ title, description, imgSrc, href, repo, demo }) => (
   <div className="md max-w-[544px] p-4 md:w-1/2">
     <div className="group aura-spotlight-card aura-corner-ticks border-warm-gray bg-cream-light hover:border-terracotta/50 flex h-full flex-col overflow-hidden rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       {imgSrc &&
-        (href || repo ? (
-          <Link href={href || repo} aria-label={`Link to ${title}`} className="overflow-hidden">
+        (demo || href || repo ? (
+          <Link
+            href={demo || href || repo}
+            aria-label={`Link to ${title}`}
+            className="overflow-hidden"
+          >
             <Image
               alt={title}
               src={imgSrc}
@@ -28,8 +32,8 @@ const Card = ({ title, description, imgSrc, href, repo }) => (
         ))}
       <div className="relative z-10 flex flex-1 flex-col p-6">
         <h2 className="text-charcoal group-hover:text-terracotta mb-3 font-serif text-xl font-medium transition-colors">
-          {href || repo ? (
-            <Link href={href || repo} aria-label={`Link to ${title}`}>
+          {demo || href || repo ? (
+            <Link href={demo || href || repo} aria-label={`Link to ${title}`}>
               {title}
             </Link>
           ) : (
@@ -38,6 +42,29 @@ const Card = ({ title, description, imgSrc, href, repo }) => (
         </h2>
         <p className="text-charcoal-light mb-5 flex-1 text-sm leading-relaxed">{description}</p>
         <div className="border-warm-gray/60 flex flex-wrap items-center gap-3 border-t border-dashed pt-4">
+          {demo && (
+            <Link
+              href={demo}
+              className="bg-terracotta hover:bg-terracotta-dark inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 font-mono text-xs font-medium text-white shadow-sm transition-colors"
+              aria-label={`Live demo for ${title}`}
+            >
+              <svg
+                className="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+              <span>在线体验 / Demo</span>
+            </Link>
+          )}
           {repo && (
             <Link
               href={repo}

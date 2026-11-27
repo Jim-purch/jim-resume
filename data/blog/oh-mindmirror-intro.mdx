@@ -41,24 +41,26 @@ export const createInitialContext = (cards: CardCombination): string => {
 }
 ```
 
-### 2. 抽卡仪式感与多模型兼容架构
+### 2. 抽卡仪式感、多模态视觉理解与多模型兼容架构
 
-- **双卡 3D 翻牌体验（`components/CardDrawer.tsx`）**：内置 89 张图像卡与完整文字卡词库，点击卡背触发洗牌与 3D `rotateY(180deg)` 翻转动画，确认组合后自动开启专属探索会话；对话顶部支持随时展开/收起卡牌大图对照。
-- **多 API Provider 自由切换（`components/SettingsModal.tsx`）**：
-  - 原生接入 Google `@google/genai` SDK（默认 `gemini-2.5-flash`，可自定义模型名）；
-  - 同时兼容任意 OpenAI 格式接口（`provider: 'openai' | 'custom'`），方便用户接入 DeepSeek、硅基流动或本地中转端点。
+- **双卡 3D 翻牌体验（`components/CardDrawer.tsx`）**：内置 89 张图像卡与完整文字卡词库（全部经 Web 优化压缩，整体不足 9 MB），点击卡背触发洗牌与 3D `rotateY(180deg)` 翻转动画，确认组合后自动开启专属探索会话；对话顶部支持随时展开/收起卡牌大图对照。
+- **Gemini 视觉多模态传图（`services/geminiService.ts`）**：使用 Google `@google/genai` SDK（默认 `gemini-2.5-flash`）时，会将当前抽到的 OH 图像卡转为 Base64 `inlineData` 与引导上下文一并发送给模型，让引导提问能自然呼应卡面细节（网络或格式异常时优雅降级为纯文本）。
+- **多 API Provider 自由切换（`components/SettingsModal.tsx`）**：同时兼容任意 OpenAI 格式接口（`provider: 'openai' | 'custom'`），方便接入 DeepSeek、硅基流动或自定义中转端点。
 
-### 3. 隐私优先的纯前端端侧存储
+### 3. 隐私优先的纯前端端侧存储与心语卡片导出
 
-心理探索记录高度私密，应用采用纯静态 SPA 架构（Vite + React 19 + TypeScript）：
+心理探索记录高度私密，应用采用纯静态 SPA 架构（Vite + React 19 + TypeScript + Tailwind CSS v4）：
 
 - **零服务端数据留存**：所有探索会话（`oh_card_sessions`）与 API 配置（`oh_card_api_settings`）完全保存在浏览器本地 `localStorage`；
-- **BYOK（Bring Your Own Key）直连模式**：用户填入自己的 API Key 后，请求直接从浏览器发往对应模型服务端点；
-- **会话归档与导出**：支持侧边栏多会话管理（`HistorySidebar.tsx`）以及一键将完整对话记录导出为本地 `.txt` 文件保存。
+- **BYOK（Bring Your Own Key）直连与免 Key 试玩**：访客无需配置 Key 即可直接体验抽卡翻牌、查看引导开场白并导出心语卡片，填入自己的 API Key 后即可由浏览器直连模型端点对话；
+- **双格式成果导出**：支持侧边栏多会话管理（`HistorySidebar.tsx`）、一键导出 `.txt` 对话记录，以及基于纯 HTML5 Canvas 渲染的**「导出心语卡片（PNG）」**（`utils/exportInsightCard.ts`）。
 
 ---
 
-## 本地运行
+## 在线体验与本地运行
+
+- **在线体验 Demo**：[oh-mindmirror.vercel.app](https://oh-mindmirror.vercel.app)（零安装直接体验抽卡、心语卡片导出与 BYOK 对话）
+- **GitHub 开源仓库**：[Jim-purch/OH-MindMirror](https://github.com/Jim-purch/OH-MindMirror)
 
 ```bash
 git clone https://github.com/Jim-purch/OH-MindMirror.git
@@ -68,13 +70,4 @@ npm install
 npm run dev
 ```
 
-启动后在左下角设置按钮中填入 Gemini 或 OpenAI 兼容 API Key，即可开始抽卡探索。
-
----
-
-## 后续迭代方向
-
-- 将当前抽到的图像卡以 Base64 多模态输入形式一并传给 Gemini Vision，让引导提问能更细腻地呼应画面视觉细节；
-- 将卡图资源压缩为 WebP 以大幅缩减仓库体积，并新增 HTML-to-Image 探索心语卡片导出功能。
-
-开源仓库地址：[GitHub Jim-purch/OH-MindMirror](https://github.com/Jim-purch/OH-MindMirror)。
+启动后在左下角设置按钮中填入 Gemini 或 OpenAI 兼容 API Key，即可开始深度自我探索。

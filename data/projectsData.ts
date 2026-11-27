@@ -3,6 +3,7 @@ interface Project {
   description: string
   href?: string
   repo?: string
+  demo?: string
   imgSrc?: string
 }
 
@@ -18,10 +19,11 @@ const projectsData: Project[] = [
   {
     title: '企业云表格 SaaS 与跨表检索系统',
     description:
-      '基于 Next.js 16 与 Supabase 构建的云表格令牌管理与跨表多条件搜索中台，支持权限分享、多租户 RLS 隔离与一键生成 MCP 配置。',
+      '基于 Next.js 16 与 Supabase 构建的云表格令牌管理与跨表多条件搜索中台，支持权限分享、多租户 RLS 隔离、免登录沙盒演示与一键生成 MCP 配置。',
     imgSrc: '/resume/images/proj-saas.svg',
     href: '/blog/cloud-sheet-saas-guide',
     repo: 'https://github.com/Jim-purch/websearch-wps-webhook',
+    demo: 'https://websearch-wps-webhook.vercel.app/demo',
   },
   {
     title: '2000万+ 配件数据分布式架构实践',
@@ -41,10 +43,36 @@ const projectsData: Project[] = [
   {
     title: 'OH-MindMirror 心理投射工具（开源）',
     description:
-      '结合经典 OH 卡潜意识投射原理与 Gemini / OpenAI 兼容大模型，通过结构化提问词库实现无偏见的自我深度对话，纯前端本地存储高隐私运行。',
+      '结合经典 OH 卡潜意识投射原理与 Gemini 多模态视觉理解（亦兼容 OpenAI 接口），支持 3D 翻牌、结构化引导对话与 PNG 心语卡片导出，纯前端高隐私运行。',
     imgSrc: '/resume/images/proj-mindmirror.svg',
     href: '/blog/oh-mindmirror-intro',
     repo: 'https://github.com/Jim-purch/OH-MindMirror',
+    demo: 'https://oh-mindmirror.vercel.app',
+  },
+  {
+    title: '知己工具箱 Know Yourself Tools（开源）',
+    description:
+      '面向自我探索与心理觉察的纯前端综合工具箱，集成 AI 生活教练（GROW 模型）、MBTI 性格测试、OH 卡探索、八字排盘与紫微斗数，数据纯本地存储。',
+    imgSrc: '/resume/images/proj-mindmirror.svg',
+    repo: 'https://github.com/Jim-purch/know-yourself-tools',
+    demo: 'https://know-yourself-tools.vercel.app',
+  },
+  {
+    title: '台球大师 ball-webgame（Web 物理桌球）',
+    description:
+      '基于 Next.js 16 与 Matter.js 物理引擎构建的网页桌球游戏，支持美式 8 球、9 球与英式斯诺克，含力度/加塞控制、本地双人、AI 对战与 Supabase 在线联机。',
+    imgSrc: '/resume/images/proj-starkark.svg',
+    repo: 'https://github.com/Jim-purch/ball-webgame',
+    demo: 'https://ball-webgame.vercel.app',
+  },
+  {
+    title: '纯前端批量水印工具（隐私优先 · Docker）',
+    description:
+      '基于 Vite + React + HTML5 Canvas 的浏览器本地批量水印与图片处理工具箱（含 PDF 转换、文件提取与 ICO 转换），零数据上传，附带 Docker + Nginx 私有化方案。',
+    imgSrc: '/resume/images/proj-watermark.svg',
+    href: '/blog/batch-watermark-privacy-guide',
+    repo: 'https://github.com/Jim-purch/put-watermark-web',
+    demo: 'https://put-watermark-web.vercel.app',
   },
   {
     title: 'Mac Voice to Text（macOS 免驱动内录）',
@@ -53,14 +81,6 @@ const projectsData: Project[] = [
     imgSrc: '/resume/images/proj-telechat.svg',
     href: '/blog/mac-voice-to-text-guide',
     repo: 'https://github.com/Jim-purch/mac-voice-to-text',
-  },
-  {
-    title: '纯前端批量水印工具（隐私优先 · Docker）',
-    description:
-      '基于 Vite + React + HTML5 Canvas 的浏览器本地批量水印与图片处理工具，零数据上传，附带多阶段 Docker + Nginx 镜像方便企业私有化部署。',
-    imgSrc: '/resume/images/proj-watermark.svg',
-    href: '/blog/batch-watermark-privacy-guide',
-    repo: 'https://github.com/Jim-purch/put-watermark-web',
   },
   {
     title: 'TeleChat 文本+语音双输出机器人',

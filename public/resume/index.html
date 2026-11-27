@@ -1604,6 +1604,71 @@
             border-top: 1px dashed var(--card-border);
         }
 
+        .project-demo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.42rem;
+            padding: 0.36rem 0.88rem;
+            border-radius: 9999px;
+            border: 1px solid var(--terracotta);
+            background: var(--terracotta);
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .project-demo-link:hover {
+            background: var(--terracotta-dark, #b85134);
+            border-color: var(--terracotta-dark, #b85134);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(217, 119, 87, 0.28);
+        }
+
+        .oss-repo-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-top: 0.3rem;
+        }
+
+        .oss-repo-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.28rem;
+            padding: 0.18rem 0.56rem;
+            border-radius: 9999px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .oss-repo-pill.demo {
+            background: var(--terracotta);
+            color: #ffffff;
+        }
+
+        .oss-repo-pill.demo:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .oss-repo-pill.gh {
+            border: 1px solid var(--warm-gray);
+            background: var(--cream-light);
+            color: var(--charcoal);
+        }
+
+        .oss-repo-pill.gh:hover {
+            border-color: var(--terracotta);
+            color: var(--terracotta);
+        }
+
         .project-gh-link {
             display: inline-flex;
             align-items: center;
@@ -2685,6 +2750,10 @@
                         <span class="project-tag">RLS安全</span>
                     </div>
                     <div class="project-links">
+                        <a href="https://websearch-wps-webhook.vercel.app/demo" target="_blank" rel="noopener noreferrer" class="project-demo-link">
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+                            <span>在线体验 Demo</span>
+                        </a>
                         <a href="https://github.com/Jim-purch/websearch-wps-webhook" target="_blank" rel="noopener noreferrer" class="project-gh-link">
                             <i class="fab fa-github"></i>
                             <span>websearch-wps-webhook</span>
@@ -2712,6 +2781,10 @@
                         <span class="project-tag">TypeScript</span>
                     </div>
                     <div class="project-links">
+                        <a href="https://oh-mindmirror.vercel.app" target="_blank" rel="noopener noreferrer" class="project-demo-link">
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+                            <span>在线体验 Demo</span>
+                        </a>
                         <a href="https://github.com/Jim-purch/OH-MindMirror" target="_blank" rel="noopener noreferrer" class="project-gh-link">
                             <i class="fab fa-github"></i>
                             <span>OH-MindMirror</span>
@@ -2822,10 +2895,14 @@
                         <span class="project-tag">Supabase</span>
                     </div>
                     <div class="project-links">
-                        <span class="project-private-pill"><i class="fas fa-lock"></i> 独立私有仓库</span>
+                        <span class="project-private-pill"><i class="fas fa-lock"></i> 星海方舟私有库</span>
+                        <a href="https://ball-webgame.vercel.app" target="_blank" rel="noopener noreferrer" class="project-demo-link">
+                            <i class="fas fa-gamepad"></i>
+                            <span>在线试玩 ball-webgame</span>
+                        </a>
                         <a href="https://github.com/Jim-purch/ball-webgame" target="_blank" rel="noopener noreferrer" class="project-gh-link">
                             <i class="fab fa-github"></i>
-                            <span>公开小游戏 ball-webgame</span>
+                            <span>ball-webgame 源码</span>
                         </a>
                     </div>
                 </div>
@@ -2849,6 +2926,10 @@
                         <span class="project-tag">Nginx</span>
                     </div>
                     <div class="project-links">
+                        <a href="https://put-watermark-web.vercel.app" target="_blank" rel="noopener noreferrer" class="project-demo-link">
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+                            <span>在线体验 Demo</span>
+                        </a>
                         <a href="https://github.com/Jim-purch/put-watermark-web" target="_blank" rel="noopener noreferrer" class="project-gh-link">
                             <i class="fab fa-github"></i>
                             <span>put-watermark-web</span>
@@ -2876,10 +2957,18 @@
                     <span class="oss-repo-name"><span>soul-mirror-with-other.skill</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
                     <span class="oss-repo-desc">AI 引导式多人关系探索与深度对话 Agent Skill</span>
                 </a>
-                <a href="https://github.com/Jim-purch/know-yourself-tools" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
-                    <span class="oss-repo-name"><span>know-yourself-tools</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
-                    <span class="oss-repo-desc">人工咨询 + AI 结合的自我认知与量表探索 Web 项目</span>
-                </a>
+                <div class="oss-repo-item">
+                    <span class="oss-repo-name"><span>know-yourself-tools</span></span>
+                    <span class="oss-repo-desc">集 AI 教练、MBTI、OH 卡、八字与紫微于一体的纯前端自我探索工具箱</span>
+                    <div class="oss-repo-actions">
+                        <a href="https://know-yourself-tools.vercel.app" target="_blank" rel="noopener noreferrer" class="oss-repo-pill demo">
+                            <i class="fas fa-arrow-up-right-from-square"></i> 在线体验
+                        </a>
+                        <a href="https://github.com/Jim-purch/know-yourself-tools" target="_blank" rel="noopener noreferrer" class="oss-repo-pill gh">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
                 <a href="https://github.com/Jim-purch/bgremove-zbar-rename" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
                     <span class="oss-repo-name"><span>bgremove-zbar-rename</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
                     <span class="oss-repo-desc">产品图自动去背景 + 识别条码归档重命名批处理管线</span>

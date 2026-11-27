@@ -30,6 +30,7 @@ export default function Projects() {
               imgSrc={d.imgSrc}
               href={d.href}
               repo={d.repo}
+              demo={d.demo}
             />
           ))}
         </div>
