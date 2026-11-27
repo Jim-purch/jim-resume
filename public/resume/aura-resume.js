@@ -790,9 +790,9 @@
       {
         group: 'GitHub 开源仓库 / Repositories',
         icon: 'fab fa-github',
-        title: 'Jim-purch/mac-voice-to-text (macOS 实时语音转文字)',
+        title: 'Jim-purch/mac-voice-to-text (macOS 系统内录转文字)',
         sub: 'GitHub',
-        keywords: 'github repo macos voice whisper swift',
+        keywords: 'github repo macos voice tauri swift screencapturekit',
         action: () =>
           window.open('https://github.com/Jim-purch/mac-voice-to-text', '_blank', 'noopener'),
       },
@@ -808,7 +808,7 @@
       {
         group: 'GitHub 开源仓库 / Repositories',
         icon: 'fab fa-github',
-        title: 'Jim-purch/telechat (Telegram 双通道语音机器人)',
+        title: 'Jim-purch/telechat (Telegram 文本+语音 AI 机器人)',
         sub: 'GitHub',
         keywords: 'github repo telechat deepseek minimax telegram',
         action: () => window.open('https://github.com/Jim-purch/telechat', '_blank', 'noopener'),

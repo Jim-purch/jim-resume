@@ -1,70 +1,106 @@
 ---
-title: 'Mac Voice to Text：macOS 免驱动双通道内录与实时语音转文字实战'
+title: 'Mac Voice to Text：基于 Tauri v2 + ScreenCaptureKit 的 macOS 系统内录实时转文字实战'
 date: '2024-11-15'
-tags: ['macOS', 'Swift', 'Whisper', 'ScreenCaptureKit', '音频工程', '开源工具']
+tags: ['macOS', 'Tauri', 'Rust', 'Swift', 'ScreenCaptureKit', 'SFSpeechRecognizer', '开源工具']
 draft: false
-summary: '解决 macOS 线上会议与播客录音实时转写的痛点。基于 Apple 官方 ScreenCaptureKit 实现免装虚拟声卡的系统内录音频采集，结合双通道混音与本地 Whisper 模型实现低延迟高精度实时文字转换。'
+summary: '解决 macOS 线上会议、视频课程与播客音频实时转写的痛点。详解如何用 Tauri v2 + Rust FFI 桥接 Swift 原生插件，通过 Apple ScreenCaptureKit 免驱动捕获系统音频，并结合端侧 SFSpeechRecognizer 实现本地离线实时转文字。'
 ---
 
-## 痛点：Mac 系统音频内录的传统困局
+## 痛点：macOS 系统音频内录的传统困局
 
-如果你经常使用 Mac 参加 Zoom / 腾讯会议、收听英文播客或整理访谈录音，你一定遇到过这样的难题：
+在 macOS 上参加线上会议、观看外语技术分享或收听播客时，如果想把电脑正在播放的声音实时转成文字，通常会遇到三个门槛：
 
-1. **内录困难**：macOS 为了隐私安全，普通麦克风 API 无法捕获系统其他应用程序发出的声音；
-2. **虚拟声卡繁琐且脆弱**：传统的 BlackHole 或 Soundflower 需要安装内核扩展或系统级音频插件，系统一旦升级就可能失效或引发音画不同步；
-3. **隐私顾虑**：将整场商业会议的音频实时传给第三方云服务，存在极大的合规与泄露风险。
+1. **权限与采集受限**：普通麦克风接口无法直接录制其他应用程序播放的系统声音；
+2. **虚拟声卡配置繁琐**：安装 BlackHole / Soundflower 并配置多输出设备不仅上手成本高，系统升级后还容易出现无声或声道错乱；
+3. **云端转写的隐私顾虑**：将内部会议或敏感内容上传至第三方云端语音 API 存在合规与泄露风险。
 
-**[Mac Voice to Text](https://github.com/Jim-purch/mac-voice-to-text)** 应运而生，基于现代化 macOS 原生技术栈彻底解决了上述问题。
+**[Mac Voice to Text](https://github.com/Jim-purch/mac-voice-to-text)** 基于 **Tauri v2 + Rust + Swift 原生插件** 构建，不装任何虚拟声卡，完全在 macOS 本地端侧完成系统音频采集与实时文字转写。
 
 ---
 
-## 核心实现方案
+## 跨语言分层架构
 
-### 1. 免驱动内录采集（Apple ScreenCaptureKit Audio API）
+项目采用三层架构兼顾原生性能与现代桌面 UI 开发效率：
 
-自 macOS 13 (Ventura) 起，苹果推出了高性能的 `ScreenCaptureKit` 框架。除了捕获屏幕画面外，它还提供了对系统音频流（`SCStreamOutputType.audio`）的硬件级无缝拦截：
+```text
+React 19 + TypeScript 前端界面 (Vite)
+        │  Tauri invoke / 状态轮询
+        ▼
+Tauri v2 Rust 后端 (src-tauri/src/lib.rs, audio_bridge.rs, storage.rs)
+        │  C ABI FFI (@_cdecl, 链接静态库 libAudioCapture.a)
+        ▼
+Swift 原生模块 (swift-plugin/Sources/AudioCapture/)
+  ├─ AudioCaptureManager.swift  ── Apple ScreenCaptureKit 系统内录
+  └─ SpeechRecognizer.swift     ── Apple SFSpeechRecognizer 端侧识别
+```
+
+---
+
+## 核心技术实现
+
+### 1. 免虚拟声卡的系统内录（`AudioCaptureManager.swift`）
+
+自 macOS 13 (Ventura) 起，苹果提供的 `ScreenCaptureKit` 支持直接拦截系统输出音频。我们在 Swift 插件中以最小视频开销（2×2 像素、1 FPS）启动纯音频捕获流，并直接输出 16kHz 单声道 Float32 PCM 采样：
 
 ```swift
-// 开启系统音频内录流捕获示例
-let filter = SCContentFilter(display: display, excludingWindows: [])
-let streamConfig = SCStreamConfiguration()
-streamConfig.capturesAudio = true
-streamConfig.excludesCurrentProcessAudio = true // 防止自身监听发生声反馈回路
+let filter = SCContentFilter(display: display, excludingApplications: [], exceptingWindows: [])
+let config = SCStreamConfiguration()
+config.capturesAudio = true
+config.excludesCurrentProcessAudio = true // 避免本应用自身声音回环
+config.sampleRate = 16000
+config.channelCount = 1
 
-let stream = SCStream(filter: filter, configuration: streamConfig, delegate: self)
+let stream = SCStream(filter: filter, configuration: config, delegate: self)
+try stream.addStreamOutput(self, type: .audio, sampleHandlerQueue: audioQueue)
 try await stream.startCapture()
 ```
 
-这种方案的巨大优势是：**零安装虚拟声卡、零内核权限改动、纯用户态运行**。
+整个链路纯用户态运行，仅需用户授予标准的「屏幕录制」与「语音识别」系统权限即可工作。
 
-### 2. 双通道音频对齐与重采样（AVAudioEngine）
+### 2. 端侧实时语音识别（`SpeechRecognizer.swift`）
 
-真实场景中，往往需要同时记录“对方说话的声音（系统声音）”以及“我自己的发言（麦克风声音）”。
+捕获到的音频采样通过 `@_cdecl` 导出的 C 回调函数经 Rust `audio_bridge.rs` 转发至 `SFSpeechAudioBufferRecognitionRequest`，由 Apple 原生 `SFSpeechRecognizer` 进行实时转写：
 
-通过 `AVAudioEngine` 将系统音频缓冲区与麦克风输入缓冲区在环形缓冲区（Ring Buffer）中进行降噪混音与时间戳对齐，统一重采样为 Whisper 最佳兼容的 **16kHz 单声道 16-bit PCM** 音频流。
+- **端侧优先**：优先使用设备端离线识别（`supportsOnDeviceRecognition`），音频数据不离开本机；
+- **多语言切换**：内置简体中文、繁体中文、英语（美/英）、日语、韩语、西/法/德语等常见语言选项；
+- **增量缓冲管理**：Rust 层区分 `is_final = false` 的实时中间句（`CURRENT_TRANSCRIPTION`）与 `is_final = true` 的已确认段落（`CONFIRMED_BUFFER`），保证前端字幕平滑刷新不抖动。
 
-### 3. 本地 Whisper 实时转写流水线
+### 3. 本地历史归档与多格式导出
 
-- 支持调用 OpenAI 官方云端 Whisper API；
-- 更推荐使用 **本地轻量级推理引擎（基于 whisper.cpp / CoreML 硬件加速）**，充分榨干 Apple Silicon (M1/M2/M3/M4) 神经网络引擎（ANE）的算力，在完全断网的环境下实现 200ms 内的流式转文字，做到数据 100% 不离机。
+- 每次停止转录后，Rust 后端的 `StorageManager`（`storage.rs`）会自动将完整文本、语言与时长保存为本地 JSON 记录；
+- 支持历史记录检索、删除以及一键导出为 **TXT / Markdown / JSON** 文件。
 
 ---
 
-## 快速安装与使用
+## 安装与本地构建
 
-### 下载与构建
+### 直接下载安装包
+
+前往 [GitHub Releases](https://github.com/Jim-purch/mac-voice-to-text/releases) 下载 Apple Silicon 版本 `.dmg`（当前已发布 `v0.1.0`）。
+
+### 从源码编译（macOS 13.0+）
 
 ```bash
 git clone https://github.com/Jim-purch/mac-voice-to-text.git
 cd mac-voice-to-text
 
-# 使用 Swift Package Manager 快速编译
-swift build -c release
+# 1. 编译 Swift 原生静态库
+cd swift-plugin && swift build -c release && cd ..
+
+# 2. 安装前端依赖并启动 Tauri 开发模式
+npm install
+npm run tauri:dev
+
+# 构建发布包
+npm run tauri:build
 ```
 
-### 运行模式
+---
 
-1. **菜单栏悬浮模式**：点击状态栏图标即可一键启动“会议实时速记”，识别结果实时以字幕形式悬浮在屏幕底部；
-2. **自动化导出**：会话结束后自动整理为带时间戳的 Markdown 会议纪要，支持一键发送到剪贴板或保存本地。
+## 后续规划
 
-开源地址：[Jim-purch/mac-voice-to-text](https://github.com/Jim-purch/mac-voice-to-text)，欢迎体验与贡献。
+- 增加麦克风通道采集与双通道混音（同时记录会议对方与本地麦克风发言）；
+- 优化未授权时的权限引导提示，并补充 GitHub Actions macOS 自动打包流水线；
+- 探索接入本地 `whisper.cpp` 作为可选高精度识别引擎。
+
+开源仓库：[Jim-purch/mac-voice-to-text](https://github.com/Jim-purch/mac-voice-to-text)。

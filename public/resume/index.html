@@ -2870,7 +2870,7 @@
             <div class="oss-matrix-grid">
                 <a href="https://github.com/Jim-purch/mac-voice-to-text" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
                     <span class="oss-repo-name"><span>mac-voice-to-text</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
-                    <span class="oss-repo-desc">macOS 免装虚拟声卡系统内录 + 麦克风实时语音转文字桌面应用</span>
+                    <span class="oss-repo-desc">macOS 免装虚拟声卡系统内录实时语音转文字桌面应用（Tauri v2 + Swift 端侧识别）</span>
                 </a>
                 <a href="https://github.com/Jim-purch/soul-mirror-with-other.skill" target="_blank" rel="noopener noreferrer" class="oss-repo-item">
                     <span class="oss-repo-name"><span>soul-mirror-with-other.skill</span> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.68rem;opacity:0.6;"></i></span>
@@ -2926,17 +2926,17 @@
                     </div>
                     <h4>
                         WPS MCP Server 开源介绍与接入指南
-                        <span class="en-sub">WPS 365 Open API MCP Server Integration Guide</span>
+                        <span class="en-sub">WPS AirScript Webhook MCP Server Integration Guide</span>
                     </h4>
                     <p>
-                        基于 Model Context Protocol 构建的 WPS 365 AI 集成服务端。支持 Claude Desktop、Cline 等主流智能体直接调度表格读取、文档解析与云端自动化协同，从架构设计到一行命令接入实战。
+                        基于 Model Context Protocol 与 WPS AirScript Webhook 构建的云表格查询服务端（已发布 npm：jim-wps-mcp-server）。无需企业开放平台复杂审批，一行 npx 命令让 Claude Desktop、Cline、Cursor 直接检索表格数据。
                     </p>
                 </div>
                 <div class="blog-card-bottom">
                     <div class="project-tags">
                         <span class="project-tag primary">MCP</span>
                         <span class="project-tag">TypeScript</span>
-                        <span class="project-tag">Claude</span>
+                        <span class="project-tag">AirScript</span>
                     </div>
                     <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
                 </div>
@@ -2950,15 +2950,15 @@
                     </div>
                     <h4>
                         OH-MindMirror 心理镜像投射工具手记
-                        <span class="en-sub">OH-Cards &amp; Gemini Multimodal Psychological Mirror</span>
+                        <span class="en-sub">OH-Cards &amp; AI-Guided Psychological Mirror</span>
                     </h4>
                     <p>
-                        融合 OH 潜意识图像卡与 Gemini 2.0 视觉多模态交互。深入解析如何通过两步引导式提问（外在描述到内在投射）规避模型幻觉与空泛鸡汤，在浏览器端构建高隐私的深度自我对话场域。
+                        融合经典 OH 卡 3D 翻牌体验与可控提示词工程，结合 OH 卡提问手册实现非评判式自我探索引导。支持 Gemini 与 OpenAI 兼容接口，纯前端本地存储构建高隐私的自我对话场域。
                     </p>
                 </div>
                 <div class="blog-card-bottom">
                     <div class="project-tags">
-                        <span class="project-tag primary">Gemini 2.0</span>
+                        <span class="project-tag primary">Gemini</span>
                         <span class="project-tag">React</span>
                         <span class="project-tag">心理学</span>
                     </div>
@@ -2997,11 +2997,11 @@
                         <span>2024-12 · 全栈构建</span>
                     </div>
                     <h4>
-                        基于 Next.js 16 与 Supabase 构建云表格 SaaS
-                        <span class="en-sub">Enterprise Cloud-Sheet SaaS with Next.js 16 &amp; Supabase</span>
+                        基于 Next.js 16 与 Supabase 构建云表格检索平台
+                        <span class="en-sub">Cloud-Sheet Cross-Table Search Platform with Next.js 16 &amp; Supabase</span>
                     </h4>
                     <p>
-                        企业轻量级云表格与全文检索引擎的完整开发链条：Next.js App Router 架构、Supabase 行级安全（RLS）租户隔离、大文件 Excel 流式解析入库与响应式现代化数据大屏的设计技巧。
+                        企业云表格跨表检索与令牌管理中台实战：Next.js 16 App Router、Supabase 行级安全（RLS）权限分享、批量搜索分批回退与增量结果累积、ExcelJS 导出及一键生成 MCP 配置。
                     </p>
                 </div>
                 <div class="blog-card-bottom">
@@ -3021,18 +3021,18 @@
                         <span>2024-11 · 原生实践</span>
                     </div>
                     <h4>
-                        Mac Voice to Text：系统内录/外录实时听写工具
-                        <span class="en-sub">macOS Dual-Channel Audio Capture &amp; Real-time Dictation</span>
+                        Mac Voice to Text：Tauri v2 + ScreenCaptureKit 系统内录转文字
+                        <span class="en-sub">macOS System Audio Capture &amp; On-Device Real-time Transcription</span>
                     </h4>
                     <p>
-                        解决 macOS 线上会议、播客录制实时转文字痛点。利用 ScreenCaptureKit 实现免虚拟驱动的系统内录采集，双通道混音与本地轻量 ASR / 云端 Whisper 模型串联，提供开箱即用的安装与配置教程。
+                        解决 macOS 线上会议、课程与播客实时转文字痛点。利用 Tauri v2 + Rust FFI 桥接 Swift 原生插件，通过 ScreenCaptureKit 免驱动捕获系统音频并由端侧 SFSpeechRecognizer 离线转写。
                     </p>
                 </div>
                 <div class="blog-card-bottom">
                     <div class="project-tags">
-                        <span class="project-tag primary">macOS</span>
+                        <span class="project-tag primary">Tauri v2</span>
+                        <span class="project-tag">Rust</span>
                         <span class="project-tag">Swift</span>
-                        <span class="project-tag">Whisper</span>
                     </div>
                     <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
                 </div>
@@ -3049,7 +3049,7 @@
                         <span class="en-sub">Privacy-first Batch Watermark Tool: Canvas &amp; Docker Self-host</span>
                     </h4>
                     <p>
-                        零服务端数据上传的图片水印利器。详解 HTML5 Canvas 批量高清排版、Web Worker 异步并发渲染、以及仅 15MB 的 Alpine Nginx 极简 Docker 镜像打包，适合企业敏感证照安全处理。
+                        零服务端数据上传的浏览器本地图片处理工具箱。详解 HTML5 Canvas 原分辨率批量水印渲染、JSZip 前端一键打包、以及基于多阶段构建 + Alpine Nginx 的企业内网 Docker 私有化部署。
                     </p>
                 </div>
                 <div class="blog-card-bottom">
@@ -3069,18 +3069,18 @@
                         <span>2024-09 · 智能体</span>
                     </div>
                     <h4>
-                        TeleChat：DeepSeek + MiniMax 双通道语音机器人
-                        <span class="en-sub">DeepSeek-R1 Reasoning &amp; MiniMax Voice Bot for Telegram</span>
+                        TeleChat：Node.js + DeepSeek + MiniMax 语音机器人
+                        <span class="en-sub">DeepSeek / Kimi Reasoning &amp; MiniMax TTS Bot for Telegram</span>
                     </h4>
                     <p>
-                        如何打造具有拟人语音回复能力的 Telegram 个人智囊助手？集成 DeepSeek 推理能力与 MiniMax 高拟真语音合成，支持长文本流式分句播报、异步任务队列与防网络抖动的容错机制。
+                        基于 Node.js 打造具备拟人语音播报能力的 Telegram 个人智囊助手：支持 DeepSeek / Moonshot 多模型热切换、MiniMax 多音色配置、用户级上下文记忆及 Docker 在线/离线一键部署。
                     </p>
                 </div>
                 <div class="blog-card-bottom">
                     <div class="project-tags">
-                        <span class="project-tag primary">DeepSeek</span>
+                        <span class="project-tag primary">Node.js</span>
+                        <span class="project-tag">DeepSeek</span>
                         <span class="project-tag">MiniMax</span>
-                        <span class="project-tag">Telegram Bot</span>
                     </div>
                     <span class="blog-read-link">阅读文档 <i class="fas fa-arrow-right"></i></span>
                 </div>

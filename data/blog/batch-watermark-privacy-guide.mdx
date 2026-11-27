@@ -1,82 +1,85 @@
 ---
 title: '纯前端隐私优先批量水印工具：Canvas 高清排版与 Docker 极简私有化部署'
 date: '2024-10-10'
-tags: ['Canvas', 'Docker', 'Web-Worker', '隐私安全', '前端工程', '开源工具']
+tags: ['Canvas', 'Docker', 'Vite', 'React', '隐私安全', '开源工具']
 draft: false
-summary: '图片零上传的敏捷水印利器。详解 HTML5 Canvas 批量高清排版渲染、Web Worker 多线程避免主界面卡死、以及基于 Alpine Nginx 打造仅 15MB 极轻量 Docker 镜像的工程实践。'
+summary: '图片零上传的本地敏捷处理工具箱。详解如何基于 Vite + React + HTML5 Canvas 在浏览器本地实现高清批量水印、JSZip 一键打包下载，以及多阶段 Docker + Nginx 私有化容器部署方案。'
 ---
 
-## 敏感信息处理的痛点
+## 敏感证照与商图的隐私痛点
 
-在办理入职审核、房屋租赁、银行借贷或出海资质证明时，我们经常需要提交身份证、营业执照或护照复印件。在这些证件上加盖“仅供某某业务办理使用，他用无效”的防伪水印是基础的安全常识。
+日常办公中，无论是提交身份证/营业执照复印件加注“仅供某某业务使用”，还是给大量商品图批量盖上品牌防盗水印，把图片上传到陌生第三方在线工具都存在泄露与速度瓶颈。
 
-然而市面上大多数免费水印网站，都会把图片悄悄上传至其云端服务器进行合成，不仅造成敏感个人身份信息（PII）泄露，遇到大批量图片时处理速度也极慢。
-
-**[纯前端批量水印工具 (put-watermark-web)](https://github.com/Jim-purch/put-watermark-web)** 专注于一件事情：**数据绝对不离开用户设备，100% 浏览器本地瞬时完成批量水印加注**。
+**[纯前端批量水印工具（put-watermark-web）](https://github.com/Jim-purch/put-watermark-web)** 坚持一个核心原则：**所有图片与文档处理 100% 在用户本地浏览器内完成，零文件上传服务器**。
 
 ---
 
-## 核心技术实现
+## 核心功能与技术实现
 
-### 1. HTML5 Canvas 高清离屏渲染与抗拉伸
+### 1. HTML5 Canvas 全分辨率本地渲染（`src/App.jsx`）
 
-很多水印工具在图片缩放后，文字会出现模糊和锯齿。我们采用了动态 DPI 与物理像素比（Device Pixel Ratio）适配机制：
+为了避免预览图压缩导致的输出糊图，核心渲染流程始终以原图真实像素尺寸（`image.naturalWidth × image.naturalHeight`）创建离屏 Canvas 进行绘制：
+
+- **双水印模式**：同时支持**文本水印**（自定义文案、字体、字号、字重、颜色、阴影、透明度、旋转角）与**图片 Logo 水印**（支持本地上传或预设 PNG、自由缩放比例）；
+- **灵活布局**：支持九宫格锚点定位（左上、居中、右下等）以及可调横向/纵向间距的倾斜平铺矩阵，防止边缘裁切；
+- **实时预览与无损保留**：基于首张选中图片实时刷新效果；导出时透明 PNG 自动保留 Alpha 通道，JPEG 以 92% 高画质输出。
 
 ```javascript
-// 针对高分辨率原图的坐标系动态缩放矩阵
-function renderWatermarkToCanvas(image, watermarkText, options) {
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
+// 全分辨率 Canvas 平铺水印绘制逻辑示意
+function drawTextWatermark(ctx, opts) {
+  const { width, height } = ctx.canvas
+  const rad = (opts.angle * Math.PI) / 180
+  const stepX = Math.max(opts.spacingX, opts.fontSize * 2)
+  const stepY = Math.max(opts.spacingY, opts.fontSize * 2)
 
-  canvas.width = image.naturalWidth;
-  canvas.height = image.naturalHeight;
-
-  // 保持全尺寸底图渲染，不损失原图细节
-  ctx.drawImage(image, 0, 0);
-
-  // 倾斜 30 度平铺全屏水印矩阵，防止边缘被轻易裁切
-  ctx.rotate((-30 * Math.PI) / 180);
-  ctx.font = `${options.fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto`;
-  ctx.fillStyle = `rgba(180, 180, 180, ${options.opacity})`;
-  // 循环平铺密集绘制
-  ...
+  for (let y = -stepY; y < height + stepY; y += stepY) {
+    for (let x = -stepX; x < width + stepX; x += stepX) {
+      ctx.save()
+      ctx.translate(x, y)
+      ctx.rotate(rad)
+      ctx.fillText(opts.text, 0, 0)
+      ctx.restore()
+    }
+  }
 }
 ```
 
-### 2. Web Worker 异步批处理与主线程解耦
+### 2. 前端 `JSZip` 批量打包与扩展工具箱
 
-当用户一次性拖入 100+ 张单反拍摄的 10MB 大图时，如果在主线程直接循环处理 Canvas，浏览器标签页会瞬间陷入“无响应（Unresponsive）”假死状态。
+处理多张图片后，应用直接在浏览器内存中通过 `JSZip` 打包为单个 `.zip` 文件供一键下载，无需逐张点击保存。
 
-我们利用 **`OffscreenCanvas` 与 Web Worker**：
+随着日常高频需求沉淀，项目还在同一个纯前端导航框架内扩展了多个本地免上传实用模块：
 
-1. 主线程将原始 `File / Blob` 对象传递给 Worker 池；
-2. Worker 线程利用后台 OffscreenCanvas 并行渲染，避免阻塞 UI 交互；
-3. 主线程保留流畅的实时进度条与取消操作，处理完毕后通过 JSZip 在前端直接将所有图片打包为 `.zip` 供一键下载。
+- **PDF 转换工具（`PdfConverter.jsx`）**：基于 `pdfjs-dist` 在本地解析与裁剪导出 PDF 页面图片；
+- **文件提取与链接校验（`FileExtractor.jsx`）**：本地快速批量提取和校验文件链接；
+- **图片转 ICO 图标（`ImageConverter.jsx`）**：本地生成多尺寸浏览器 Favicon `.ico`。
 
 ---
 
-## 极简 Docker 私有化交付（仅 15MB）
+## Docker 多阶段构建与私有化部署
 
-为了方便企业内部内网部署，项目编写了高优化的多阶段构建 `Dockerfile`：
-
-```dockerfile
-# 仅需超轻量的 Alpine Nginx 即可承载
-FROM nginx:alpine-slim
-
-COPY ./public /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-最终镜像压缩包仅约 **15 MB**，支持内网离线机房一键分发运行：
+仓库内置多阶段 `Dockerfile`（Node 阶段执行 `vite build`，运行阶段仅用 `nginx:alpine` 托管静态产物）及 `docker-compose.yml`，适合企业内网一键自托管：
 
 ```bash
-# 启动本地 Docker 容器
-docker run -d -p 8080:80 --name watermark-tool jim-purch/batch-watermark:latest
+git clone https://github.com/Jim-purch/put-watermark-web.git
+cd put-watermark-web
+
+# 方式一：Docker Compose 一键启动（默认映射至 docker-compose.yml 配置端口）
+docker compose up -d --build
+
+# 方式二：手动构建并运行
+docker build -t put-watermark-web:latest .
+docker run -d --name put-watermark-web -p 8080:80 --restart unless-stopped put-watermark-web:latest
 ```
 
-访问 `http://localhost:8080` 即可在局域网内任意终端离线安全使用。
+容器运行期不依赖 Node.js，仅由 Nginx 托管纯静态文件，内存占用极低，可在完全断网的局域网环境中稳定运行。
 
-项目源码与部署配置见：[GitHub Jim-purch/put-watermark-web](https://github.com/Jim-purch/put-watermark-web)。
+---
+
+## 后续优化方向
+
+- 修复 `pdfjs-dist` 升级后 PDF 转矢量 SVG 的兼容问题，并移除测试期遗留的示例品牌图；
+- 为超大批量高分辨率图引入 `OffscreenCanvas` + Web Worker 并发队列，进一步提升极端大批量场景的界面流畅度；
+- 发布公开在线 Demo 站点，开箱即用。
+
+源码与部署配置：[GitHub Jim-purch/put-watermark-web](https://github.com/Jim-purch/put-watermark-web)。

@@ -10,7 +10,7 @@ const projectsData: Project[] = [
   {
     title: 'WPS MCP Server（已开源 · npm）',
     description:
-      '基于 Model Context Protocol 构建的 WPS 365 开放平台服务端，让 Claude / Cursor 等智能体直接调度表格与文档自动化协同。',
+      '基于 Model Context Protocol 与 WPS AirScript Webhook 构建的云表格查询服务端，让 Claude / Cursor 等智能体直接检索智能表格与多维表格数据。',
     imgSrc: '/resume/images/proj-mcp.svg',
     href: '/blog/wps-mcp-server-guide',
     repo: 'https://github.com/Jim-purch/jim-wps-mcp-server',
@@ -41,7 +41,7 @@ const projectsData: Project[] = [
   {
     title: 'OH-MindMirror 心理投射工具（开源）',
     description:
-      '结合经典 OH 卡潜意识投射原理与 Gemini 2.0 多模态能力，通过两步阶梯式引导实现无偏见的自我深度对话，纯前端高隐私运行。',
+      '结合经典 OH 卡潜意识投射原理与 Gemini / OpenAI 兼容大模型，通过结构化提问词库实现无偏见的自我深度对话，纯前端本地存储高隐私运行。',
     imgSrc: '/resume/images/proj-mindmirror.svg',
     href: '/blog/oh-mindmirror-intro',
     repo: 'https://github.com/Jim-purch/OH-MindMirror',
@@ -49,7 +49,7 @@ const projectsData: Project[] = [
   {
     title: 'Mac Voice to Text（macOS 免驱动内录）',
     description:
-      '基于 Apple ScreenCaptureKit 实现的系统内录与双通道混音工具，免装虚拟声卡即可实时流式调用 Whisper 进行高精度文字转换。',
+      '基于 Tauri v2 + Rust + Swift (ScreenCaptureKit & SFSpeechRecognizer) 实现的系统内录实时转文字桌面端，免装虚拟声卡且端侧离线运行。',
     imgSrc: '/resume/images/proj-telechat.svg',
     href: '/blog/mac-voice-to-text-guide',
     repo: 'https://github.com/Jim-purch/mac-voice-to-text',
@@ -57,15 +57,15 @@ const projectsData: Project[] = [
   {
     title: '纯前端批量水印工具（隐私优先 · Docker）',
     description:
-      '完全在本地浏览器 Canvas 离屏多线程处理的批量水印工具，零数据上传，附带仅 15MB 极轻量 Docker 镜像方便企业私有化部署。',
+      '基于 Vite + React + HTML5 Canvas 的浏览器本地批量水印与图片处理工具，零数据上传，附带多阶段 Docker + Nginx 镜像方便企业私有化部署。',
     imgSrc: '/resume/images/proj-watermark.svg',
     href: '/blog/batch-watermark-privacy-guide',
     repo: 'https://github.com/Jim-purch/put-watermark-web',
   },
   {
-    title: 'TeleChat 语音思考双通道机器人',
+    title: 'TeleChat 文本+语音双输出机器人',
     description:
-      '整合 DeepSeek 深度推理与 MiniMax 逼真情感语音合成，打造具备多轮上下文记忆与语音实时收发能力的 7x24 小时随身智能助手。',
+      '基于 Node.js 整合 DeepSeek / Kimi 多模型推理与 MiniMax 高拟真语音合成，打造具备多轮上下文记忆与文字+语音双输出能力的 7x24 小时随身助手。',
     imgSrc: '/resume/images/proj-telechat.svg',
     href: '/blog/telechat-voice-bot',
     repo: 'https://github.com/Jim-purch/telechat',

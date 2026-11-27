@@ -1,35 +1,41 @@
 ---
 title: 'WPS MCP Server 开源介绍与 Claude Desktop / Cline 接入实战指南'
 date: '2025-03-01'
-tags: ['MCP', 'TypeScript', 'Claude', 'WPS-365', 'AI-Agent', '开源实战']
+tags: ['MCP', 'TypeScript', 'Claude', 'WPS', 'AirScript', 'AI-Agent', '开源实战']
 draft: false
-summary: '基于 Model Context Protocol (MCP) 构建的 WPS 365 开放接口服务端。支持 Claude Desktop、Cline 等智能体直接调度表格读取、文档解析与云端自动化协同，本文详述架构设计与接入实操。'
+summary: '基于 Model Context Protocol (MCP) 与 WPS AirScript Webhook 构建的云表格查询服务端（已发布 npm：jim-wps-mcp-server）。无需企业开放平台复杂审批，让 Claude Desktop、Cline、Cursor 直接检索 WPS 智能表格与多维表格数据。'
 ---
 
 ## 项目背景
 
-在日常生产力场景中，大语言模型（LLM）擅长理解、归纳与起草内容，但往往无法直接感知并修改本地或云端的企业办公文档。传统的做法是复制粘贴或通过特定脚本转换，效率低下且破坏了上下文连贯性。
+在日常办公与业务协同场景中，团队的报价表、配件表、台账数据大量沉淀在金山文档 / WPS 云表格中。大语言模型擅长理解与总结，却往往无法直接读取企业云表格，只能反复手动筛选、复制粘贴。
 
-**[WPS MCP Server](https://github.com/Jim-purch/jim-wps-mcp-server)** 应运而生。它基于 Anthropic 提出的 **Model Context Protocol (MCP)** 开放协议标准，将金山办公 WPS 365 开放平台的丰富能力（包括多维表格、在线表格、云文档、知识库等）抽象为标准的 Tools 与 Resources，让 Claude Desktop、Cline、Cursor 等 AI 客户端能够像调用本地函数一样操作 WPS 文档。
+**[jim-wps-mcp-server](https://github.com/Jim-purch/jim-wps-mcp-server)** 基于 Anthropic 推出的 **Model Context Protocol (MCP)** 开放协议构建，采用 **WPS AirScript Webhook** 轻量接入方案——无需申请 WPS 企业开放平台应用与复杂 OAuth 审批，只需在表格中配置一段 AirScript 脚本令牌，即可让 Claude Desktop、Cline、Cursor 等 AI 客户端直接查询表格数据。
 
 ---
 
 ## 核心架构设计
 
-WPS MCP Server 采用分层解耦的架构：
+项目采用 TypeScript 编写，基于 `@modelcontextprotocol/sdk` 与 `zod` 实现强类型工具定义，整体分为三层：
 
-1. **协议接入层（MCP Transport Layer）**：
-   - 支持 `stdio`（用于本地桌面端，如 Claude Desktop）与 `SSE`（Server-Sent Events，用于云端部署与网络交互）。
-   - 严格实现 MCP 协议生命周期协议与 Capabilities 握手。
+1. **双模式传输层（`src/index.ts` & `src/http-server.ts`）**：
+   - **`stdio` 模式（`npx jim-wps-mcp-server`）**：适配 Claude Desktop、Cursor、Cline 等本地桌面端 AI 客户端；
+   - **HTTP / SSE 模式（`npx jim-wps-mcp-http`）**：基于 Express 暴露网络端点，方便局域网内多端或远程智能体接入。
 
-2. **工具编排与鉴权层（Tools & Auth Engine）**：
-   - 统一管理 WPS 开放平台的 `AppID`、`AppSecret` 以及基于 OAuth 2.0 / 签名机制的令牌刷新缓存。
-   - 针对不同操作提供参数校验（Zod Schema），保证 LLM 传参的强类型安全性。
+2. **多配置与参数校验层（`src/tools.ts`）**：
+   - 支持单表环境变量（`WPS_WEBHOOK_URL` + `WPS_TOKEN`），也支持通过 `WPS_CONFIG` JSON 数组同时挂载多个 WPS 表格，并通过 `tokenName` 动态切换；
+   - 内置 `cleanSearchValue` 服务端预处理（统一去除回车、空格、`-`、`.` 及前导零并转小写），与 AirScript 端清理逻辑对齐，减轻表格脚本压力。
 
-3. **文档与表格执行引擎（Document & Sheet Adapter）**：
-   - **表格读写**：单元格范围查询、批量追加记录、条件过滤、公式解析。
-   - **文档解析**：提取结构化段落、追加总结批注。
-   - **错误处理**：提供友好的语义化错误提示，指导智能体自动重试或自我修正参数。
+3. **WPS Webhook 执行与 AirScript 模板层（`src/wps-client.ts` & `airscript/`）**：
+   - 配套提供智能表格（`airscript_sheet_template.js`）、多维表格（`airscript_dbsheet_template.js`）与编辑扩展（`airscript_sheet_edit_template.js`）脚本模板；
+   - 目前 MCP Server 已内置 **7 个标准查询工具**：
+     - `list_configs`：列出所有已配置的 WPS 表格及用途描述；
+     - `get_table_list`：获取目标文档中全部工作表 / 数据表的列结构与行数；
+     - `search`：多条件 AND 精确/模糊搜索（支持 `Contains`、`Equals`、`NotEqu`、`Greater`、`BeginWith`、`Empty` 等 11 种匹配操作符，支持指定返回列）；
+     - `batch_search`：单次调用批量执行多组件号/关键词查询并汇总结果；
+     - `get_image_urls`：提取指定单元格（含 `DISPIMG` 图片公式）的临时访问链接；
+     - `get_range_data`：读取 Excel 风格工作表的指定区域（如 `A1:E100`）；
+     - `get_table_details`：获取多维表格的字段结构与示例数据。
 
 ---
 
@@ -37,85 +43,80 @@ WPS MCP Server 采用分层解耦的架构：
 
 ### 1. 准备工作
 
-在开始之前，你需要在 [WPS 365 开放平台](https://open.wps.cn/) 注册应用并获取：
+1. 在你的 WPS 智能表格或多维表格中打开「开发 → AirScript 脚本编辑器」；
+2. 复制仓库 `airscript/` 目录下对应的脚本模板并保存；
+3. 开启 Webhook 触发器，获取：
+   - `WPS_WEBHOOK_URL`：脚本触发地址
+   - `WPS_TOKEN`：AirScript 访问令牌
 
-- `WPS_APP_ID`: 你的应用 ID
-- `WPS_APP_SECRET`: 你的应用密钥
+### 2. 在 Claude Desktop 中一键接入（npx）
 
-### 2. 在 Claude Desktop 中接入
-
-编辑 Claude Desktop 的配置文件：
+编辑 Claude Desktop 配置文件：
 
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
-在 `mcpServers` 字段中添加：
+在 `mcpServers` 中加入（已发布至 npm 公开仓库 `jim-wps-mcp-server`）：
 
 ```json
 {
   "mcpServers": {
     "wps": {
       "command": "npx",
-      "args": ["-y", "@jim-purch/wps-mcp-server"],
+      "args": ["-y", "jim-wps-mcp-server@latest"],
       "env": {
-        "WPS_APP_ID": "your_app_id_here",
-        "WPS_APP_SECRET": "your_app_secret_here"
+        "WPS_WEBHOOK_URL": "https://airscript.wps.cn/your-webhook-path",
+        "WPS_TOKEN": "your-airscript-token"
       }
     }
   }
 }
 ```
 
-保存后重启 Claude Desktop，界面右下角的小锤子（Tools）图标即会显示 WPS 相关工具已就绪。
+### 3. 同时挂载多个 WPS 表格（`WPS_CONFIG`）
 
-### 3. 在 Cline / VS Code 智能体中接入
-
-在 Cline 的 MCP 设置界面中添加该服务端配置：
+如果需要让 AI 同时检索多份业务表，可直接传入 JSON 数组配置：
 
 ```json
 {
-  "name": "wps-mcp",
-  "command": "node",
-  "args": ["/path/to/wps-mcp-server/dist/index.js"],
-  "env": {
-    "WPS_APP_ID": "your_app_id",
-    "WPS_APP_SECRET": "your_app_secret"
+  "mcpServers": {
+    "wps": {
+      "command": "npx",
+      "args": ["-y", "jim-wps-mcp-server@latest"],
+      "env": {
+        "WPS_CONFIG": "[{\"name\":\"parts\",\"description\":\"配件报价主表\",\"webhookUrl\":\"...\",\"token\":\"...\"},{\"name\":\"inventory\",\"description\":\"库存台账\",\"webhookUrl\":\"...\",\"token\":\"...\"}]"
+      }
+    }
   }
 }
 ```
+
+保存后重启客户端，AI 会先通过 `list_configs` 识别各个表的用途，再自动选择对应的 `tokenName` 进行检索。
 
 ---
 
 ## 典型使用场景示例
 
-### 场景一：自动汇总并写入工作周报
+### 场景一：多条件精准检索与列投影
 
-向 Claude 输入指令：
+向 Claude / Cursor 提问：
 
-> “请阅读我最近与客户的讨论总结，并调用 WPS 工具，将这 5 条行动项直接追加到我的 WPS 在线工作周报表格第 2 个工作表中。”
+> “帮我在 `parts` 配置的报价表里查找品牌包含 `Bosch` 且状态不为空的记录，只返回件号、名称和单价列。”
 
-Claude 会自动：
+智能体会自动先调 `get_table_list` 确认列名，再构造 `criteria` 与 `returnColumns` 调用 `search`，只取回必要列，大幅节省上下文 Token。
 
-1. 识别目标表格 ID 与 Sheet 索引；
-2. 构造行数据 JSON；
-3. 调用 `wps_append_rows` 写入数据，并返回行号与写入确认。
+### 场景二：批量件号核对与图片查验
 
-### 场景二：多维表格智能筛选与分析
-
-向 Claude 输入指令：
-
-> “查询 WPS 多维表格中‘状态’为‘延期’的待办任务，帮我生成一份根因分析和复盘报告。”
-
-智能体通过 `wps_query_records` 快速拉取原始结构化行记录，并在本地推理生成 Markdown 深度分析报告。
+直接粘贴一列待查件号让 AI 调用 `batch_search` 批量核对库存与价格；若表格单元格内嵌了产品图，还可以进一步调用 `get_image_urls` 获取图片临时链接。
 
 ---
 
 ## 经验总结与后续规划
 
-1. **Token 消耗控制**：大表格返回全部内容容易撑爆上下文。我们在设计 Tool 时引入了 `limit`、`offset` 和按列投影，优先返回概览与统计量。
-2. **连接稳定性**：针对国内企业内网与网络抖动，增加自动指数退避重试（Exponential Backoff）。
-3. **未来路线图**：
-   - 支持 WPS 知识库 RAG 检索端点；
-   - 增加本地离线 `.docx` / `.xlsx` 的混合操作支持。
+1. **上下文截断保护**：`handleSearch` 默认最多格式化展示前 20 条记录并标明总命中数与截断状态，防止大表查询直接撑爆 LLM 上下文窗口。
+2. **与前端管理台联动**：配套开源项目 [websearch-wps-webhook](https://github.com/Jim-purch/websearch-wps-webhook) 提供了可视化 Token 管理与「一键生成 MCP 配置 JSON」抽屉，团队成员无需手写环境变量。
+3. **后续规划**：
+   - 将已准备好的 `airscript_sheet_edit_template.js` 能力封装为标准 MCP 写入/追加工具；
+   - 补充自动化单元测试与 GitHub Releases 变更日志。
 
 欢迎在 GitHub 上提出 Issue 或 PR：[Jim-purch/jim-wps-mcp-server](https://github.com/Jim-purch/jim-wps-mcp-server)。

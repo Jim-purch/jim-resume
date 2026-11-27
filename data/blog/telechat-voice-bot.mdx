@@ -1,99 +1,99 @@
 ---
-title: 'TeleChat：DeepSeek 推理与 MiniMax 语音合成双通道 Telegram 机器人部署指南'
+title: 'TeleChat：基于 Node.js、DeepSeek 与 MiniMax 语音合成的 Telegram 机器人实战'
 date: '2024-09-05'
-tags: ['Telegram-Bot', 'DeepSeek', 'MiniMax', 'Python', '语音合成', '开源实战']
+tags: ['Telegram-Bot', 'DeepSeek', 'MiniMax', 'Node.js', 'Docker', '语音合成', '开源实战']
 draft: false
-summary: '打通文字思考与自然语音收发的 AI 对话机器人。详解利用 DeepSeek V3 / R1 强推理核心、MiniMax T2A 逼真语音合成 API、以及异步轮询与 Webhook 架构构建 7x24 小时随身语音助手的工程细节。'
+summary: '打通大模型深度对话与高拟真情感语音播报的 Telegram 机器人（Node.js 实现）。支持 DeepSeek 与 Moonshot（Kimi）多模型切换、MiniMax 多音色配置、用户级上下文记忆及 Docker 在线/离线一键部署。'
 ---
 
-## 为什么需要语音双通道 Bot？
+## 为什么做文本 + 语音双输出 Bot？
 
-移动端即时通讯软件（如 Telegram / 微信）是绝大多数人日常碎片化时间停留最多的地方。然而传统的聊天机器人往往有两个体验硬伤：
+在通勤、步行或碎片化学习场景下，在 Telegram 里盯着大段纯文本阅读既累眼又不方便。如果机器人既能保留结构清晰的文字答复，又能同步附带一段自然流畅的人声语音播报，就能把聊天窗口变成随时可听的随身知识电台。
 
-1. **只有冰冷的文字输出**：在步行、通勤或运动场景下，阅读长篇大段文字非常不便；
-2. **逻辑浅显**：普通的轻量模型在处理复杂的逻辑分析或长文档研读时常常产生幻觉。
-
-**[TeleChat](https://github.com/Jim-purch/telechat)** 的设计哲学是：**大脑用 DeepSeek（深度逻辑思考），嘴巴用 MiniMax（逼真人声传达）**，用户发送一条语音，Bot 即以自然对话的口吻用语音回传。
+**[TeleChat](https://github.com/Jim-purch/telechat)** 采用 **Node.js + `node-telegram-bot-api`** 构建，将 **DeepSeek / Moonshot（Kimi）对话推理** 与 **MiniMax 高拟真语音合成（TTS）** 串联，用户发送文字问题后，Bot 会依次返回文字回复和配套语音消息。
 
 ---
 
-## 核心系统工作流
+## 核心架构与工作流
 
-```
+```text
 [用户 Telegram 客户端]
-       │  (发送语音或文字)
-       ▼
-[python-telegram-bot 异步监听层]
-       │
-       ├─► [语音转文字：Whisper API / 本地引擎] (若是语音输入)
-       │
-       ▼
-[DeepSeek API 推理核心 (R1 / V3)]
-       │  (生成高情商、精炼口语化的回答)
-       ▼
-[MiniMax T2A-v2 语音合成引擎]
-       │  (生成极具呼吸感与情绪色彩的 .ogg 语音包)
-       ▼
-[回传至 Telegram 聊天窗口]
+        │  (发送文本消息或 /命令)
+        ▼
+[Node.js Bot 监听层 (index.js · node-telegram-bot-api)]
+        │  ├─ 读取用户个性化配置 (services/userConfig.js)
+        │  └─ 读取/写入多轮上下文 (services/sessionManager.js)
+        ▼
+[LLM 推理服务 (services/deepseek.js | services/moonshot.js)]
+        │  (按用户所选模型生成回复)
+        ▼
+[MiniMax TTS 合成服务 (services/minimax.js)]
+        │  (按用户所选音色生成本地临时音频)
+        ▼
+[先发文本回复 + 再发语音消息 → utils/fileManager.js 自动清理临时音频]
 ```
 
 ---
 
-## 关键技术细节
+## 关键工程设计
 
-### 1. 语音转文字与口语化上下文重塑
+### 1. 用户级个性化配置与多模型热切换
 
-为了让生成的语音听起来不像是“机械念经”，向 DeepSeek 输入的系统提示词（System Prompt）经过了专门微调：
+不同于把模型和音色写死在环境变量里的简单脚本，TeleChat 为每位 Telegram 用户维护独立配置（持久化在 `data/userConfigs.json`），支持在聊天窗口直接通过命令实时调整：
 
-```python
-SYSTEM_INSTRUCTION = """
-你现在正通过即时语音通话与用户交谈。
-你的输出将被直接送入语音合成系统（TTS）：
-1. 严禁输出 Markdown 符号（如 **加粗**、# 标题、列表序号）；
-2. 语言需口语化、亲切自然，善用短句与自然的停顿感；
-3. 关键数字与专有名词用适合发音的方式拼写。
-"""
-```
+- `/models` & `/set_model <deepseek|moonshot>`：在 DeepSeek 与 Moonshot（Kimi）之间随时切换；
+- `/voices` & `/set_voice <voice_id>`：浏览 `data/availableVoices.json` 中的 MiniMax 音色列表并自由切换声线；
+- `/set_prompt <prompt>`：自定义专属 System Prompt（例如英语口语陪练、技术播客主播）；
+- `/set_context <1-20>` & `/clear_history`：灵活控制上下文记忆轮数或一键清空会话。
 
-### 2. 流式分段合成（Chunked TTS Streaming）
+### 2. 临时音频生命周期与断网自动重连
 
-如果等大模型全部生成完 800 字再去请求 MiniMax 合成整个长音频，首包延迟（TTFT）可能会达到 6~10 秒。
-
-我们采用了**双缓冲队列流式切分机制**：
-
-- DeepSeek 输出每遇到第一个完整的句子标点（`。！？`），立即将该句推送至后台异步任务调用 MiniMax 生成音频片段；
-- 首句语音在 1.5 秒内即可完成推送，大幅降低用户的等待焦虑感。
+- **自动清理**：每条回复的音频发送完成后立即调用 `fileManager.deleteFile()` 删除临时文件，防止容器磁盘被音频缓存撑满；
+- **状态反馈**：处理长推理与 TTS 合成期间，通过 `editMessageText` 动态更新「🤔 正在思考中... → 🎵 正在生成语音...」，完成后自动撤回状态条，保持对话流清爽；
+- **容错重连**：监听 `polling_error`，遇到 `EFATAL`、`ECONNRESET`、`ETIMEDOUT` 等网络抖动自动延迟 5 秒重启轮询，并分流写入 `logs/bot.log` 与 `logs/error.log`。
 
 ---
 
-## 快速配置与私有化部署
+## 快速配置与 Docker 部署
 
-### 1. 环境变量设置
+### 1. 配置环境变量
 
-创建 `.env` 文件：
+```bash
+git clone https://github.com/Jim-purch/telechat.git
+cd telechat
+cp .env.example .env
+```
+
+在 `.env` 中填入对应凭据：
 
 ```env
-TELEGRAM_BOT_TOKEN="your_telegram_bot_token_from_botfather"
-DEEPSEEK_API_KEY="sk-your-deepseek-key"
-MINIMAX_API_KEY="your_minimax_api_key"
-MINIMAX_GROUP_ID="your_minimax_group_id"
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+DEEPSEEK_API_KEY=your_deepseek_api_key
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+MINIMAX_API_KEY=your_minimax_api_key
+MINIMAX_GROUP_ID=your_minimax_group_id
+MINIMAX_BASE_URL=https://api.minimax.chat
 ```
 
-### 2. Docker Compose 极速拉起
+### 2. 启动运行（Docker Compose 或本地 Node.js）
 
-```yaml
-version: '3.8'
+```bash
+# Docker Compose 构建并后台启动（推荐）
+docker compose up -d --build
+docker compose logs -f
 
-services:
-  telechat-bot:
-    image: jim-purch/telechat-bot:latest
-    restart: always
-    env_file:
-      - .env
-    volumes:
-      - ./data:/app/data
+# 或本地 Node.js 直接运行
+npm install
+npm start
 ```
 
-运行 `docker compose up -d`，在 Telegram 搜索你的机器人发送 `/start` 即可开启专属双通道对话。
+仓库同时提供了服务器一键安装脚本 `deploy.sh` 以及面向无网/受限服务器的离线镜像打包脚本 `build-offline-package.sh`（详见仓库内 `DEPLOY.md` 与 `DOCKER_OFFLINE_DEPLOY.md`）。
 
-开源仓库与详细调试指南：[GitHub Jim-purch/telechat](https://github.com/Jim-purch/telechat)。
+---
+
+## 后续规划
+
+- 新增 Telegram 语音消息输入解析（监听 `voice` 事件并接入 Whisper / 语音识别接口），实现真正的语音双向收发；
+- 探索长回复按句切分流式合成，降低首段语音等待延迟。
+
+开源仓库与完整部署文档：[GitHub Jim-purch/telechat](https://github.com/Jim-purch/telechat)。

@@ -1,78 +1,80 @@
 ---
-title: 'OH-MindMirror 心理投射工具：基于 Gemini 2.0 与 OH 潜意识图像卡的自我探索实战'
+title: 'OH-MindMirror 心理投射工具：基于 OH 卡牌与大模型引导的自我探索实践'
 date: '2025-02-18'
-tags: ['Gemini-2.0', 'React', '多模态', '心理学', 'AI原生应用', '开源实战']
+tags: ['Gemini', 'React', 'TypeScript', '心理学', 'AI原生应用', '开源实战']
 draft: false
-summary: '融合经典 OH 卡投射测验与 Gemini 2.0 视觉多模态能力。详述如何通过两步阶梯式提问（客观观察到主观隐喻投射）避免 AI 评判与假鸡汤，构建高隐私的深度自我对话工具。'
+summary: '融合经典 OH 卡潜意识投射机制与可控提示词工程。详述如何在纯前端 React 应用中实现 3D 翻牌抽卡、基于 OH 卡提问参考手册的非评判式对话引导，以及支持 Gemini 与 OpenAI 兼容接口的高隐私端侧架构。'
 ---
 
-## 什么是 OH 卡？为什么需要 AI 镜像？
+## 什么是 OH 卡？为什么用 AI 做镜像引导？
 
-**OH Cards（潜意识投射图像卡）** 是心理学中非常经典且有效的投射沟通工具。卡牌没有标准答案，每一幅画面都是一面镜子，使用者在画面中看到什么，往往映射了其当下内心的焦虑、渴望或尚未被言说的情感。
+**OH Cards（潜意识投射图像卡）** 是心理学与自我觉察领域常用的投射工具，由「图像卡」与「文字卡」两副卡牌组合而成。卡牌没有标准答案，同一张画面在不同心境下会触发完全不同的联想。
 
-然而在传统的咨询中，OH 卡通常需要专业引导师在旁把控节奏，这给许多希望进行日常自我觉察、梳理情绪但又注重私密性的普通人带来了门槛。
+传统 OH 卡练习往往需要引导师在旁把控节奏，而普通人日常想要安静地梳理情绪、做一次私密的自我对话时，很难随时找到一位不评判、不说教的倾听者。
 
-**[OH-MindMirror](https://github.com/Jim-purch/oh-mindmirror)** 的目标，就是利用大模型的多模态能力与精心编排的引导性提示工程，充当一个**中立、包容、不带评判的“数字倾听者与镜像引导师”**。
+**[OH-MindMirror](https://github.com/Jim-purch/OH-MindMirror)** 的目标，就是通过精心的引导提示词与结构化提问词库，让大语言模型充当一个**中立、克制、不带评判的“数字倾听者与镜像引导师”**。
 
 ---
 
-## 核心设计难点与工程实践
+## 核心设计与工程实现
 
-### 1. 规避“好为人师”：拒绝廉价的说教与鸡汤
+### 1. 规避“好为人师”：结合 OH 卡提问手册的引导上下文
 
-许多 AI 心理类产品最常犯的错误，就是过早地下定义或给出空泛的“行动指南”：“你现在感到疲惫，建议多喝水、早点睡觉……”。这种机械的应答会直接打断用户的内心感受流。
+很多 AI 心理对话工具最容易让人出戏的地方，在于模型习惯过早下结论或输出大段说教清单。在 **OH-MindMirror** 中，我们在 `constants.ts` 与 `services/geminiService.ts` 中设计了双重约束：
 
-在 **OH-MindMirror** 中，我们设计了严格的 **二阶投射交互链（Two-Step Projection Chain）**：
-
-- **阶段一：现象描述（Phenomenological Seeing）**
-  引导用户只描述画面中的客观要素：“画面中有哪些物体？线条和色彩给你什么直观感觉？”
-  通过去意向化的观察，先让大脑从防御状态松弛下来。
-- **阶段二：隐喻连接（Metaphorical Bridging）**
-  模型不直接给出解释，而是提出开放式问题：“如果画面中的这个小角落代表你现实生活中的某件事，你第一直觉会想到什么？”
-  通过隐喻启发用户自行完成意义构建。
-
-### 2. 视觉多模态多维感知架构
-
-我们选用了 **Google Gemini 2.0 Flash / Pro** 的视觉理解接口：
+- **角色系统指令（`SYSTEM_INSTRUCTION`）**：约束模型以温和、留白、非评判的方式回应，**严禁直接替用户解读卡牌含义**，而是通过开放式提问帮助用户自行发现联结；
+- **文字卡专属提问方向（`createInitialContext`）**：结合仓库内置的 `OH卡提问参考.md`，当用户抽到「图像卡 + 文字卡」组合后，系统会将该文字卡对应的引导方向、图像卡通用观察问题以及图文关联问题动态注入会话上下文：
 
 ```typescript
-// 核心提示词与角色约束逻辑示意
-const SYSTEM_PROMPT = `
-你是一位温和、克制、富有同理心的 OH 卡探索陪伴者。
-核心准则：
-1. 严禁对用户进行心理学病理化标签归类或居高临下的道德评判。
-2. 严禁主动断定画面的象征意义（例如："红色的花代表你的爱情"），只能将其作为问题抛回给用户。
-3. 你的职责是提问，引导对方说出更多他们自己的故事。
-4. 语言风格：留白、质朴、倾听。
-`
+// services/geminiService.ts 核心上下文构造示意
+export const createInitialContext = (cards: CardCombination): string => {
+  const suggestedQuestions = getWordCardQuestions(cards.word.text)
+  return `
+[系统事件] 用户抽到了两张 OH 卡：
+1. 图像卡：编号 #${cards.image.index + 1}
+2. 文字卡：「${cards.word.text}」
+...
+请以温和、开放、非评判的态度，邀请用户分享他们看到这个组合的第一直觉和感受：
+- 不要解读卡牌的意义，让用户自己发现
+- 循序渐进，从表层感受开始
+  `
+}
 ```
 
-通过传入当前抽取的卡牌高分辨率图像与用户的文字描述，Gemini 能够极其细腻地捕捉用户描述与卡面细节之间的张力（例如卡面原本是阳光明媚的森林，但用户却把焦点放在了阴影中的石块上），并据此给出精准的回应提问。
+### 2. 抽卡仪式感与多模型兼容架构
+
+- **双卡 3D 翻牌体验（`components/CardDrawer.tsx`）**：内置 89 张图像卡与完整文字卡词库，点击卡背触发洗牌与 3D `rotateY(180deg)` 翻转动画，确认组合后自动开启专属探索会话；对话顶部支持随时展开/收起卡牌大图对照。
+- **多 API Provider 自由切换（`components/SettingsModal.tsx`）**：
+  - 原生接入 Google `@google/genai` SDK（默认 `gemini-2.5-flash`，可自定义模型名）；
+  - 同时兼容任意 OpenAI 格式接口（`provider: 'openai' | 'custom'`），方便用户接入 DeepSeek、硅基流动或本地中转端点。
+
+### 3. 隐私优先的纯前端端侧存储
+
+心理探索记录高度私密，应用采用纯静态 SPA 架构（Vite + React 19 + TypeScript）：
+
+- **零服务端数据留存**：所有探索会话（`oh_card_sessions`）与 API 配置（`oh_card_api_settings`）完全保存在浏览器本地 `localStorage`；
+- **BYOK（Bring Your Own Key）直连模式**：用户填入自己的 API Key 后，请求直接从浏览器发往对应模型服务端点；
+- **会话归档与导出**：支持侧边栏多会话管理（`HistorySidebar.tsx`）以及一键将完整对话记录导出为本地 `.txt` 文件保存。
 
 ---
 
-## 隐私优先与端侧架构
-
-心理探索的内容具有极高的隐私敏感度：
-
-- **无数据库日志沉淀**：用户的每一次探索会话纯保存在浏览器的 LocalStorage / IndexedDB 中。
-- **直连 API Key 模式**：用户可自行配置个人 Google AI API Key，数据直接由浏览器向官方端点发起安全请求，不经过任何第三方中间服务器。
-- **一键导出脱敏卡片**：支持将会话核心觉察生成一张审美雅致的“探索心语卡片”（基于 HTML-to-Image），方便用户存入个人的 Notion 或笔记软件中。
-
----
-
-## 部署与体验
-
-项目采用极简的纯静态单页架构（Vite + React + Tailwind CSS），你可以直接部署在 Vercel、Cloudflare Pages 或任何静态服务器：
+## 本地运行
 
 ```bash
-# 克隆仓库
-git clone https://github.com/Jim-purch/oh-mindmirror.git
-cd oh-mindmirror
+git clone https://github.com/Jim-purch/OH-MindMirror.git
+cd OH-MindMirror
 
-# 安装依赖并启动
 npm install
 npm run dev
 ```
 
-构建你的个人镜像：[GitHub 仓库地址](https://github.com/Jim-purch/oh-mindmirror)。
+启动后在左下角设置按钮中填入 Gemini 或 OpenAI 兼容 API Key，即可开始抽卡探索。
+
+---
+
+## 后续迭代方向
+
+- 将当前抽到的图像卡以 Base64 多模态输入形式一并传给 Gemini Vision，让引导提问能更细腻地呼应画面视觉细节；
+- 将卡图资源压缩为 WebP 以大幅缩减仓库体积，并新增 HTML-to-Image 探索心语卡片导出功能。
+
+开源仓库地址：[GitHub Jim-purch/OH-MindMirror](https://github.com/Jim-purch/OH-MindMirror)。
